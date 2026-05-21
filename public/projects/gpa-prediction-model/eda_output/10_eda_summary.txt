@@ -1,0 +1,21 @@
+============================================================
+ EDA SUMMARY — Graduate2567_ExportStudent
+============================================================
+ Total records       : 6,520
+ Total features      : 42
+ Numerical features  : 21
+ Categorical features: 21
+ Missing columns     : 10
+
+ GPA Statistics:
+   Mean   : 3.059
+   Median : 3.060
+   Std    : 0.462
+   Min    : 0.00
+   Max    : 4.00
+
+ Corr(GPA, OLD_GPA) = 0.3837
+
+ Cohort with highest avg GPA : 2567 (3.449)
+ Cohort with lowest  avg GPA : 2558 (2.330)
+============================================================
