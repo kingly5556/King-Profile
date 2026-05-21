@@ -358,34 +358,40 @@ export default async function ProjectPage({ params }: Props) {
               </>
             }
             metadataContent={
-              <>
-                {project.detailSections?.map((section, idx) => {
-                  if (section.kind === "dataset") {
-                    return <DatasetSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
-                  }
-                  return null;
-                })}
-              </>
+              project.detailSections?.some(s => s.kind === "dataset") ? (
+                <>
+                  {project.detailSections.map((section, idx) => {
+                    if (section.kind === "dataset") {
+                      return <DatasetSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
+                    }
+                    return null;
+                  })}
+                </>
+              ) : undefined
             }
             edaContent={
-              <>
-                {project.detailSections?.map((section, idx) => {
-                  if (section.kind === "eda") {
-                    return <EDASection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
-                  }
-                  return null;
-                })}
-              </>
+              project.detailSections?.some(s => s.kind === "eda") ? (
+                <>
+                  {project.detailSections.map((section, idx) => {
+                    if (section.kind === "eda") {
+                      return <EDASection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
+                    }
+                    return null;
+                  })}
+                </>
+              ) : undefined
             }
             cleaningContent={
-              <>
-                {project.detailSections?.map((section, idx) => {
-                  if (section.kind === "cleaning") {
-                    return <CleaningSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
-                  }
-                  return null;
-                })}
-              </>
+              project.detailSections?.some(s => s.kind === "cleaning") ? (
+                <>
+                  {project.detailSections.map((section, idx) => {
+                    if (section.kind === "cleaning") {
+                      return <CleaningSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
+                    }
+                    return null;
+                  })}
+                </>
+              ) : undefined
             }
           />
 

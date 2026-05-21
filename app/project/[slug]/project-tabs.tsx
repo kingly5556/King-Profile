@@ -10,8 +10,8 @@ export function ProjectTabs({
   accentBorderClass,
 }: {
   overviewContent: React.ReactNode;
-  metadataContent: React.ReactNode;
-  edaContent: React.ReactNode;
+  metadataContent?: React.ReactNode;
+  edaContent?: React.ReactNode;
   cleaningContent?: React.ReactNode;
   accentBorderClass: string;
 }) {
@@ -19,8 +19,8 @@ export function ProjectTabs({
 
   const tabs = [
     { id: "Overview", label: "Overview" },
-    { id: "Metadata", label: "Metadata" },
-    { id: "EDA", label: "EDA" },
+    ...(metadataContent ? [{ id: "Metadata", label: "Metadata" }] : []),
+    ...(edaContent ? [{ id: "EDA", label: "EDA" }] : []),
     ...(cleaningContent ? [{ id: "Cleaning", label: "Data Cleaning" }] : []),
   ];
 
