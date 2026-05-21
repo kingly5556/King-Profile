@@ -319,7 +319,7 @@ export const SKILL_ITEMS: SkillItem[] = [
 ];
 
 export const FOOTER_SOCIAL_LINKS: SocialLink[] = [
-  { label: "kongkat5556 on GitHub", href: "https://github.com/kongkat5556", icon: "github" },
+  { label: "kingly5556 on GitHub", href: "https://github.com/kingly5556", icon: "github" },
   { label: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}`, icon: "mail" },
   { label: CONTACT_PHONE_DISPLAY, href: `tel:${CONTACT_PHONE_TEL}`, icon: "call" },
 ];
