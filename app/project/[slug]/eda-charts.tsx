@@ -75,7 +75,7 @@ export function GPADistributionChart() {
           contentStyle={tooltipStyle}
           labelStyle={tooltipLabelStyle}
           itemStyle={tooltipItemStyle}
-          formatter={(v: number) => [`${v.toLocaleString()} students`, "Count"]}
+          formatter={(v: any) => [`${Number(v).toLocaleString()} students`, "Count"]}
         />
         <ReferenceLine x="3.0–3.2" stroke={ORANGE} strokeDasharray="4 2" label={{ value: "Mean ≈ 3.06", fill: ORANGE, fontSize: 11 }} />
         {bins.map((_, i) => (
@@ -127,8 +127,8 @@ export function CohortTrendChart() {
           contentStyle={tooltipStyle}
           labelStyle={tooltipLabelStyle}
           itemStyle={tooltipItemStyle}
-          formatter={(v: number, name: string) =>
-            name === "# Students" ? [v.toLocaleString(), name] : [v.toFixed(3), name]
+          formatter={(v: any, name: any) =>
+            name === "# Students" ? [Number(v).toLocaleString(), name] : [Number(v).toFixed(3), name]
           }
         />
         <Legend wrapperStyle={{ color: TEXT_SEC, fontSize: 12, paddingTop: 8 }} />
@@ -163,7 +163,7 @@ export function GPAByGenderChart() {
           contentStyle={tooltipStyle}
           labelStyle={tooltipLabelStyle}
           itemStyle={tooltipItemStyle}
-          formatter={(v: number, name: string) => [v.toFixed(3), name]}
+          formatter={(v: any, name: any) => [Number(v).toFixed(3), name]}
         />
         <Legend wrapperStyle={{ color: TEXT_SEC, fontSize: 12 }} />
         <Bar dataKey="mean" name="Avg GPA" radius={[0, 2, 2, 0]}>
@@ -225,7 +225,7 @@ export function ScatterOldGPAChart() {
           contentStyle={tooltipStyle}
           labelStyle={tooltipLabelStyle}
           itemStyle={tooltipItemStyle}
-          formatter={(v: number, name: string) => [v.toFixed(2), name === "hs" ? "HS GPA" : "Uni GPA"]}
+          formatter={(v: any, name: any) => [Number(v).toFixed(2), name === "hs" ? "HS GPA" : "Uni GPA"]}
           cursor={{ stroke: PURPLE, strokeDasharray: "3 3" }}
         />
         <Scatter data={data} fill={PURPLE} fillOpacity={0.55} r={5} />
@@ -264,7 +264,7 @@ export function CorrelationChart() {
           contentStyle={tooltipStyle}
           labelStyle={tooltipLabelStyle}
           itemStyle={tooltipItemStyle}
-          formatter={(v: number) => [`r = ${v.toFixed(3)}`, "Correlation"]}
+          formatter={(v: any) => [`r = ${Number(v).toFixed(3)}`, "Correlation"]}
         />
         <Bar dataKey="r" radius={[0, 3, 3, 0]}>
           {data.map((d, i) => (
@@ -307,7 +307,7 @@ export function MissingValuesChart() {
           contentStyle={tooltipStyle}
           labelStyle={tooltipLabelStyle}
           itemStyle={tooltipItemStyle}
-          formatter={(v: number) => [`${v}% missing`, "Missing"]}
+          formatter={(v: any) => [`${v}% missing`, "Missing"]}
         />
         <Bar dataKey="pct" name="Missing %" radius={[0, 3, 3, 0]}>
           {data.map((_, i) => (
