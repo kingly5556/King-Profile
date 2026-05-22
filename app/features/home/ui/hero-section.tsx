@@ -52,10 +52,10 @@ export function HeroSection() {
             variants={fadeUp}
             className="hero-headline-wrap w-full min-w-0 text-pretty font-display-lg-mobile text-[clamp(2rem,7.5vw+0.5rem,4rem)] uppercase leading-[0.92] md:font-display-lg md:text-[clamp(2.5rem,3.8vw+1.25rem,7.5rem)] md:leading-[0.92]"
           >
-            <span className="hero-headline-line-1 block font-light tracking-[-0.04em] md:tracking-[-0.055em]">
+            <span className="hero-headline-line-1 block w-fit pr-[0.2em] font-light tracking-[-0.04em] md:tracking-[-0.055em]">
               {nameLines[0]}
             </span>
-            <span className="hero-headline-line-1 mt-0.5 block font-light tracking-[-0.04em] md:mt-1 md:tracking-[-0.055em]">
+            <span className="hero-headline-line-1 mt-0.5 block w-fit pr-[0.2em] font-light tracking-[-0.04em] md:mt-1 md:tracking-[-0.055em]">
               {nameLines[1]}
             </span>
             <span className="mt-2 flex min-w-0 items-center gap-3 md:mt-3 md:gap-4">
@@ -63,7 +63,7 @@ export function HeroSection() {
                 className="hidden h-[0.65em] w-px shrink-0 bg-linear-to-b from-accent-blue via-accent-purple to-transparent opacity-80 sm:block"
                 aria-hidden
               />
-              <span className="hero-headline-line-2 block min-w-0 flex-1 font-bold tracking-[-0.03em] md:tracking-[-0.045em]">
+              <span className="hero-headline-line-2 block min-w-0 flex-1 pr-[0.2em] font-bold tracking-[-0.03em] md:tracking-[-0.045em]">
                 {role}
               </span>
             </span>
