@@ -192,6 +192,61 @@ function CleaningSection({ section, accentColorClass, accentBorderClass }: {
 }
 
 
+function FeatureEngineeringSection({ section, accentColorClass, accentBorderClass }: {
+  section: Extract<ProjectDetailSection, { kind: "featureEngineering" }>;
+  accentColorClass: string;
+  accentBorderClass: string;
+}) {
+  return (
+    <div className="flex flex-col gap-16">
+      {/* Stats */}
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        {section.stats.map((stat) => (
+          <div key={stat.label} className={`border ${accentBorderClass} bg-surface-container-low p-5 flex flex-col gap-3`}>
+            <div className="flex items-center gap-2">
+              <MaterialIcon name={stat.icon} sizeClass="text-base" className={accentColorClass} />
+              <span className="font-label-mono text-[10px] uppercase tracking-widest text-secondary">{stat.label}</span>
+            </div>
+            <span className={`font-headline-md text-2xl font-bold ${accentColorClass}`}>{stat.value}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Steps */}
+      <div className="flex flex-col gap-8">
+        <h3 className="font-headline-sm text-headline-sm text-primary">What We Did — Step by Step</h3>
+        {section.steps.map((s) => (
+          <div key={s.task} className={`border ${accentBorderClass} bg-surface-container-low`}>
+            {/* Step header */}
+            <div className={`flex items-center gap-4 border-b ${accentBorderClass} px-6 py-4`}>
+              <span className={`font-label-mono text-xs uppercase tracking-widest ${accentColorClass}`}>
+                Task {s.task}
+              </span>
+              <span className="font-headline-sm text-sm text-primary font-semibold">{s.title}</span>
+              <span className="ml-auto text-lg">{s.badge}</span>
+            </div>
+            {/* Step body */}
+            <div className="grid grid-cols-1 gap-0 md:grid-cols-3">
+              <div className="border-b border-outline/40 p-5 md:border-b-0 md:border-r">
+                <p className="mb-1 font-label-mono text-[10px] uppercase tracking-widest text-secondary">Concept</p>
+                <p className="font-body-md text-sm text-secondary leading-relaxed">{s.concept}</p>
+              </div>
+              <div className="border-b border-outline/40 p-5 md:border-b-0 md:border-r">
+                <p className="mb-1 font-label-mono text-[10px] uppercase tracking-widest text-secondary">What Was Done</p>
+                <p className="font-body-md text-sm text-secondary leading-relaxed">{s.what}</p>
+              </div>
+              <div className="p-5">
+                <p className="mb-1 font-label-mono text-[10px] uppercase tracking-widest text-secondary">Result</p>
+                <p className={`font-body-md text-sm leading-relaxed ${accentColorClass}`}>{s.result}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function EDASection({ section, accentColorClass, accentBorderClass }: {
   section: Extract<ProjectDetailSection, { kind: "eda" }>;
   accentColorClass: string;
@@ -387,6 +442,18 @@ export default async function ProjectPage({ params }: Props) {
                   {project.detailSections.map((section, idx) => {
                     if (section.kind === "cleaning") {
                       return <CleaningSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
+                    }
+                    return null;
+                  })}
+                </>
+              ) : undefined
+            }
+            featureEngineeringContent={
+              project.detailSections?.some(s => s.kind === "featureEngineering") ? (
+                <>
+                  {project.detailSections.map((section, idx) => {
+                    if (section.kind === "featureEngineering") {
+                      return <FeatureEngineeringSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
                     }
                     return null;
                   })}

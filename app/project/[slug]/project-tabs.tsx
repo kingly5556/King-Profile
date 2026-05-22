@@ -7,12 +7,14 @@ export function ProjectTabs({
   metadataContent,
   edaContent,
   cleaningContent,
+  featureEngineeringContent,
   accentBorderClass,
 }: {
   overviewContent: React.ReactNode;
   metadataContent?: React.ReactNode;
   edaContent?: React.ReactNode;
   cleaningContent?: React.ReactNode;
+  featureEngineeringContent?: React.ReactNode;
   accentBorderClass: string;
 }) {
   const [activeTab, setActiveTab] = useState("Overview");
@@ -22,6 +24,7 @@ export function ProjectTabs({
     ...(metadataContent ? [{ id: "Metadata", label: "Metadata" }] : []),
     ...(edaContent ? [{ id: "EDA", label: "EDA" }] : []),
     ...(cleaningContent ? [{ id: "Cleaning", label: "Data Cleaning" }] : []),
+    ...(featureEngineeringContent ? [{ id: "FeatureEng", label: "Feature Engineering" }] : []),
   ];
 
   return (
@@ -46,6 +49,7 @@ export function ProjectTabs({
         {activeTab === "Metadata" && metadataContent}
         {activeTab === "EDA" && edaContent}
         {activeTab === "Cleaning" && cleaningContent}
+        {activeTab === "FeatureEng" && featureEngineeringContent}
       </div>
     </div>
   );

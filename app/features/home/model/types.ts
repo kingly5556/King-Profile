@@ -46,12 +46,28 @@ export type CleaningStat = {
   icon: string;
 };
 
+export type FeatureEngineeringStep = {
+  task: number;
+  title: string;
+  concept: string;
+  what: string;
+  result: string;
+  badge?: string;
+};
+
+export type FeatureEngineeringStat = {
+  label: string;
+  value: string;
+  icon: string;
+};
+
 export type ProjectDetailSection =
   | { kind: "dataset"; title: string; source: string; groups: DatasetFeatureGroup[] }
   | { kind: "pdpa"; title: string; piiColumns: string[]; principles: { label: string; detail: string }[] }
   | { kind: "stack"; title: string; items: { label: string; icon: string }[] }
   | { kind: "eda"; title: string; stats: EDAStatCard[]; charts: EDAChart[] }
-  | { kind: "cleaning"; title: string; stats: CleaningStat[]; steps: CleaningStep[]; issues: { title: string; detail: string }[] };
+  | { kind: "cleaning"; title: string; stats: CleaningStat[]; steps: CleaningStep[]; issues: { title: string; detail: string }[] }
+  | { kind: "featureEngineering"; title: string; stats: FeatureEngineeringStat[]; steps: FeatureEngineeringStep[] };
 
 export type PortfolioProject = {
   slug: string;

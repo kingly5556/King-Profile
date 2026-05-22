@@ -285,6 +285,50 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
       },
 
       {
+        kind: "featureEngineering",
+        title: "Feature Engineering",
+        stats: [
+          { label: "Total Features Added", value: "21", icon: "add_circle" },
+          { label: "Final Column Count", value: "66", icon: "view_column" },
+          { label: "Missing AGE Fixed", value: "100%", icon: "done_all" },
+        ],
+        steps: [
+          {
+            task: 1,
+            title: "Fix AGE_AT_GRAD via precise Thai Calendar Parsing",
+            concept: "The original dataset lacked age data due to dropping the birthdate column early. However, age is a critical demographic factor for academic performance.",
+            what: "Extracted the 'BIRTHDAY' column from the raw source file. Parsed the Thai Buddhist Era (B.E.) date format (DD/MM/YYYY) into Gregorian (C.E.) dates. Calculated the exact age down to decimal years using the specific 'DATAGRADUATION' date rather than a generic year.",
+            result: "Successfully populated AGE_AT_GRAD with 0 missing values. The average graduating age is 22.9 years.",
+            badge: "🎂",
+          },
+          {
+            task: 2,
+            title: "Develop SCHOOL_QUALITY_INDEX via Bayesian Average",
+            concept: "High schools (OLD_SCHOOL_CODE) are highly sparse (875 unique schools). Direct encoding causes overfitting. Instead, we can estimate a school's inherent 'quality' based on the average high school GPA of students originating from it.",
+            what: "Computed the mean High School GPA per school. Applied a Bayesian Average formula (with prior strength m=5) to pull schools with very few students toward the global mean (3.24). This prevents overestimating schools with only 1-2 students who happen to have 4.0 GPAs.",
+            result: "Created a single numerical index (2.62–3.67) that represents high school quality without high cardinality issues.",
+            badge: "🏫",
+          },
+          {
+            task: 3,
+            title: "Geographic Mapping (PROVINCE_ID to REGION)",
+            concept: "Individual provinces (76 unique values) create too many sparse features. Grouping them into broader geographic regions helps the model identify macro-level geographic patterns.",
+            what: "Mapped both the student's current 'PROVINCE_ID' and high school 'OLD_PROV_CODE' into 5 standard Thai regions (Northeast, North, Central, South, Upper North) and applied One-Hot Encoding.",
+            result: "Revealed that 95% of the student body originates from the Northeast. Added 11 One-Hot Encoded regional columns.",
+            badge: "🗺️",
+          },
+          {
+            task: 4,
+            title: "Categorical Encoding Strategy",
+            concept: "Machine learning algorithms require numeric inputs. Different categorical variables require specific encoding strategies based on their cardinality and intrinsic ordering.",
+            what: "Applied Ordinal Encoding to 'GPA_CLASS' (Below Standard -> 1st Class Honors). Applied Label Encoding to prior education levels (e.g., Middle School -> Bachelor's). Applied Target Encoding (mean GPA) to high-cardinality features like Province Name and Program Name.",
+            result: "Added 6 numerically encoded columns ready for model consumption. (Target encoding lookup tables were saved to prevent data leakage during training).",
+            badge: "🔢",
+          },
+        ],
+      },
+
+      {
         kind: "stack",
 
         title: "Tools & Tech Stack",
