@@ -1,8 +1,8 @@
 import type { PortfolioProject, SiteNavLink, SkillItem, SocialLink } from "../model/types";
 
-export const SITE_BRAND_TH = "ก้องเกียรติ ธนเลิศรุ่งโรจน์";
+export const SITE_BRAND_TH = "ก้องกาจ ธนเลิศรุ่งโรจน์";
 
-export const HERO_HEADLINE_NAME_LINES_TH = ["ก้องเกียรติ", "ธนเลิศรุ่งโรจน์"] as const;
+export const HERO_HEADLINE_NAME_LINES_TH = ["ก้องกาจ", "ธนเลิศรุ่งโรจน์"] as const;
 
 export const HERO_HEADLINE_ROLE_TH = "โปรแกรมเมอร์ & วิศวกร AI" as const;
 
@@ -336,13 +336,13 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
 ];
 
 export const SKILL_ITEMS_TH: SkillItem[] = [
-  { label: "PYTHON (ภาษาไพธอน)", icon: "code" },
+  { label: "PYTHON", icon: "code" },
   { label: "FASTAPI · NEXT.JS · REACT", icon: "layers" },
-  { label: "ML PIPELINES (ท่อข้อมูลแมชชีนเลิร์นนิง)", icon: "model_training" },
-  { label: "POSTGRESQL · ER MODELING & DATA DESIGN (การออกแบบโครงสร้างฐานข้อมูล)", icon: "table_chart" },
-  { label: "DOCKER · FULL-STACK & MICROSERVICES (การติดตั้งและพัฒนาระบบ)", icon: "deployed_code" },
-  { label: "TECHNICAL DOCS · FLOWCHARTS · ROADMAPS (เอกสารทางเทคนิคและแผนภาพการทำงาน)", icon: "description" },
-  { label: "CRITICAL THINKING · BUSINESS ANALYSIS · PRESENTATION (การคิดวิเคราะห์เชิงธุรกิจ)", icon: "psychology" },
+  { label: "ML PIPELINES", icon: "model_training" },
+  { label: "POSTGRESQL · ER MODELING & DATA DESIGN", icon: "table_chart" },
+  { label: "DOCKER · FULL-STACK & MICROSERVICES", icon: "deployed_code" },
+  { label: "TECHNICAL DOCS · FLOWCHARTS · ROADMAPS", icon: "description" },
+  { label: "CRITICAL THINKING · BUSINESS ANALYSIS · PRESENTATION", icon: "psychology" },
 ];
 
 export const FOOTER_SOCIAL_LINKS_TH: SocialLink[] = [

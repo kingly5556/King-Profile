@@ -100,7 +100,7 @@ export function HeroSection() {
             >
               <Image
                 src={HERO_PORTRAIT_SRC}
-                alt={locale === "en" ? "Kongkat Thanalertrungroj" : "ก้องเกียรติ ธนเลิศรุ่งโรจน์"}
+                alt={locale === "en" ? "Kongkat Thanalertrungroj" : "ก้องกาจ ธนเลิศรุ่งโรจน์"}
                 width={400}
                 height={500}
                 className="h-full w-full object-cover"
