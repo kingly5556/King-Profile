@@ -2,12 +2,23 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
-import { CONTACT_EMAIL, FOOTER_SOCIAL_LINKS, SITE_BRAND } from "../content/home";
+import { useLanguage } from "@/app/context/LanguageContext";
+import {
+  CONTACT_EMAIL,
+  FOOTER_SOCIAL_LINKS_EN,
+  FOOTER_SOCIAL_LINKS_TH,
+  SITE_BRAND_EN,
+  SITE_BRAND_TH,
+} from "../content/home";
 import { MaterialIcon } from "./material-icon";
 import { fadeUp, staggerContainer, staggerItem, viewportScroll } from "./motion-variants";
 
 export function SiteFooter() {
+  const { locale, t } = useLanguage();
   const reduceMotion = useReducedMotion();
+
+  const brand = locale === "en" ? SITE_BRAND_EN : SITE_BRAND_TH;
+  const links = locale === "en" ? FOOTER_SOCIAL_LINKS_EN : FOOTER_SOCIAL_LINKS_TH;
 
   return (
     <footer
@@ -30,7 +41,7 @@ export function SiteFooter() {
           whileInView={reduceMotion ? undefined : "visible"}
           viewport={viewportScroll}
         >
-          {FOOTER_SOCIAL_LINKS.map((item) => (
+          {links.map((item) => (
             <motion.li key={item.label} variants={staggerItem}>
               <motion.a
                 href={item.href}
@@ -56,7 +67,7 @@ export function SiteFooter() {
           viewport={viewportScroll}
         >
           <MaterialIcon name="copyright" sizeClass="text-sm" />
-          2026 {SITE_BRAND} — ALL RIGHTS RESERVED
+          2026 {brand} — {t("allRightsReserved")}
         </motion.p>
       </div>
     </footer>

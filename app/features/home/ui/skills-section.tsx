@@ -2,12 +2,16 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
-import { SKILL_ITEMS } from "../content/home";
+import { useLanguage } from "@/app/context/LanguageContext";
+import { SKILL_ITEMS_EN, SKILL_ITEMS_TH } from "../content/home";
 import { MaterialIcon } from "./material-icon";
 import { staggerContainer, staggerItem, viewportScroll } from "./motion-variants";
 
 export function SkillsSection() {
+  const { locale } = useLanguage();
   const reduceMotion = useReducedMotion();
+
+  const skills = locale === "en" ? SKILL_ITEMS_EN : SKILL_ITEMS_TH;
 
   return (
     <section id="expertise" className="relative overflow-hidden border-y border-outline bg-surface-container-lowest py-20">
@@ -26,7 +30,7 @@ export function SkillsSection() {
         whileInView={reduceMotion ? undefined : "visible"}
         viewport={viewportScroll}
       >
-        {SKILL_ITEMS.map((item) => (
+        {skills.map((item) => (
           <motion.div
             key={item.label}
             variants={staggerItem}

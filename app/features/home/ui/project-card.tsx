@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-
+import { useLanguage } from "@/app/context/LanguageContext";
 import type { PortfolioProject } from "../model/types";
 import { MaterialIcon } from "./material-icon";
 import { staggerItem, viewportScroll } from "./motion-variants";
@@ -24,6 +24,7 @@ const accentIcon: Record<PortfolioProject["accent"], string> = {
 };
 
 export function ProjectCard({ project }: { project: PortfolioProject }) {
+  const { t } = useLanguage();
   const reduceMotion = useReducedMotion();
 
   return (
@@ -63,7 +64,7 @@ export function ProjectCard({ project }: { project: PortfolioProject }) {
         </div>
 
         <div className="mt-auto flex items-center gap-2 pt-4 font-label-mono text-[10px] uppercase text-primary transition-colors group-hover:text-accent-blue">
-          <span>View Details</span>
+          <span>{t("viewDetails")}</span>
           <MaterialIcon name="arrow_forward" sizeClass="text-sm" />
         </div>
       </Link>

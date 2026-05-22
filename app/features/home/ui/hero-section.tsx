@@ -4,11 +4,21 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import Image from "next/image";
 import { useRef } from "react";
 
-import { HERO_HEADLINE_NAME_LINES, HERO_HEADLINE_ROLE, HERO_PORTRAIT_SRC, HERO_SUBTITLE } from "../content/home";
+import { useLanguage } from "@/app/context/LanguageContext";
+import {
+  HERO_HEADLINE_NAME_LINES_EN,
+  HERO_HEADLINE_NAME_LINES_TH,
+  HERO_HEADLINE_ROLE_EN,
+  HERO_HEADLINE_ROLE_TH,
+  HERO_PORTRAIT_SRC,
+  HERO_SUBTITLE_EN,
+  HERO_SUBTITLE_TH,
+} from "../content/home";
 import { MaterialIcon } from "./material-icon";
 import { easeOutExpo, fadeUp, springSoft } from "./motion-variants";
 
 export function HeroSection() {
+  const { locale, t } = useLanguage();
   const reduceMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -16,6 +26,10 @@ export function HeroSection() {
     offset: ["start start", "end start"],
   });
   const portraitInnerY = useTransform(scrollYProgress, [0, 1], [0, -32]);
+
+  const nameLines = locale === "en" ? HERO_HEADLINE_NAME_LINES_EN : HERO_HEADLINE_NAME_LINES_TH;
+  const role = locale === "en" ? HERO_HEADLINE_ROLE_EN : HERO_HEADLINE_ROLE_TH;
+  const subtitle = locale === "en" ? HERO_SUBTITLE_EN : HERO_SUBTITLE_TH;
 
   return (
     <section
@@ -39,10 +53,10 @@ export function HeroSection() {
             className="hero-headline-wrap w-full min-w-0 text-pretty font-display-lg-mobile text-[clamp(2rem,7.5vw+0.5rem,4rem)] uppercase leading-[0.92] md:font-display-lg md:text-[clamp(2.5rem,3.8vw+1.25rem,7.5rem)] md:leading-[0.92]"
           >
             <span className="hero-headline-line-1 block font-light tracking-[-0.04em] md:tracking-[-0.055em]">
-              {HERO_HEADLINE_NAME_LINES[0]}
+              {nameLines[0]}
             </span>
             <span className="hero-headline-line-1 mt-0.5 block font-light tracking-[-0.04em] md:mt-1 md:tracking-[-0.055em]">
-              {HERO_HEADLINE_NAME_LINES[1]}
+              {nameLines[1]}
             </span>
             <span className="mt-2 flex min-w-0 items-center gap-3 md:mt-3 md:gap-4">
               <span
@@ -50,7 +64,7 @@ export function HeroSection() {
                 aria-hidden
               />
               <span className="hero-headline-line-2 block min-w-0 flex-1 font-bold tracking-[-0.03em] md:tracking-[-0.045em]">
-                {HERO_HEADLINE_ROLE}
+                {role}
               </span>
             </span>
           </motion.h1>
@@ -58,7 +72,7 @@ export function HeroSection() {
             variants={fadeUp}
             className="mt-6 max-w-xl min-w-0 font-body-md text-body-md text-secondary md:font-body-lg md:text-body-lg"
           >
-            {HERO_SUBTITLE}
+            {subtitle}
           </motion.p>
         </motion.div>
       </div>
@@ -86,7 +100,7 @@ export function HeroSection() {
             >
               <Image
                 src={HERO_PORTRAIT_SRC}
-                alt="Kongkat Thanalertrungroj"
+                alt={locale === "en" ? "Kongkat Thanalertrungroj" : "ก้องเกียรติ ธนเลิศรุ่งโรจน์"}
                 width={400}
                 height={500}
                 className="h-full w-full object-cover"
@@ -108,11 +122,11 @@ export function HeroSection() {
         <div className="text-right">
           <p className="flex items-center justify-end gap-2 font-label-mono text-label-mono uppercase tracking-widest text-primary">
             <MaterialIcon name="work_history" sizeClass="text-base text-accent-blue" />
-            OPEN TO OPPORTUNITIES
+            {t("openToOpportunities")}
           </p>
           <p className="mt-1 flex items-center justify-end gap-1.5 font-label-mono text-label-mono text-[10px] opacity-60">
             <MaterialIcon name="location_on" sizeClass="text-sm" />
-            Based in Thailand
+            {t("basedInThailand")}
           </p>
         </div>
         <span className="relative flex h-12 w-12 items-center justify-center rounded-full border border-outline/60 bg-surface-container-low/80">
@@ -122,7 +136,7 @@ export function HeroSection() {
       </motion.div>
       <motion.a
         href="#expertise"
-        aria-label="Scroll to expertise section"
+        aria-label={locale === "en" ? "Scroll to expertise section" : "เลื่อนไปยังส่วนความเชี่ยวชาญ"}
         className="absolute bottom-16 left-margin-mobile z-10 flex cursor-pointer flex-col items-center gap-3 rounded-sm text-primary no-underline outline-none ring-offset-background transition-opacity hover:opacity-100 focus-visible:ring-2 focus-visible:ring-accent-blue md:left-margin-desktop"
         initial={reduceMotion ? false : { opacity: 0, y: 16 }}
         animate={{ opacity: 0.72, y: 0 }}
@@ -147,7 +161,7 @@ export function HeroSection() {
             transition={{ duration: 1.85, repeat: Infinity, ease: [0.45, 0, 0.55, 1] }}
           />
         </div>
-        <span className="font-label-mono text-[9px] uppercase tracking-[0.42em] text-primary/55">Scroll</span>
+        <span className="font-label-mono text-[9px] uppercase tracking-[0.42em] text-primary/55">{t("scroll")}</span>
       </motion.a>
     </section>
   );

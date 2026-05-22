@@ -26,6 +26,8 @@ export const metadata: Metadata = {
     "Portfolio of Kongkat Thanalertrungroj — programmer, AI engineer, B.Sc. Computer Science (RMUTI). Data platforms, full-stack, and ML.",
 };
 
+import { LanguageProvider } from "@/app/context/LanguageContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -49,7 +51,9 @@ export default function RootLayout({
           Site-wide background + grid: see @layer base `html` in globals.css.
           Do not put `bg-background` on body here — it resets `background-image`.
         */}
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

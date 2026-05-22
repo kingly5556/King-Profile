@@ -10,7 +10,15 @@ import {
 } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 
-import { CONTACT_EMAIL, NAV_SECTION_ORDER, SITE_BRAND, SITE_NAV } from "../content/home";
+import { useLanguage } from "@/app/context/LanguageContext";
+import {
+  CONTACT_EMAIL,
+  NAV_SECTION_ORDER,
+  SITE_BRAND_EN,
+  SITE_BRAND_TH,
+  SITE_NAV_EN,
+  SITE_NAV_TH,
+} from "../content/home";
 import { MaterialIcon } from "./material-icon";
 import { navItem, staggerContainer } from "./motion-variants";
 
@@ -47,6 +55,7 @@ function readActiveSectionId(): (typeof NAV_SECTION_ORDER)[number] {
 }
 
 export function SiteHeader() {
+  const { locale, setLocale, t } = useLanguage();
   const reduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -55,6 +64,9 @@ export function SiteHeader() {
   const syncActive = useCallback(() => {
     setActiveSectionId(readActiveSectionId());
   }, []);
+
+  const brand = locale === "en" ? SITE_BRAND_EN : SITE_BRAND_TH;
+  const nav = locale === "en" ? SITE_NAV_EN : SITE_NAV_TH;
 
   useMotionValueEvent(scrollY, "change", syncActive);
 
@@ -72,6 +84,33 @@ export function SiteHeader() {
   const navBg = useTransform(scrollY, [0, 100], ["rgba(10, 10, 10, 0)", "rgba(10, 10, 10, 0.88)"]);
   const navBorder = useTransform(scrollY, [0, 80], ["rgba(51, 51, 51, 0)", "rgba(51, 51, 51, 0.85)"]);
   const navBlur = useTransform(scrollY, [0, 100], ["blur(0px)", "blur(14px)"]);
+
+  const LanguageToggle = () => (
+    <div className="flex h-10 items-center rounded-full border border-outline bg-surface-container-low/40 p-1 shadow-[0_0_12px_rgba(0,0,0,0.2)] backdrop-blur-md">
+      {(["en", "th"] as const).map((lang) => {
+        const active = locale === lang;
+        return (
+          <button
+            key={lang}
+            type="button"
+            onClick={() => setLocale(lang)}
+            className={`relative z-10 flex h-full w-10 items-center justify-center font-label-mono text-[10px] font-bold uppercase transition-colors duration-300 ${
+              active ? "text-background" : "text-secondary hover:text-primary"
+            }`}
+          >
+            {lang}
+            {active && (
+              <motion.span
+                layoutId="active-lang-bg"
+                className="absolute inset-0 -z-10 rounded-full bg-accent-blue shadow-[0_2px_8px_-1px_rgba(59,130,246,0.5)]"
+                transition={{ type: "spring", stiffness: 380, damping: 28 }}
+              />
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
 
   return (
     <>
@@ -105,7 +144,7 @@ export function SiteHeader() {
           onClick={() => setMobileOpen(false)}
         >
           <MaterialIcon name="token" sizeClass="text-lg text-accent-blue" />
-          <span className="max-w-[min(100%,11rem)] leading-tight md:max-w-none">{SITE_BRAND}</span>
+          <span className="max-w-[min(100%,11rem)] leading-tight md:max-w-none">{brand}</span>
         </motion.a>
         <motion.ul
           className="hidden items-center gap-8 md:flex"
@@ -113,7 +152,7 @@ export function SiteHeader() {
           initial="hidden"
           animate="visible"
         >
-          {SITE_NAV.map((link) => {
+          {nav.map((link) => {
             const id = link.href.replace(/^\/?#/, "");
             const isActive = activeSectionId === id;
             return (
@@ -152,26 +191,28 @@ export function SiteHeader() {
             );
           })}
         </motion.ul>
-        <motion.div
-          className="hidden md:block"
-          initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.15, type: "spring", stiffness: 320, damping: 26 }}
-        >
-          <a
-            href={`mailto:${CONTACT_EMAIL}`}
-            className="inline-flex items-center gap-2 border border-outline px-6 py-3 font-label-mono text-label-mono uppercase tracking-widest transition-all duration-200 hover:bg-primary hover:text-on-primary"
+        <div className="hidden items-center gap-6 md:flex">
+          <LanguageToggle />
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.15, type: "spring", stiffness: 320, damping: 26 }}
           >
-            <MaterialIcon name="forum" sizeClass="text-base" />
-            Let&apos;s Talk
-          </a>
-        </motion.div>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="inline-flex items-center gap-2 border border-outline px-6 py-3 font-label-mono text-label-mono uppercase tracking-widest transition-all duration-200 hover:bg-primary hover:text-on-primary"
+            >
+              <MaterialIcon name="forum" sizeClass="text-base" />
+              {t("letsTalk")}
+            </a>
+          </motion.div>
+        </div>
         <button
           type="button"
           className="relative z-60 text-primary md:hidden"
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav"
-          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-label={mobileOpen ? (locale === "en" ? "Close menu" : "ปิดเมนู") : (locale === "en" ? "Open menu" : "เปิดเมนู")}
           onClick={() => setMobileOpen((o) => !o)}
         >
           <AnimatePresence mode="wait" initial={false}>
@@ -217,7 +258,7 @@ export function SiteHeader() {
               animate="visible"
               exit="hidden"
             >
-              {SITE_NAV.map((link) => {
+              {nav.map((link) => {
                 const id = link.href.replace(/^\/?#/, "");
                 const isActive = activeSectionId === id;
                 return (
@@ -248,17 +289,25 @@ export function SiteHeader() {
                 );
               })}
             </motion.ul>
-            <motion.a
-              href={`mailto:${CONTACT_EMAIL}`}
-              className="mt-10 inline-flex w-max items-center gap-2 border border-outline px-6 py-4 font-label-mono text-label-mono uppercase tracking-widest"
+            <motion.div
+              className="mt-8 flex flex-col gap-6"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              onClick={() => setMobileOpen(false)}
+              transition={{ delay: 0.22 }}
             >
-              <MaterialIcon name="forum" sizeClass="text-xl" />
-              Let&apos;s Talk
-            </motion.a>
+              <div className="flex items-center justify-between border-t border-outline pt-6">
+                <span className="font-label-mono text-[10px] uppercase text-secondary">Language / ภาษา</span>
+                <LanguageToggle />
+              </div>
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="inline-flex w-max items-center gap-2 border border-outline px-6 py-4 font-label-mono text-label-mono uppercase tracking-widest hover:bg-primary hover:text-on-primary"
+                onClick={() => setMobileOpen(false)}
+              >
+                <MaterialIcon name="forum" sizeClass="text-xl" />
+                {t("letsTalk")}
+              </a>
+            </motion.div>
           </motion.div>
         ) : null}
       </AnimatePresence>

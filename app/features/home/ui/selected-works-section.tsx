@@ -3,26 +3,37 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useState, useMemo } from "react";
 
-import { PORTFOLIO_PROJECTS } from "../content/home";
+import { useLanguage } from "@/app/context/LanguageContext";
+import { PORTFOLIO_PROJECTS_EN, PORTFOLIO_PROJECTS_TH } from "../content/home";
 import { MaterialIcon } from "./material-icon";
 import { fadeUp, viewportScroll } from "./motion-variants";
 import { ProjectCard } from "./project-card";
 
 export function SelectedWorksSection() {
+  const { locale, t } = useLanguage();
   const reduceMotion = useReducedMotion();
-  const [activeTab, setActiveTab] = useState<string>("All");
+  const [activeTabKey, setActiveTabKey] = useState<"all" | "website" | "data">("all");
+
+  const projects = locale === "en" ? PORTFOLIO_PROJECTS_EN : PORTFOLIO_PROJECTS_TH;
 
   const categories = useMemo(() => {
-    const cats = new Set(PORTFOLIO_PROJECTS.map((p) => p.category).filter(Boolean));
-    cats.add("Website project");
-    cats.add("Data Project");
-    return ["All", ...Array.from(cats)];
-  }, []);
+    return [
+      { key: "all" as const, label: t("all") },
+      { key: "website" as const, label: locale === "en" ? "Website project" : "โครงการเว็บไซต์" },
+      { key: "data" as const, label: locale === "en" ? "Data Project" : "โครงการข้อมูล" },
+    ];
+  }, [locale, t]);
 
   const filteredProjects = useMemo(() => {
-    if (activeTab === "All") return PORTFOLIO_PROJECTS;
-    return PORTFOLIO_PROJECTS.filter((p) => p.category === activeTab);
-  }, [activeTab]);
+    if (activeTabKey === "all") return projects;
+
+    const activeCategoryLabel =
+      activeTabKey === "website"
+        ? (locale === "en" ? "Website project" : "โครงการเว็บไซต์")
+        : (locale === "en" ? "Data Project" : "โครงการข้อมูล");
+
+    return projects.filter((p) => p.category === activeCategoryLabel);
+  }, [activeTabKey, locale, projects]);
 
   return (
     <section id="work" className="px-margin-mobile py-section-gap md:px-margin-desktop">
@@ -42,7 +53,7 @@ export function SelectedWorksSection() {
         </motion.span>
         <div className="flex flex-col justify-center">
           <h3 className="font-label-mono text-label-mono uppercase tracking-widest text-primary">
-            SELECTED WORKS
+            {t("selectedWorks")}
           </h3>
         </div>
       </motion.div>
@@ -55,15 +66,15 @@ export function SelectedWorksSection() {
       >
         {categories.map(cat => (
           <button
-            key={cat}
-            onClick={() => setActiveTab(cat as string)}
+            key={cat.key}
+            onClick={() => setActiveTabKey(cat.key)}
             className={`rounded-full border px-6 py-2 font-label-mono text-xs uppercase tracking-widest transition-colors ${
-              activeTab === cat 
+              activeTabKey === cat.key 
                 ? "border-accent-blue bg-accent-blue text-background" 
                 : "border-outline text-secondary hover:border-primary hover:text-primary"
             }`}
           >
-            {cat}
+            {cat.label}
           </button>
         ))}
       </motion.div>
@@ -74,7 +85,7 @@ export function SelectedWorksSection() {
         ))}
         {filteredProjects.length === 0 && (
           <div className="col-span-full py-20 text-center font-body-lg text-secondary border border-dashed border-outline">
-            No projects in this category yet.
+            {t("noProjects")}
           </div>
         )}
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "@/app/context/LanguageContext";
 
 export function ProjectTabs({
   overviewContent,
@@ -18,13 +19,14 @@ export function ProjectTabs({
   accentBorderClass: string;
 }) {
   const [activeTab, setActiveTab] = useState("Overview");
+  const { t } = useLanguage();
 
   const tabs = [
-    { id: "Overview", label: "Overview" },
-    ...(metadataContent ? [{ id: "Metadata", label: "Metadata" }] : []),
-    ...(edaContent ? [{ id: "EDA", label: "EDA" }] : []),
-    ...(cleaningContent ? [{ id: "Cleaning", label: "Data Cleaning" }] : []),
-    ...(featureEngineeringContent ? [{ id: "FeatureEng", label: "Feature Engineering" }] : []),
+    { id: "Overview", label: t("overview") },
+    ...(metadataContent ? [{ id: "Metadata", label: t("metadata") }] : []),
+    ...(edaContent ? [{ id: "EDA", label: t("eda") }] : []),
+    ...(cleaningContent ? [{ id: "Cleaning", label: t("dataCleaning") }] : []),
+    ...(featureEngineeringContent ? [{ id: "FeatureEng", label: t("featureEngineering") }] : []),
   ];
 
   return (
