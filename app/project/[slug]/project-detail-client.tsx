@@ -242,6 +242,192 @@ function FeatureEngineeringSection({ section, accentColorClass, accentBorderClas
   );
 }
 
+function StatisticalTestingSection({ section, accentColorClass, accentBorderClass }: {
+  section: Extract<ProjectDetailSection, { kind: "statisticalTesting" }>;
+  accentColorClass: string;
+  accentBorderClass: string;
+}) {
+  const { t } = useLanguage();
+  return (
+    <div className="flex flex-col gap-16">
+      <p className="font-body-lg text-body-lg text-secondary leading-relaxed border-l-4 border-accent-purple pl-6">
+        {section.summary}
+      </p>
+
+      {section.groups.map((group, gi) => (
+        <div key={gi} className="flex flex-col gap-6">
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">{group.icon}</span>
+            <h3 className={`font-headline-sm text-headline-sm ${accentColorClass}`}>{group.groupTitle}</h3>
+          </div>
+          <p className="font-body-md text-sm text-secondary italic">{group.question}</p>
+          <div className="flex flex-col gap-3">
+            {group.results.map((res, ri) => (
+              <div key={ri} className={`border ${accentBorderClass} bg-surface-container-low`}>
+                <div className={`flex flex-wrap items-center gap-3 border-b ${accentBorderClass} px-5 py-3`}>
+                  <span className="font-mono text-xs bg-surface px-2 py-0.5 text-secondary">{res.test}</span>
+                  <span className={`font-mono text-sm font-bold ${accentColorClass}`}>{res.feature}</span>
+                  <span className={`ml-auto inline-flex items-center gap-1.5 px-3 py-1 font-label-mono text-[10px] uppercase tracking-widest ${
+                    res.verdict === "significant"
+                      ? "bg-green-950/40 text-green-400 border border-green-500/40"
+                      : "bg-red-950/40 text-red-400 border border-red-500/40"
+                  }`}>
+                    {res.verdict === "significant" ? "✅" : "❌"} {res.verdict === "significant" ? t("significant") : t("notSignificant")}
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 gap-0 md:grid-cols-4">
+                  <div className="border-b border-outline/40 p-4 md:border-b-0 md:border-r">
+                    <p className="mb-1 font-label-mono text-[10px] uppercase tracking-widest text-secondary">{t("testResult")}</p>
+                    <p className="font-mono text-xs text-primary">{res.statistic}</p>
+                  </div>
+                  <div className="border-b border-outline/40 p-4 md:border-b-0 md:border-r">
+                    <p className="mb-1 font-label-mono text-[10px] uppercase tracking-widest text-secondary">{t("pValue")}</p>
+                    <p className="font-mono text-xs text-primary">{res.pValue}</p>
+                  </div>
+                  <div className="border-b border-outline/40 p-4 md:border-b-0 md:border-r">
+                    <p className="mb-1 font-label-mono text-[10px] uppercase tracking-widest text-secondary">{t("effectSize")}</p>
+                    <p className="font-mono text-xs text-primary">{res.effectSize}</p>
+                  </div>
+                  <div className="p-4">
+                    <p className="mb-1 font-label-mono text-[10px] uppercase tracking-widest text-secondary">{t("keyInsight")}</p>
+                    <p className="font-body-md text-xs text-secondary leading-relaxed">{res.insight}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <div className={`border ${accentBorderClass} bg-surface-container-low p-6`}>
+        <h3 className={`mb-4 font-label-mono text-sm uppercase tracking-widest ${accentColorClass}`}>🔑 {t("keyFindings")}</h3>
+        <ul className="flex flex-col gap-3">
+          {section.keyFindings.map((finding, i) => (
+            <li key={i} className="flex gap-3 text-sm text-secondary font-body-md leading-relaxed">
+              <span className={`mt-0.5 shrink-0 ${accentColorClass}`}>→</span>
+              {finding}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+function PredictiveModelingSection({ section, accentColorClass, accentBorderClass }: {
+  section: Extract<ProjectDetailSection, { kind: "predictiveModeling" }>;
+  accentColorClass: string;
+  accentBorderClass: string;
+}) {
+  const { t } = useLanguage();
+  const winner = section.models.find(m => m.isWinner) ?? section.models[0];
+  const improvement = ((section.baselineMae - winner.mae) / section.baselineMae * 100).toFixed(1);
+
+  return (
+    <div className="flex flex-col gap-16">
+      <p className="font-body-lg text-body-lg text-secondary leading-relaxed border-l-4 border-accent-purple pl-6">
+        {section.summary}
+      </p>
+
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        {section.stats.map((stat) => (
+          <div key={stat.label} className={`border ${accentBorderClass} bg-surface-container-low p-5 flex flex-col gap-2`}>
+            <div className="flex items-center gap-2">
+              <MaterialIcon name={stat.icon} sizeClass="text-base" className={accentColorClass} />
+              <span className="font-label-mono text-[10px] uppercase tracking-widest text-secondary">{stat.label}</span>
+            </div>
+            <span className={`font-headline-md text-2xl font-bold ${accentColorClass}`}>{stat.value}</span>
+            {stat.sub && <span className="font-body-md text-xs text-secondary">{stat.sub}</span>}
+          </div>
+        ))}
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <h3 className="font-headline-sm text-headline-sm text-primary">🏆 {t("modelRanking")}</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className={`border-b ${accentBorderClass}`}>
+                <th className="py-3 pr-4 text-left font-label-mono text-[10px] uppercase tracking-widest text-secondary">Rank</th>
+                <th className="py-3 pr-4 text-left font-label-mono text-[10px] uppercase tracking-widest text-secondary">Model</th>
+                <th className="py-3 pr-4 text-right font-label-mono text-[10px] uppercase tracking-widest text-secondary">MAE ↓</th>
+                <th className="py-3 pr-4 text-right font-label-mono text-[10px] uppercase tracking-widest text-secondary">RMSE ↓</th>
+                <th className="py-3 text-right font-label-mono text-[10px] uppercase tracking-widest text-secondary">R² ↑</th>
+              </tr>
+            </thead>
+            <tbody>
+              {section.models.map((m) => (
+                <tr key={m.name} className={`border-b border-outline/40 last:border-0 ${m.isWinner ? "bg-surface-container" : ""}`}>
+                  <td className="py-3 pr-4 font-mono text-xs text-secondary">{m.isWinner ? "🏆" : `#${m.rank}`}</td>
+                  <td className={`py-3 pr-4 font-mono text-xs font-semibold ${m.isWinner ? accentColorClass : "text-primary"}`}>
+                    {m.name}{m.isWinner && " ★"}
+                  </td>
+                  <td className={`py-3 pr-4 text-right font-mono text-xs ${m.isWinner ? accentColorClass : "text-secondary"}`}>{m.mae.toFixed(4)}</td>
+                  <td className={`py-3 pr-4 text-right font-mono text-xs ${m.isWinner ? accentColorClass : "text-secondary"}`}>{m.rmse.toFixed(4)}</td>
+                  <td className={`py-3 text-right font-mono text-xs ${m.isWinner ? accentColorClass : "text-secondary"}`}>{m.r2.toFixed(4)}</td>
+                </tr>
+              ))}
+              <tr className="border-t-2 border-outline/60 opacity-60">
+                <td className="py-3 pr-4 font-mono text-xs text-secondary">—</td>
+                <td className="py-3 pr-4 font-mono text-xs text-secondary italic">Baseline (Predict Mean)</td>
+                <td className="py-3 pr-4 text-right font-mono text-xs text-secondary">{section.baselineMae.toFixed(4)}</td>
+                <td className="py-3 pr-4 text-right font-mono text-xs text-secondary">—</td>
+                <td className="py-3 text-right font-mono text-xs text-secondary">0.0000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className={`inline-flex items-center gap-2 self-start border ${accentBorderClass} bg-surface-container-low px-4 py-2`}>
+          <MaterialIcon name="trending_up" sizeClass="text-sm" className={accentColorClass} />
+          <span className="font-label-mono text-xs uppercase tracking-widest text-secondary">{t("improvement")}:</span>
+          <span className={`font-mono text-sm font-bold ${accentColorClass}`}>+{improvement}%</span>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <h3 className="font-headline-sm text-headline-sm text-primary">📊 {t("featureSelection")}</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className={`border-b ${accentBorderClass}`}>
+                <th className="py-2 pr-4 text-left font-label-mono text-[10px] uppercase tracking-widest text-secondary">Feature</th>
+                <th className="py-2 pr-4 text-left font-label-mono text-[10px] uppercase tracking-widest text-secondary">{t("whySelected")}</th>
+                <th className="py-2 text-left font-label-mono text-[10px] uppercase tracking-widest text-secondary">{t("phase3Evidence")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {section.features.map((f, i) => (
+                <tr key={i} className="border-b border-outline/40 last:border-0">
+                  <td className={`py-3 pr-4 font-mono text-xs font-bold ${accentColorClass}`}>{f.name}</td>
+                  <td className="py-3 pr-4 font-body-md text-xs text-secondary">{f.reason}</td>
+                  <td className="py-3 font-mono text-xs text-secondary">{f.evidence}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className={`border ${accentBorderClass} bg-surface-container-low p-6`}>
+        <h3 className={`mb-3 font-label-mono text-sm uppercase tracking-widest ${accentColorClass}`}>🔁 {t("crossValidation")}</h3>
+        <p className="font-body-md text-sm text-secondary leading-relaxed">{section.cvSummary}</p>
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <h3 className="font-headline-sm text-headline-sm text-primary">🔎 {t("residualAnalysis")}</h3>
+        <ul className="flex flex-col gap-3">
+          {section.residualInsights.map((insight, i) => (
+            <li key={i} className="flex gap-3 text-sm text-secondary font-body-md leading-relaxed">
+              <span className={`mt-0.5 shrink-0 ${accentColorClass}`}>→</span>
+              {insight}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
 function EDASection({ section, accentColorClass, accentBorderClass }: {
   section: Extract<ProjectDetailSection, { kind: "eda" }>;
   accentColorClass: string;
@@ -452,6 +638,30 @@ export function ProjectDetailClient({ slug }: { slug: string }) {
                   {project.detailSections.map((section, idx) => {
                     if (section.kind === "featureEngineering") {
                       return <FeatureEngineeringSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
+                    }
+                    return null;
+                  })}
+                </>
+              ) : undefined
+            }
+            statisticalTestingContent={
+              project.detailSections?.some(s => s.kind === "statisticalTesting") ? (
+                <>
+                  {project.detailSections.map((section, idx) => {
+                    if (section.kind === "statisticalTesting") {
+                      return <StatisticalTestingSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
+                    }
+                    return null;
+                  })}
+                </>
+              ) : undefined
+            }
+            predictiveModelingContent={
+              project.detailSections?.some(s => s.kind === "predictiveModeling") ? (
+                <>
+                  {project.detailSections.map((section, idx) => {
+                    if (section.kind === "predictiveModeling") {
+                      return <PredictiveModelingSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
                     }
                     return null;
                   })}

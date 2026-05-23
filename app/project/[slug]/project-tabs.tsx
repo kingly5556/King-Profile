@@ -9,6 +9,8 @@ export function ProjectTabs({
   edaContent,
   cleaningContent,
   featureEngineeringContent,
+  statisticalTestingContent,
+  predictiveModelingContent,
   accentBorderClass,
 }: {
   overviewContent: React.ReactNode;
@@ -16,6 +18,8 @@ export function ProjectTabs({
   edaContent?: React.ReactNode;
   cleaningContent?: React.ReactNode;
   featureEngineeringContent?: React.ReactNode;
+  statisticalTestingContent?: React.ReactNode;
+  predictiveModelingContent?: React.ReactNode;
   accentBorderClass: string;
 }) {
   const [activeTab, setActiveTab] = useState("Overview");
@@ -27,6 +31,8 @@ export function ProjectTabs({
     ...(edaContent ? [{ id: "EDA", label: t("eda") }] : []),
     ...(cleaningContent ? [{ id: "Cleaning", label: t("dataCleaning") }] : []),
     ...(featureEngineeringContent ? [{ id: "FeatureEng", label: t("featureEngineering") }] : []),
+    ...(statisticalTestingContent ? [{ id: "StatTest", label: t("statisticalTesting") }] : []),
+    ...(predictiveModelingContent ? [{ id: "PredModel", label: t("predictiveModeling") }] : []),
   ];
 
   return (
@@ -52,6 +58,8 @@ export function ProjectTabs({
         {activeTab === "EDA" && edaContent}
         {activeTab === "Cleaning" && cleaningContent}
         {activeTab === "FeatureEng" && featureEngineeringContent}
+        {activeTab === "StatTest" && statisticalTestingContent}
+        {activeTab === "PredModel" && predictiveModelingContent}
       </div>
     </div>
   );

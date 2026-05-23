@@ -61,13 +61,59 @@ export type FeatureEngineeringStat = {
   icon: string;
 };
 
+export type StatisticalTestResult = {
+  test: string;         // e.g. "t-test", "ANOVA", "Correlation", "Chi-Square"
+  feature: string;
+  statistic: string;    // e.g. "t = -15.05"
+  pValue: string;       // e.g. "< 0.001"
+  effectSize: string;   // e.g. "Cohen's d = -0.37"
+  verdict: "significant" | "not-significant";
+  insight: string;
+};
+
+export type StatisticalTestGroup = {
+  groupTitle: string;   // e.g. "TEST 1 — t-test"
+  icon: string;         // emoji
+  question: string;
+  results: StatisticalTestResult[];
+};
+
+export type ModelResult = {
+  rank: number;
+  name: string;
+  mae: number;
+  rmse: number;
+  r2: number;
+  isWinner?: boolean;
+};
+
+export type PredictiveModelStat = {
+  label: string;
+  value: string;
+  sub?: string;
+  icon: string;
+};
+
 export type ProjectDetailSection =
   | { kind: "dataset"; title: string; source: string; groups: DatasetFeatureGroup[] }
   | { kind: "pdpa"; title: string; piiColumns: string[]; principles: { label: string; detail: string }[] }
   | { kind: "stack"; title: string; items: { label: string; icon: string }[] }
   | { kind: "eda"; title: string; stats: EDAStatCard[]; charts: EDAChart[] }
   | { kind: "cleaning"; title: string; stats: CleaningStat[]; steps: CleaningStep[]; issues: { title: string; detail: string }[] }
-  | { kind: "featureEngineering"; title: string; stats: FeatureEngineeringStat[]; steps: FeatureEngineeringStep[] };
+  | { kind: "featureEngineering"; title: string; stats: FeatureEngineeringStat[]; steps: FeatureEngineeringStep[] }
+  | { kind: "statisticalTesting"; title: string; summary: string; groups: StatisticalTestGroup[]; keyFindings: string[] }
+  | {
+      kind: "predictiveModeling";
+      title: string;
+      summary: string;
+      stats: PredictiveModelStat[];
+      models: ModelResult[];
+      baselineMae: number;
+      features: { name: string; reason: string; evidence: string }[];
+      residualInsights: string[];
+      cvSummary: string;
+    };
+
 
 export type PortfolioProject = {
   slug: string;
