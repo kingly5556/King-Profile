@@ -507,6 +507,45 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
         ],
       },
       {
+        kind: "summary",
+        title: "Project Summary",
+        goalAchievement: "The project successfully met its initial goals by developing a robust machine learning pipeline capable of predicting university GPA with an average error of ±0.16 points. The comprehensive analysis successfully uncovered key academic patterns, confirming that prior education level and high school performance are the strongest indicators of university success.",
+        qualityAssessment: "The implementation quality is exceptionally high, adhering strictly to PDPA compliance by removing all PII. The analysis follows a rigorous scientific approach, utilizing 18 statistical tests to validate feature significance before model training. The final LightGBM model was rigorously evaluated using 5-fold Cross-Validation, ensuring strong generalization without overfitting or data leakage.",
+        benefits: [
+          "Enables early identification of at-risk students based on their admission profile, allowing the university to provide targeted academic support.",
+          "Provides data-driven insights for the university administration regarding the effectiveness of different prior educational tracks.",
+          "Demonstrates a complete, end-to-end data science lifecycle from raw, messy academic records to a deployable predictive model.",
+          "Establishes a foundational framework that the university can expand upon for future cohorts."
+        ],
+        steps: [
+          {
+            phase: "Data Cleaning & PDPA",
+            action: "Sanitized 6,520 records, removed 11 PII columns, and resolved all missing values and data type errors.",
+            result: "A clean, mathematically sound dataset that strictly complies with privacy laws."
+          },
+          {
+            phase: "Exploratory Data Analysis",
+            action: "Visualized and analyzed patterns across cohorts, genders, and prior education tracks.",
+            result: "Identified high school GPA as the strongest initial predictor of university success."
+          },
+          {
+            phase: "Feature Engineering",
+            action: "Created 21 new features including Age at Graduation, School Quality Index, and regional mappings.",
+            result: "Significantly enriched the dataset, providing deeper signals for the machine learning algorithms."
+          },
+          {
+            phase: "Statistical Testing",
+            action: "Applied t-tests, ANOVA, Pearson/Spearman correlations, and Chi-Square tests to validate features.",
+            result: "Statistically confirmed the predictive power of 14 features, providing an evidence-based foundation for modeling."
+          },
+          {
+            phase: "Predictive Modeling",
+            action: "Trained and evaluated 6 machine learning models using 5-fold cross-validation.",
+            result: "The LightGBM model emerged as the best performer, improving upon the baseline by 57% with an MAE of ±0.1632."
+          }
+        ]
+      },
+      {
         kind: "stack",
         title: "Tools & Tech Stack",
         items: [

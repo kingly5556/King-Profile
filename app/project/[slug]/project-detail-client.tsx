@@ -488,6 +488,67 @@ function EDASection({ section, accentColorClass, accentBorderClass }: {
   );
 }
 
+function SummarySection({ section, accentColorClass, accentBorderClass }: {
+  section: Extract<ProjectDetailSection, { kind: "summary" }>;
+  accentColorClass: string;
+  accentBorderClass: string;
+}) {
+  const { t } = useLanguage();
+  return (
+    <div className="flex flex-col gap-16">
+      <div className="flex flex-col gap-4">
+        <h3 className="font-headline-sm text-headline-sm text-primary">🎯 {t("goalAchievement")}</h3>
+        <p className={`font-body-lg text-body-lg text-secondary leading-relaxed border-l-4 ${accentBorderClass} pl-6`}>
+          {section.goalAchievement}
+        </p>
+      </div>
+
+      <div className="flex flex-col gap-8">
+        <h3 className="font-headline-sm text-headline-sm text-primary">📝 {t("stepByStepSummary")}</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className={`border-b ${accentBorderClass}`}>
+                <th className="py-3 pr-4 text-left font-label-mono text-[10px] uppercase tracking-widest text-secondary">{t("phase")}</th>
+                <th className="py-3 pr-4 text-left font-label-mono text-[10px] uppercase tracking-widest text-secondary">{t("action")}</th>
+                <th className="py-3 text-left font-label-mono text-[10px] uppercase tracking-widest text-secondary">{t("result")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {section.steps.map((step, idx) => (
+                <tr key={idx} className="border-b border-outline/40 last:border-0">
+                  <td className={`py-4 pr-4 font-label-mono text-xs uppercase tracking-widest ${accentColorClass}`}>{step.phase}</td>
+                  <td className="py-4 pr-4 font-body-md text-sm text-secondary leading-relaxed">{step.action}</td>
+                  <td className="py-4 font-body-md text-sm text-primary leading-relaxed">{step.result}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <h3 className="font-headline-sm text-headline-sm text-primary">⭐ {t("qualityAssessment")}</h3>
+        <p className={`font-body-lg text-body-lg text-secondary leading-relaxed border-l-4 ${accentBorderClass} pl-6`}>
+          {section.qualityAssessment}
+        </p>
+      </div>
+
+      <div className={`border ${accentBorderClass} bg-surface-container-low p-6`}>
+        <h3 className={`mb-4 font-label-mono text-sm uppercase tracking-widest ${accentColorClass}`}>✨ {t("benefitsAndImpact")}</h3>
+        <ul className="flex flex-col gap-3">
+          {section.benefits.map((benefit, i) => (
+            <li key={i} className="flex gap-3 text-sm text-secondary font-body-md leading-relaxed">
+              <span className={`mt-0.5 shrink-0 ${accentColorClass}`}>→</span>
+              {benefit}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
 export function ProjectDetailClient({ slug }: { slug: string }) {
   const { locale, t } = useLanguage();
   
@@ -662,6 +723,18 @@ export function ProjectDetailClient({ slug }: { slug: string }) {
                   {project.detailSections.map((section, idx) => {
                     if (section.kind === "predictiveModeling") {
                       return <PredictiveModelingSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
+                    }
+                    return null;
+                  })}
+                </>
+              ) : undefined
+            }
+            summaryContent={
+              project.detailSections?.some(s => s.kind === "summary") ? (
+                <>
+                  {project.detailSections.map((section, idx) => {
+                    if (section.kind === "summary") {
+                      return <SummarySection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
                     }
                     return null;
                   })}

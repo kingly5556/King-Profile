@@ -112,8 +112,19 @@ export type ProjectDetailSection =
       features: { name: string; reason: string; evidence: string }[];
       residualInsights: string[];
       cvSummary: string;
+    }
+  | {
+      kind: "summary";
+      title: string;
+      goalAchievement: string;
+      qualityAssessment: string;
+      benefits: string[];
+      steps: {
+        phase: string;
+        action: string;
+        result: string;
+      }[];
     };
-
 
 export type PortfolioProject = {
   slug: string;

@@ -11,6 +11,7 @@ export function ProjectTabs({
   featureEngineeringContent,
   statisticalTestingContent,
   predictiveModelingContent,
+  summaryContent,
   accentBorderClass,
 }: {
   overviewContent: React.ReactNode;
@@ -20,6 +21,7 @@ export function ProjectTabs({
   featureEngineeringContent?: React.ReactNode;
   statisticalTestingContent?: React.ReactNode;
   predictiveModelingContent?: React.ReactNode;
+  summaryContent?: React.ReactNode;
   accentBorderClass: string;
 }) {
   const [activeTab, setActiveTab] = useState("Overview");
@@ -33,6 +35,7 @@ export function ProjectTabs({
     ...(featureEngineeringContent ? [{ id: "FeatureEng", label: t("featureEngineering") }] : []),
     ...(statisticalTestingContent ? [{ id: "StatTest", label: t("statisticalTesting") }] : []),
     ...(predictiveModelingContent ? [{ id: "PredModel", label: t("predictiveModeling") }] : []),
+    ...(summaryContent ? [{ id: "Summary", label: t("projectSummary") }] : []),
   ];
 
   return (
@@ -60,6 +63,7 @@ export function ProjectTabs({
         {activeTab === "FeatureEng" && featureEngineeringContent}
         {activeTab === "StatTest" && statisticalTestingContent}
         {activeTab === "PredModel" && predictiveModelingContent}
+        {activeTab === "Summary" && summaryContent}
       </div>
     </div>
   );
