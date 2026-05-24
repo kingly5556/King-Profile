@@ -204,14 +204,6 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
           },
           {
             step: 2,
-            title: "Remove Personal Information (PDPA)",
-            why: "Personally Identifiable Information (PII) such as names, citizen IDs, birth dates, and contact details must not be used for modeling to comply with the Personal Data Protection Act (PDPA).",
-            what: "Dropped 11 PII columns, including first-last name, national ID, birthday, detailed address, phone number, and email.",
-            result: "Dataset reduced to 33 columns—safely aligned with PDPA compliance.",
-            badge: "🔒",
-          },
-          {
-            step: 3,
             title: "Handle Missing Values",
             why: "Missing values can bias model training and cause errors; they must be strategically imputed, dropped, or flagged.",
             what: "Dropped NEW_CURR_ID (100% missing). Imputed OLD_GPA with its median (3.290) for 58 missing records. Imputed RELIGION_ID with its mode. Created missingness indicator flags for PROG_CURR_ID, PROGRAM_ID, and ISCED_ID before retaining them.",
@@ -219,7 +211,7 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
             badge: "🩹",
           },
           {
-            step: 4,
+            step: 3,
             title: "Fix GPA Outliers",
             why: "GPAs outside the standard [0, 4.0] range are clear errors, while highly suspicious values (e.g., exact 0.00) should be flagged rather than immediately dropped.",
             what: "Validated all GPA values against the [0, 4.0] range. Flagged highly suspicious records—specifically GPA = 0.00 (1 record) and GPA < 0.50 (1 record)—as suspect.",
@@ -227,7 +219,7 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
             badge: "✅",
           },
           {
-            step: 5,
+            step: 4,
             title: "Normalize OLD_GPA Scale",
             why: "High school GPAs originate from multiple schools using different scales (e.g., 4.0 vs 5.0). Using raw values would bias model learning and prevent fair comparisons.",
             what: "Identified 1 outlier record with OLD_GPA = 4.58 (based on a 5.0 scale) and rescaled it to a 4.0 scale by multiplying by 4/5.",
@@ -235,7 +227,7 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
             badge: "📐",
           },
           {
-            step: 6,
+            step: 5,
             title: "Clean Text & Group Rare Categories",
             why: "Categorical levels with very low representation (e.g., 1–2 students) can cause overfitting and force the model to learn noise instead of generalizable patterns.",
             what: "Standardized text formatting (whitespace stripping and upper-casing). Aggregated rare groups (province < 20 students → 'OTHER' [41 provinces]; curriculum tracks < 20 students → 'OTHER' [523 tracks]; high schools < 5 students → 'OTHER').",
@@ -243,7 +235,7 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
             badge: "🗂️",
           },
           {
-            step: 7,
+            step: 6,
             title: "Create New Features",
             why: "Raw attributes often lack direct predictive power, but converting them into engineered features unlocks valuable signals for machine learning algorithms.",
             what: "Engineered key features: GPA_CLASS (First Class Honours, Second Class Honours, Normal, Academic Probation), IS_VOCATIONAL (from vocational track), IS_STEM (STEM-focused high school track), and STUDY_GAP (gap years before university enrollment).",
@@ -503,7 +495,7 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
         kind: "summary",
         title: "Project Summary",
         goalAchievement: "The project successfully met its initial goals by developing a robust machine learning pipeline capable of predicting university GPA with an average error of ±0.16 points. The comprehensive analysis successfully uncovered key academic patterns, confirming that prior education level and high school performance are the strongest indicators of university success.",
-        qualityAssessment: "The implementation quality is exceptionally high, adhering strictly to PDPA compliance by removing all PII. The analysis follows a rigorous scientific approach, utilizing 18 statistical tests to validate feature significance before model training. The final LightGBM model was rigorously evaluated using 5-fold Cross-Validation, ensuring strong generalization without overfitting or data leakage.",
+        qualityAssessment: "The implementation quality is exceptionally high. The analysis follows a rigorous scientific approach, utilizing 18 statistical tests to validate feature significance before model training. The final LightGBM model was rigorously evaluated using 5-fold Cross-Validation, ensuring strong generalization without overfitting or data leakage.",
         benefits: [
           "Enables early identification of at-risk students based on their admission profile, allowing the university to provide targeted academic support.",
           "Provides data-driven insights for the university administration regarding the effectiveness of different prior educational tracks.",
@@ -512,9 +504,9 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
         ],
         steps: [
           {
-            phase: "Data Cleaning & PDPA",
-            action: "Sanitized 6,520 records, removed 11 PII columns, and resolved all missing values and data type errors.",
-            result: "A clean, mathematically sound dataset that strictly complies with privacy laws."
+            phase: "Data Cleaning",
+            action: "Sanitized 6,520 records, and resolved all missing values and data type errors.",
+            result: "A clean and mathematically sound dataset."
           },
           {
             phase: "Exploratory Data Analysis",
