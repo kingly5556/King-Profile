@@ -144,7 +144,6 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
           { label: "Average GPA", value: "3.06", sub: "Median: 3.06 · Std: 0.46", icon: "grade" },
           { label: "GPA Range", value: "0.00 – 4.00", sub: "Only 1 outlier detected (0.02%)", icon: "show_chart" },
           { label: "High School GPA Correlation", value: "r = 0.384", sub: "Strongest predictor of university GPA", icon: "trending_up" },
-          { label: "Best Cohort (Avg GPA)", value: "2566 → 3.17", sub: "Largest group: 2,565 students", icon: "emoji_events" },
         ],
         charts: [
           {
@@ -164,12 +163,6 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
             description: "Comparison of average GPA between male and female students.",
             imagePath: "/projects/gpa-prediction-model/eda_output/06a_gpa_by_gender.png",
             insight: "Female students achieve significantly higher average GPAs (3.17) compared to male students (2.94). With a balanced sample size of over 3,200 students per gender, this outcome demonstrates high reliability.",
-          },
-          {
-            title: "GPA Trend by Admission Year (Cohort Analysis)",
-            description: "Average GPA for each admission year cohort, showing how academic performance evolved over time.",
-            imagePath: "/projects/gpa-prediction-model/eda_output/09_cohort_trend.png",
-            insight: "There is a consistent upward trend in average GPAs according to admission year. The 2023 (2566) cohort reached the highest average GPA (3.17) and largest student count (2,565), with a notable jump starting in 2021 (2564).",
           },
           {
             title: "GPA by Prior Education Level",

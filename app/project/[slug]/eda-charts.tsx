@@ -91,54 +91,6 @@ export function GPADistributionChart() {
   );
 }
 
-// ── 2. Cohort GPA Trend (Line + Bar) ────────────────────────────
-export function CohortTrendChart() {
-  // From 09_cohort_gpa.csv (excluding 2558-2562 small samples n<100)
-  const data = [
-    { year: "2562", mean: 2.55, median: 2.46, n: 90 },
-    { year: "2563", mean: 2.74, median: 2.68, n: 518 },
-    { year: "2564", mean: 3.07, median: 3.07, n: 2267 },
-    { year: "2565", mean: 2.98, median: 2.94, n: 1019 },
-    { year: "2566", mean: 3.17, median: 3.18, n: 2565 },
-  ];
-
-  return (
-    <ResponsiveContainer width="100%" height={300}>
-      <BarChart data={data} margin={{ top: 8, right: 24, left: 0, bottom: 8 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke={OUTLINE} vertical={false} />
-        <XAxis dataKey="year" tick={{ fill: TEXT_SEC, fontSize: 12 }} />
-        <YAxis
-          yAxisId="gpa"
-          domain={[2.3, 3.4]}
-          tickCount={6}
-          tick={{ fill: TEXT_SEC, fontSize: 11 }}
-          tickFormatter={(v) => v.toFixed(2)}
-          width={50}
-          label={{ value: "Avg GPA", angle: -90, position: "insideLeft", fill: TEXT_SEC, fontSize: 11, dy: 35 }}
-        />
-        <YAxis
-          yAxisId="n"
-          orientation="right"
-          tick={{ fill: MUTED, fontSize: 10 }}
-          width={50}
-          label={{ value: "# Students", angle: 90, position: "insideRight", fill: MUTED, fontSize: 10, dy: -35 }}
-        />
-        <Tooltip
-          contentStyle={tooltipStyle}
-          labelStyle={tooltipLabelStyle}
-          itemStyle={tooltipItemStyle}
-          formatter={(v: any, name: any) =>
-            name === "# Students" ? [Number(v).toLocaleString(), name] : [Number(v).toFixed(3), name]
-          }
-        />
-        <Legend wrapperStyle={{ color: TEXT_SEC, fontSize: 12, paddingTop: 8 }} />
-        <Bar yAxisId="n" dataKey="n" name="# Students" fill={MUTED} fillOpacity={0.25} radius={[2, 2, 0, 0]} />
-        <Bar yAxisId="gpa" dataKey="mean" name="GPA Mean" fill={PURPLE} radius={[2, 2, 0, 0]} />
-      </BarChart>
-    </ResponsiveContainer>
-  );
-}
-
 // ── 3. GPA by Gender (Bar) ───────────────────────────────────────
 export function GPAByGenderChart() {
   // From EDA: Gender 1=Male, 2=Female, avg GPA from bivariate analysis

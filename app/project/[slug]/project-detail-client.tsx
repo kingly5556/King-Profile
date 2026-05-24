@@ -11,7 +11,6 @@ import { SiteFooter } from "@/app/features/home/ui/site-footer";
 import { SiteHeader } from "@/app/features/home/ui/site-header";
 import {
   CorrelationChart,
-  CohortTrendChart,
   GPAByGenderChart,
   GPADistributionChart,
   MissingValuesChart,
@@ -439,7 +438,6 @@ function EDASection({ section, accentColorClass, accentBorderClass }: {
     "GPA Distribution": <GPADistributionChart />,
     "High School GPA vs. University GPA": <ScatterOldGPAChart />,
     "GPA by Gender": <GPAByGenderChart />,
-    "GPA Trend by Admission Year (Cohort Analysis)": <CohortTrendChart />,
     "Correlation Heatmap": <CorrelationChart />,
     "Missing Value Analysis": <MissingValuesChart />,
   };
