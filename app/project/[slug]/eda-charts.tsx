@@ -190,14 +190,14 @@ export function ScatterOldGPAChart() {
     [3.2,3.2],[3.2,3.5],[3.3,2.9],[3.3,3.1],[3.3,3.4],[3.4,3.0],[3.4,3.3],[3.4,3.6],
     [3.5,3.0],[3.5,3.2],[3.5,3.5],[3.5,3.8],[3.6,3.1],[3.6,3.4],[3.6,3.7],[3.7,3.2],
     [3.7,3.5],[3.7,3.8],[3.8,3.3],[3.8,3.6],[3.8,3.9],[3.9,3.4],[3.9,3.7],[3.9,4.0],
-    [4.0,3.5],[4.0,3.8],[4.0,4.0],[4.2,3.8],[4.5,3.9],[4.58,4.0],
+    [4.0,3.5],[4.0,3.8],[4.0,4.0],[3.36,3.8],[3.6,3.9],[3.66,4.0],
   ];
   const data = raw.map(([hs, uni]) => ({ hs, uni }));
 
   // OLS trendline points (slope≈0.39, intercept≈1.80)
   const trendData = [
     { hs: 1.3, trend: 1.3 * 0.39 + 1.80 },
-    { hs: 4.6, trend: 4.6 * 0.39 + 1.80 },
+    { hs: 4.0, trend: 4.0 * 0.39 + 1.80 },
   ];
 
   return (
@@ -207,7 +207,7 @@ export function ScatterOldGPAChart() {
         <XAxis
           dataKey="hs"
           type="number"
-          domain={[1.2, 4.7]}
+          domain={[1.2, 4.0]}
           name="HS GPA"
           tick={{ fill: TEXT_SEC, fontSize: 11 }}
           label={{ value: "High School GPA (OLD_GPA)", position: "insideBottom", offset: -12, fill: TEXT_SEC, fontSize: 11 }}
