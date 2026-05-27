@@ -11,16 +11,19 @@ import { staggerItem, viewportScroll } from "./motion-variants";
 const accentBorderHover: Record<PortfolioProject["accent"], string> = {
   blue: "group-hover:border-accent-blue/60",
   purple: "group-hover:border-accent-purple/60",
+  orange: "group-hover:border-orange-500/60",
 };
 
 const accentOverlay: Record<PortfolioProject["accent"], string> = {
   blue: "bg-accent-blue/10",
   purple: "bg-accent-purple/10",
+  orange: "bg-orange-500/10",
 };
 
 const accentIcon: Record<PortfolioProject["accent"], string> = {
   blue: "text-accent-blue",
   purple: "text-accent-purple",
+  orange: "text-orange-500",
 };
 
 export function ProjectCard({ project }: { project: PortfolioProject }) {

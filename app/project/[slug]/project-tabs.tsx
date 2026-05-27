@@ -11,6 +11,11 @@ export function ProjectTabs({
   featureEngineeringContent,
   statisticalTestingContent,
   predictiveModelingContent,
+  systemDesignContent,
+  authContent,
+  datasetContent,
+  schemaContent,
+  deploymentContent,
   summaryContent,
   accentBorderClass,
 }: {
@@ -21,6 +26,11 @@ export function ProjectTabs({
   featureEngineeringContent?: React.ReactNode;
   statisticalTestingContent?: React.ReactNode;
   predictiveModelingContent?: React.ReactNode;
+  systemDesignContent?: React.ReactNode;
+  authContent?: React.ReactNode;
+  datasetContent?: React.ReactNode;
+  schemaContent?: React.ReactNode;
+  deploymentContent?: React.ReactNode;
   summaryContent?: React.ReactNode;
   accentBorderClass: string;
 }) {
@@ -35,6 +45,11 @@ export function ProjectTabs({
     ...(featureEngineeringContent ? [{ id: "FeatureEng", label: t("featureEngineering") }] : []),
     ...(statisticalTestingContent ? [{ id: "StatTest", label: t("statisticalTesting") }] : []),
     ...(predictiveModelingContent ? [{ id: "PredModel", label: t("predictiveModeling") }] : []),
+    ...(systemDesignContent ? [{ id: "SystemDesign", label: t("systemDesign") }] : []),
+    ...(authContent ? [{ id: "Auth", label: t("authAndUsers") }] : []),
+    ...(datasetContent ? [{ id: "Dataset", label: t("datasetManagement") }] : []),
+    ...(schemaContent ? [{ id: "Schema", label: t("schemaManagement") }] : []),
+    ...(deploymentContent ? [{ id: "Deployment", label: t("deployment") }] : []),
     ...(summaryContent ? [{ id: "Summary", label: t("projectSummary") }] : []),
   ];
 
@@ -63,6 +78,11 @@ export function ProjectTabs({
         {activeTab === "FeatureEng" && featureEngineeringContent}
         {activeTab === "StatTest" && statisticalTestingContent}
         {activeTab === "PredModel" && predictiveModelingContent}
+        {activeTab === "SystemDesign" && systemDesignContent}
+        {activeTab === "Auth" && authContent}
+        {activeTab === "Dataset" && datasetContent}
+        {activeTab === "Schema" && schemaContent}
+        {activeTab === "Deployment" && deploymentContent}
         {activeTab === "Summary" && summaryContent}
       </div>
     </div>

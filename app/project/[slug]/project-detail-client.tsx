@@ -547,6 +547,185 @@ function SummarySection({ section, accentColorClass, accentBorderClass }: {
   );
 }
 
+function SystemDesignSection({ section, accentColorClass, accentBorderClass }: {
+  section: Extract<ProjectDetailSection, { kind: "systemDesign" }>;
+  accentColorClass: string;
+  accentBorderClass: string;
+}) {
+  const { t } = useLanguage();
+  return (
+    <div className="flex flex-col gap-16">
+      <div className="flex flex-col gap-4">
+        <h3 className="font-headline-sm text-headline-sm text-primary">💡 {t("problemsSolved") || "Problems Solved"}</h3>
+        <ul className="flex flex-col gap-3">
+          {section.problems.map((problem, i) => (
+            <li key={i} className="flex gap-3 text-sm text-secondary font-body-md leading-relaxed">
+              <span className={`mt-0.5 shrink-0 ${accentColorClass}`}>→</span>
+              {problem}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="flex flex-col gap-6">
+        <h3 className="font-headline-sm text-headline-sm text-primary">🧩 {t("coreModules") || "Core Modules"}</h3>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {section.modules.map((m, i) => (
+            <div key={i} className={`border ${accentBorderClass} bg-surface-container-low p-6 flex flex-col gap-3`}>
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">{m.icon}</span>
+                <span className={`font-label-mono text-xs uppercase tracking-widest ${accentColorClass}`}>{m.title}</span>
+              </div>
+              <p className="font-body-md text-sm text-secondary">{m.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <h3 className="font-headline-sm text-headline-sm text-primary">🔐 {t("rbac") || "Role-Based Access Control"}</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse text-sm">
+            <thead>
+              <tr className={`border-b ${accentBorderClass}`}>
+                <th className="py-2 pr-4 text-left font-label-mono text-[10px] uppercase tracking-widest text-secondary">{t("role") || "Role"}</th>
+                <th className="py-2 text-left font-label-mono text-[10px] uppercase tracking-widest text-secondary">{t("permissions") || "Permissions"}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {section.roles.map((r, i) => (
+                <tr key={i} className="border-b border-outline/40 last:border-0">
+                  <td className={`py-3 pr-4 font-mono text-xs font-bold ${accentColorClass}`}>{r.role}</td>
+                  <td className="py-3 font-body-md text-sm text-secondary">{r.permissions}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {section.architectureDiagram && (
+        <div className="flex flex-col gap-4">
+          <h3 className="font-headline-sm text-headline-sm text-primary">🏗️ {t("architecture") || "Architecture"}</h3>
+          <div className={`border ${accentBorderClass} bg-[#12121a] p-6 flex justify-center overflow-x-auto`}>
+             <pre className={`font-mono text-xs md:text-sm ${accentColorClass}`}>{section.architectureDiagram}</pre>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SystemFeatureSection({ section, accentColorClass, accentBorderClass }: {
+  section: Extract<ProjectDetailSection, { kind: "systemFeature" }>;
+  accentColorClass: string;
+  accentBorderClass: string;
+}) {
+  const { t } = useLanguage();
+  return (
+    <div className="flex flex-col gap-16">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        {section.stats.map((stat) => (
+          <div key={stat.label} className={`border ${accentBorderClass} bg-surface-container-low p-5 flex flex-col gap-3`}>
+            <div className="flex items-center gap-2">
+              <span className="text-xl">{stat.icon}</span>
+              <span className="font-label-mono text-[10px] uppercase tracking-widest text-secondary">{stat.label}</span>
+            </div>
+            <span className={`font-headline-md text-xl font-bold ${accentColorClass}`}>{stat.value}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex flex-col gap-8">
+        <h3 className="font-headline-sm text-headline-sm text-primary">{t("features") || "Features"}</h3>
+        {section.steps.map((s, i) => (
+          <div key={i} className={`border ${accentBorderClass} bg-surface-container-low`}>
+            <div className={`flex items-center gap-4 border-b ${accentBorderClass} px-6 py-4`}>
+              <span className={`font-label-mono text-xs uppercase tracking-widest ${accentColorClass}`}>
+                {typeof s.step === 'number' ? `Step ${s.step}` : s.step}
+              </span>
+              <span className="font-headline-sm text-sm text-primary font-semibold">{s.title}</span>
+            </div>
+            <div className="grid grid-cols-1 gap-0 md:grid-cols-3">
+              <div className="border-b border-outline/40 p-5 md:border-b-0 md:border-r">
+                <p className="mb-1 font-label-mono text-[10px] uppercase tracking-widest text-secondary">{t("concept") || "Concept"}</p>
+                <p className="font-body-md text-sm text-secondary leading-relaxed">{s.concept}</p>
+              </div>
+              <div className="border-b border-outline/40 p-5 md:border-b-0 md:border-r">
+                <p className="mb-1 font-label-mono text-[10px] uppercase tracking-widest text-secondary">{t("whatWasDone") || "What was done"}</p>
+                <p className="font-body-md text-sm text-secondary leading-relaxed">{s.what}</p>
+              </div>
+              <div className="p-5">
+                <p className="mb-1 font-label-mono text-[10px] uppercase tracking-widest text-secondary">{t("result") || "Result"}</p>
+                <p className={`font-body-md text-sm leading-relaxed ${accentColorClass}`}>{s.result}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DeploymentSection({ section, accentColorClass, accentBorderClass }: {
+  section: Extract<ProjectDetailSection, { kind: "deploymentPipeline" }>;
+  accentColorClass: string;
+  accentBorderClass: string;
+}) {
+  const { t } = useLanguage();
+  return (
+    <div className="flex flex-col gap-16">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
+        {section.stats.map((stat) => (
+          <div key={stat.label} className={`border ${accentBorderClass} bg-surface-container-low p-4 flex flex-col gap-2`}>
+            <div className="flex items-center gap-2">
+              <span className="text-xl">{stat.icon}</span>
+              <span className="font-label-mono text-[10px] uppercase tracking-widest text-secondary break-words">{stat.label}</span>
+            </div>
+            <span className={`font-headline-md text-lg font-bold ${accentColorClass}`}>{stat.value}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex flex-col gap-8">
+        <h3 className="font-headline-sm text-headline-sm text-primary">🚀 {t("deploymentPipeline") || "Deployment Pipeline"}</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className={`border-b ${accentBorderClass}`}>
+                <th className="py-3 pr-4 text-left font-label-mono text-[10px] uppercase tracking-widest text-secondary">{t("phase") || "Phase"}</th>
+                <th className="py-3 pr-4 text-left font-label-mono text-[10px] uppercase tracking-widest text-secondary">{t("action") || "Action"}</th>
+                <th className="py-3 text-left font-label-mono text-[10px] uppercase tracking-widest text-secondary">{t("detail") || "Detail"}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {section.phases.map((p, idx) => (
+                <tr key={idx} className="border-b border-outline/40 last:border-0">
+                  <td className={`py-4 pr-4 font-label-mono text-xs uppercase tracking-widest ${accentColorClass}`}>{p.phase}</td>
+                  <td className="py-4 pr-4 font-body-md text-sm text-primary font-semibold">{p.action}</td>
+                  <td className="py-4 font-body-md text-sm text-secondary leading-relaxed">{p.detail}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className={`border ${accentBorderClass} bg-surface-container-low p-6`}>
+        <h3 className={`mb-4 font-label-mono text-sm uppercase tracking-widest ${accentColorClass}`}>☸️ {t("k8sManifests") || "Kubernetes Manifests"}</h3>
+        <ul className="flex flex-col gap-3">
+          {section.k8sSummary.map((item, i) => (
+            <li key={i} className="flex gap-3 text-sm text-secondary font-body-md leading-relaxed">
+              <span className={`mt-0.5 shrink-0 ${accentColorClass}`}>→</span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
 export function ProjectDetailClient({ slug }: { slug: string }) {
   const { locale, t } = useLanguage();
   
@@ -558,9 +737,13 @@ export function ProjectDetailClient({ slug }: { slug: string }) {
   }
 
   const accentColorClass =
-    project.accent === "blue" ? "text-accent-blue" : "text-accent-purple";
+    project.accent === "blue" ? "text-accent-blue" :
+    project.accent === "orange" ? "text-orange-400" :
+    "text-accent-purple";
   const accentBorderClass =
-    project.accent === "blue" ? "border-accent-blue" : "border-accent-purple";
+    project.accent === "blue" ? "border-accent-blue" :
+    project.accent === "orange" ? "border-orange-500/40" :
+    "border-accent-purple";
 
   return (
     <>
@@ -721,6 +904,66 @@ export function ProjectDetailClient({ slug }: { slug: string }) {
                   {project.detailSections.map((section, idx) => {
                     if (section.kind === "predictiveModeling") {
                       return <PredictiveModelingSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
+                    }
+                    return null;
+                  })}
+                </>
+              ) : undefined
+            }
+            systemDesignContent={
+              project.detailSections?.some(s => s.kind === "systemDesign") ? (
+                <>
+                  {project.detailSections.map((section, idx) => {
+                    if (section.kind === "systemDesign") {
+                      return <SystemDesignSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
+                    }
+                    return null;
+                  })}
+                </>
+              ) : undefined
+            }
+            authContent={
+              project.detailSections?.some(s => s.kind === "systemFeature" && (s as any).id === "auth") ? (
+                <>
+                  {project.detailSections.map((section, idx) => {
+                    if (section.kind === "systemFeature" && (section as any).id === "auth") {
+                      return <SystemFeatureSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
+                    }
+                    return null;
+                  })}
+                </>
+              ) : undefined
+            }
+            datasetContent={
+              project.detailSections?.some(s => s.kind === "systemFeature" && (s as any).id === "dataset") ? (
+                <>
+                  {project.detailSections.map((section, idx) => {
+                    if (section.kind === "systemFeature" && (section as any).id === "dataset") {
+                      return <SystemFeatureSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
+                    }
+                    return null;
+                  })}
+                </>
+              ) : undefined
+            }
+            schemaContent={
+              project.detailSections?.some(s => s.kind === "systemFeature" && (s as any).id === "schema") ? (
+                <>
+                  {project.detailSections.map((section, idx) => {
+                    if (section.kind === "systemFeature" && (section as any).id === "schema") {
+                      return <SystemFeatureSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
+                    }
+                    return null;
+                  })}
+                </>
+              ) : undefined
+            }
+            deploymentContent={
+              project.detailSections?.some(s => s.kind === "deploymentPipeline") ? (
+                <>
+                  {project.detailSections.map((section, idx) => {
+                    if (section.kind === "deploymentPipeline") {
+                      return <DeploymentSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
                     }
                     return null;
                   })}

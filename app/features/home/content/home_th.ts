@@ -38,8 +38,143 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
     imageSrc: "/images/projects/data-center-v2.png",
     imageAlt: "แนวคิดแดชบอร์ดแพลตฟอร์มข้อมูล",
     imagePosition: "object-left-top",
-    accent: "blue",
+    accent: "orange",
     icon: "database",
+    detailSections: [
+      {
+        kind: "stack",
+        title: "เทคโนโลยีที่ใช้",
+        items: [
+          { label: "Next.js", icon: "code" },
+          { label: "FastAPI", icon: "api" },
+          { label: "MySQL", icon: "database" },
+          { label: "Docker", icon: "terminal" },
+          { label: "Jenkins", icon: "sync" },
+          { label: "Kubernetes", icon: "grid_view" },
+        ]
+      },
+      {
+        kind: "systemDesign",
+        title: "การออกแบบระบบ",
+        problems: [
+          "ข้อมูลถูกจัดเก็บแบบกระจัดกระจาย (Data Silo) ทำให้เข้าถึงได้ยาก",
+          "รูปแบบข้อมูลไม่มีความสอดคล้องกัน ขาดมาตรฐาน",
+          "ไม่มีนิยามข้อมูลและโครงสร้างข้อมูลร่วมกัน",
+        ],
+        modules: [
+          { title: "ระบบยืนยันตัวตนและจัดการผู้ใช้", description: "จัดการบัญชีผู้ใช้งาน สิทธิ์การเข้าถึง และการอนุมัติผู้ใช้งานใหม่", icon: "🔐" },
+          { title: "ระบบจัดการชุดข้อมูล", description: "สำรวจ นำเข้า แก้ไข และส่งออกข้อมูลพร้อมการตรวจสอบความถูกต้อง", icon: "📊" },
+          { title: "ระบบจัดการโครงสร้างข้อมูล", description: "จัดการสกีมา ตาราง คอลัมน์ และความสัมพันธ์ของข้อมูลแบบไดนามิก", icon: "🏗️" },
+          { title: "ระบบจัดการหน่วยงาน", description: "จัดการข้อมูลพื้นฐานของหน่วยงานที่เป็นเจ้าของชุดข้อมูล", icon: "🏢" }
+        ],
+        roles: [
+          { role: "Admin", permissions: "จัดการทุกระบบ รวมถึงผู้ใช้งาน" },
+          { role: "Super User", permissions: "อนุมัติคำขอ จัดการโครงสร้างข้อมูล" },
+          { role: "Data Owner", permissions: "จัดการชุดข้อมูลที่ตนเองรับผิดชอบ" },
+          { role: "User", permissions: "ดูข้อมูลในหน่วยงานและข้อมูลสาธารณะ" },
+          { role: "Guest", permissions: "ดูข้อมูลสาธารณะโดยไม่ต้องล็อกอิน" }
+        ],
+        architectureDiagram: "[Next.js Frontend] ↔ [FastAPI Backend] ↔ [MySQL + SQLAlchemy]\n                           ↕\n                  [AI Model Service (planned)]"
+      },
+      {
+        kind: "systemFeature",
+        id: "auth",
+        title: "ระบบผู้ใช้งาน (Auth & Users)",
+        stats: [
+          { label: "ระดับผู้ใช้งาน", value: "5 บทบาท", icon: "🛡️" },
+          { label: "การยืนยันตัวตน", value: "JWT", icon: "🔑" },
+          { label: "โปรไฟล์ส่วนตัว", value: "แบบไดนามิก", icon: "📝" },
+          { label: "การอนุมัติ", value: "Admin Review", icon: "✅" }
+        ],
+        steps: [
+          { step: 1, title: "Registration", concept: "กรอกข้อมูลพื้นฐานและเลือกหน่วยงาน", what: "รองรับฟิลด์ไดนามิกที่แอดมินกำหนดเพิ่มได้", result: "บัญชีรอการอนุมัติ" },
+          { step: 2, title: "Login", concept: "ยืนยันตัวตนด้วย Username/Password", what: "สร้าง Session ที่ปลอดภัยด้วย JWT", result: "เข้าสู่ระบบและได้รับสิทธิ์ตามบทบาท" },
+          { step: 3, title: "Profile Management", concept: "จัดการข้อมูลส่วนตัว", what: "อัปเดตข้อมูลและดูบทบาทปัจจุบัน", result: "ข้อมูลผู้ใช้เป็นปัจจุบัน" },
+          { step: 4, title: "User Approval", concept: "แอดมินตรวจสอบผู้สมัครใหม่", what: "อนุมัติหรือปฏิเสธคำขอเข้าใช้งาน", result: "ควบคุมความปลอดภัยการเข้าถึง" },
+          { step: 5, title: "Role Assignment", concept: "จัดการสิทธิ์การเข้าถึง", what: "ปรับเปลี่ยนบทบาทผู้ใช้ตามหน้าที่รับผิดชอบ", result: "การควบคุมสิทธิ์แบบ RBAC" }
+        ]
+      },
+      {
+        kind: "systemFeature",
+        id: "dataset",
+        title: "จัดการชุดข้อมูล (Dataset Management)",
+        stats: [
+          { label: "การนำเข้า", value: "Excel (.xlsx)", icon: "📥" },
+          { label: "เทมเพลต", value: "ดาวน์โหลดพิมพ์เขียว", icon: "📄" },
+          { label: "การตรวจสอบ", value: "ระดับเซลล์", icon: "🔍" },
+          { label: "การส่งออก", value: "Export", icon: "📤" }
+        ],
+        steps: [
+          { step: 1, title: "สำรวจข้อมูล", concept: "ต้องการ UX ที่เข้าถึงข้อมูลได้รวดเร็ว", what: "ค้นหาด้วยชื่อ/รหัส และกรองตามกลุ่มข้อมูล", result: "เข้าถึงชุดข้อมูลที่ต้องการได้ทันที" },
+          { step: 2, title: "หน้ารายละเอียด", concept: "ผู้ใช้ต้องเข้าใจบริบทข้อมูลก่อนใช้งาน", what: "แสดงเมทาดาตา คำอธิบาย และหน่วยงานเจ้าของ", result: "ช่วยให้ตัดสินใจนำข้อมูลไปใช้ได้อย่างถูกต้อง" },
+          { step: 3, title: "นำเข้าข้อมูลผ่านเทมเพลต", concept: "ควบคุมมาตรฐานตั้งแต่ต้นทาง", what: "บังคับให้ดาวน์โหลดเทมเพลตไปกรอก แล้วนำกลับมาอัปโหลด", result: "ลดปัญหารูปแบบข้อมูลผิดพลาด" },
+          { step: 4, title: "ตรวจสอบความถูกต้อง", concept: "ป้องกันข้อมูลขยะเข้าระบบ", what: "ตรวจสอบประเภทข้อมูลและความยาวทีละเซลล์", result: "แจ้งข้อผิดพลาดที่ระบุตำแหน่งชัดเจนให้แก้ไข" },
+          { step: 5, title: "แก้ไขแบบกลุ่ม (Bulk Edit)", concept: "ข้อมูลจำนวนมากต้องแก้ไขได้ง่าย", what: "นำเข้า Excel เพื่ออัปเดตข้อมูลตาม Primary Key", result: "ประหยัดเวลาในการจัดการข้อมูล" }
+        ]
+      },
+      {
+        kind: "systemFeature",
+        id: "schema",
+        title: "จัดการโครงสร้างข้อมูล (Schema Management)",
+        stats: [
+          { label: "สร้างตาราง", value: "แบบไดนามิก", icon: "🏗️" },
+          { label: "ประเภทข้อมูล", value: "Text,Int,Date..", icon: "🔠" },
+          { label: "ข้อกำหนด", value: "PK & Not Null", icon: "🛑" },
+          { label: "ความสัมพันธ์", value: "FK Reference", icon: "🔗" }
+        ],
+        steps: [
+          { step: 1, title: "สร้างตารางใหม่", concept: "รองรับชุดข้อมูลรูปแบบใหม่ๆ", what: "กำหนดชื่อ รหัส และระดับการเข้าถึงตาราง", result: "โครงสร้างพร้อมสำหรับการนำเข้าข้อมูล" },
+          { step: 2, title: "กำหนดคอลัมน์", concept: "สร้าง Data Dictionary ให้แต่ละตาราง", what: "เพิ่มคอลัมน์และกำหนด Data Type, Primary Key", result: "โครงสร้างข้อมูลมีความชัดเจน" },
+          { step: 3, title: "จัดการความสัมพันธ์", concept: "เชื่อมโยงข้อมูลระหว่างตาราง", what: "สร้าง Foreign Key อ้างอิงตารางหลักอื่นๆ", result: "ป้องกันความขัดแย้งของข้อมูลข้ามตาราง" }
+        ]
+      },
+      {
+        kind: "deploymentPipeline",
+        title: "การติดตั้งระบบ (Deployment)",
+        stats: [
+          { label: "CI/CD", value: "Jenkins", icon: "⚙️" },
+          { label: "คอนเทนเนอร์", value: "Docker", icon: "🐳" },
+          { label: "รีจิสตรี", value: "Harbor", icon: "🗄️" },
+          { label: "การจัดการ", value: "Kubernetes", icon: "☸️" },
+          { label: "Source Code", value: "GitLab", icon: "🦊" }
+        ],
+        phases: [
+          { phase: "1. Code", action: "Push to GitLab", detail: "นักพัฒนา push โค้ดไปยัง GitLab ซึ่งจะไปทริกเกอร์ Jenkins Pipeline ทันที" },
+          { phase: "2. Checkout", action: "Pull Source Code", detail: "Jenkins ดึงซอร์สโค้ดเวอร์ชันล่าสุดจาก repository" },
+          { phase: "3. Build", action: "Docker Build", detail: "สร้าง Docker Image สำหรับ Frontend และ Backend" },
+          { phase: "4. Tag", action: "Version Tagging", detail: "ติดแท็ก Image ด้วยรูปแบบ {build_number}-{git_hash} และ latest" },
+          { phase: "5. Push", action: "Push to Harbor", detail: "อัปโหลด Image ทั้งสองแท็กขึ้นไปยัง Private Registry (Harbor)" },
+          { phase: "6. Deploy", action: "Apply K8s Manifest", detail: "สั่งรันไฟล์คอนฟิก K8s เพื่ออัปเดตระบบที่ทำงานอยู่บนคลัสเตอร์" }
+        ],
+        k8sSummary: [
+          "namespace.yaml — แบ่งพื้นที่ทำงาน (Namespace)",
+          "configmap.yaml และ secret.yaml — เก็บค่าคอนฟิกโดยปิดบังข้อมูลสำคัญ",
+          "deployment.yaml — กำหนดการสร้างพอด (Pods) ของแต่ละ Service",
+          "service.yaml — กำหนดพอร์ตสำหรับการสื่อสารภายในคลัสเตอร์",
+          "ingress.yaml — กำหนดกฎ Routing สำหรับเชื่อมต่อกับภายนอก"
+        ]
+      },
+      {
+        kind: "summary",
+        title: "สรุปผลการดำเนินงาน",
+        goalAchievement: "พัฒนาระบบต้นแบบศูนย์ข้อมูลกลางที่รวบรวมข้อมูล บังคับใช้มาตรฐาน และรองรับ Role-Based Access Control ได้อย่างครบถ้วนตามเป้าหมายหลัก",
+        qualityAssessment: "ระบบสามารถจัดการวงจรชีวิตของชุดข้อมูลได้ตั้งแต่การออกแบบโครงสร้างสกีมา การนำเข้าผ่านเทมเพลต จนถึงการส่งออกข้อมูล โดยมีความปลอดภัยและความถูกต้องสูง",
+        benefits: [
+          "ลดความซ้ำซ้อนของการจัดเก็บข้อมูลภายในมหาวิทยาลัย",
+          "มีมาตรฐานข้อมูลร่วมกัน (Single Source of Truth) เพื่อให้นำไปวิเคราะห์ต่อได้ง่าย",
+          "เทมเพลตนำเข้าช่วยลดภาระและข้อผิดพลาดในการกรอกข้อมูล",
+          "การควบคุมสิทธิ์ RBAC ทำให้การเข้าถึงข้อมูลเป็นไปตามหน้าที่อย่างเหมาะสม",
+          "โครงสร้างระบบพร้อมสำหรับการต่อยอดระบบวิเคราะห์อัตโนมัติ (AutoML) ในอนาคต"
+        ],
+        steps: [
+          { phase: "Requirement", action: "วิเคราะห์ปัญหา Data Silo", result: "กำหนดขอบเขต 4 ระบบหลักที่ต้องพัฒนา" },
+          { phase: "Design", action: "ออกแบบ Database Schema และ API", result: "โครงสร้างพร้อมสำหรับการพัฒนา" },
+          { phase: "Backend", action: "พัฒนา API ด้วย FastAPI + SQLAlchemy", result: "ได้ RESTful API ที่มีประสิทธิภาพ" },
+          { phase: "Frontend", action: "พัฒนา UI ด้วย Next.js", result: "ระบบใช้งานง่ายและตอบสนองไวสำหรับทุก Role" },
+          { phase: "Deploy", action: "สร้าง CI/CD Pipeline ผ่าน Jenkins", result: "ระบบสามารถใช้งานจริงได้อย่างราบรื่น" }
+        ]
+      }
+    ],
   },
   {
     slug: "gpa-prediction-model",

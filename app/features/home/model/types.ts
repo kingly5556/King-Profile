@@ -1,4 +1,4 @@
-export type ProjectAccent = "blue" | "purple";
+export type ProjectAccent = "blue" | "purple" | "orange";
 
 export type DatasetFeatureRow = {
   column: string;
@@ -94,6 +94,43 @@ export type PredictiveModelStat = {
   icon: string;
 };
 
+export type SystemDesignModule = {
+  title: string;
+  description: string;
+  icon: string;
+};
+
+export type SystemDesignRole = {
+  role: string;
+  permissions: string;
+};
+
+export type SystemFeatureStep = {
+  step: string | number;
+  title: string;
+  concept: string;
+  what: string;
+  result: string;
+};
+
+export type SystemFeatureStat = {
+  label: string;
+  value: string;
+  icon: string;
+};
+
+export type DeploymentPhase = {
+  phase: string;
+  action: string;
+  detail: string;
+};
+
+export type DeploymentStat = {
+  label: string;
+  value: string;
+  icon: string;
+};
+
 export type ProjectDetailSection =
   | { kind: "dataset"; title: string; source: string; groups: DatasetFeatureGroup[] }
   | { kind: "pdpa"; title: string; piiColumns: string[]; principles: { label: string; detail: string }[] }
@@ -124,6 +161,28 @@ export type ProjectDetailSection =
         action: string;
         result: string;
       }[];
+    }
+  | {
+      kind: "systemDesign";
+      title: string;
+      problems: string[];
+      modules: SystemDesignModule[];
+      roles: SystemDesignRole[];
+      architectureDiagram?: string;
+    }
+  | {
+      kind: "systemFeature";
+      id?: string;
+      title: string;
+      stats: SystemFeatureStat[];
+      steps: SystemFeatureStep[];
+    }
+  | {
+      kind: "deploymentPipeline";
+      title: string;
+      stats: DeploymentStat[];
+      phases: DeploymentPhase[];
+      k8sSummary: string[];
     };
 
 export type PortfolioProject = {

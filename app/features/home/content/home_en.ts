@@ -38,8 +38,143 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
     imageSrc: "/images/projects/data-center-v2.png",
     imageAlt: "Data platform dashboard concept",
     imagePosition: "object-left-top",
-    accent: "blue",
+    accent: "orange",
     icon: "database",
+    detailSections: [
+      {
+        kind: "stack",
+        title: "Tools & Tech Stack",
+        items: [
+          { label: "Next.js", icon: "code" },
+          { label: "FastAPI", icon: "api" },
+          { label: "MySQL", icon: "database" },
+          { label: "Docker", icon: "terminal" },
+          { label: "Jenkins", icon: "sync" },
+          { label: "Kubernetes", icon: "grid_view" },
+        ]
+      },
+      {
+        kind: "systemDesign",
+        title: "System Design",
+        problems: [
+          "Data was stored in silos, making it difficult to access",
+          "Inconsistent data formats with no standards",
+          "Lack of common data definitions and structures",
+        ],
+        modules: [
+          { title: "Auth & User Management", description: "Manage user accounts, permissions, and approve new users.", icon: "🔐" },
+          { title: "Dataset Management", description: "Explore, import, edit, and export data with validation.", icon: "📊" },
+          { title: "Schema Management", description: "Manage schemas, tables, columns, and relations dynamically.", icon: "🏗️" },
+          { title: "Department Management", description: "Manage information of departments that own the datasets.", icon: "🏢" }
+        ],
+        roles: [
+          { role: "Admin", permissions: "Manage all systems, including users" },
+          { role: "Super User", permissions: "Approve requests, manage schemas" },
+          { role: "Data Owner", permissions: "Manage their own datasets" },
+          { role: "User", permissions: "View department and public data" },
+          { role: "Guest", permissions: "View public data without login" }
+        ],
+        architectureDiagram: "[Next.js Frontend] ↔ [FastAPI Backend] ↔ [MySQL + SQLAlchemy]\n                           ↕\n                  [AI Model Service (planned)]"
+      },
+      {
+        kind: "systemFeature",
+        id: "auth",
+        title: "Auth & Users",
+        stats: [
+          { label: "User Levels", value: "5 Roles", icon: "🛡️" },
+          { label: "Authentication", value: "JWT", icon: "🔑" },
+          { label: "Profile", value: "Dynamic", icon: "📝" },
+          { label: "Approval", value: "Admin Review", icon: "✅" }
+        ],
+        steps: [
+          { step: 1, title: "Registration", concept: "Basic info and department selection", what: "Supports dynamic fields added by admins", result: "Account pending approval" },
+          { step: 2, title: "Login", concept: "Auth via Username/Password", what: "Creates secure JWT session", result: "Logged in with role permissions" },
+          { step: 3, title: "Profile Management", concept: "Manage personal info", what: "Update info and view current role", result: "Up-to-date user info" },
+          { step: 4, title: "User Approval", concept: "Admin reviews new applicants", what: "Approve or reject access requests", result: "Access security control" },
+          { step: 5, title: "Role Assignment", concept: "Manage access rights", what: "Change roles based on responsibilities", result: "RBAC access control" }
+        ]
+      },
+      {
+        kind: "systemFeature",
+        id: "dataset",
+        title: "Dataset Management",
+        stats: [
+          { label: "Import", value: "Excel (.xlsx)", icon: "📥" },
+          { label: "Template", value: "Download Blueprint", icon: "📄" },
+          { label: "Validation", value: "Cell-level", icon: "🔍" },
+          { label: "Export", value: "Excel Export", icon: "📤" }
+        ],
+        steps: [
+          { step: 1, title: "Data Exploration", concept: "Fast access UX required", what: "Search by name/ID and filter by groups", result: "Instant access to datasets" },
+          { step: 2, title: "Detail Page", concept: "Context before usage", what: "Show metadata, description, and owner", result: "Informed usage decisions" },
+          { step: 3, title: "Template Import", concept: "Enforce standards at source", what: "Force downloading a template to fill", result: "Reduced formatting errors" },
+          { step: 4, title: "Validation", concept: "Prevent garbage data", what: "Validate types and lengths cell by cell", result: "Precise error location reporting" },
+          { step: 5, title: "Bulk Edit", concept: "Easy mass updates", what: "Import Excel to update via Primary Key", result: "Time saved on data management" }
+        ]
+      },
+      {
+        kind: "systemFeature",
+        id: "schema",
+        title: "Schema Management",
+        stats: [
+          { label: "Create Table", value: "Dynamic", icon: "🏗️" },
+          { label: "Data Types", value: "Text,Int,Date..", icon: "🔠" },
+          { label: "Constraints", value: "PK & Not Null", icon: "🛑" },
+          { label: "Relations", value: "FK Reference", icon: "🔗" }
+        ],
+        steps: [
+          { step: 1, title: "New Table", concept: "Support new datasets", what: "Set name, ID, and access level", result: "Structure ready for import" },
+          { step: 2, title: "Define Columns", concept: "Data Dictionary per table", what: "Add columns with Data Type, PK", result: "Clear data structures" },
+          { step: 3, title: "Manage Relations", concept: "Relational Integrity", what: "Create Foreign Keys to reference tables", result: "Prevents cross-table conflicts" }
+        ]
+      },
+      {
+        kind: "deploymentPipeline",
+        title: "Deployment Pipeline",
+        stats: [
+          { label: "CI/CD", value: "Jenkins", icon: "⚙️" },
+          { label: "Container", value: "Docker", icon: "🐳" },
+          { label: "Registry", value: "Harbor", icon: "🗄️" },
+          { label: "Orchestration", value: "Kubernetes", icon: "☸️" },
+          { label: "Source Code", value: "GitLab", icon: "🦊" }
+        ],
+        phases: [
+          { phase: "1. Code", action: "Push to GitLab", detail: "Developer pushes code, triggering the Jenkins Pipeline." },
+          { phase: "2. Checkout", action: "Pull Source Code", detail: "Jenkins pulls the latest source code from the repository." },
+          { phase: "3. Build", action: "Docker Build", detail: "Builds Docker Images for Frontend and Backend." },
+          { phase: "4. Tag", action: "Version Tagging", detail: "Tags image as {build_number}-{git_hash} and latest." },
+          { phase: "5. Push", action: "Push to Harbor", detail: "Uploads both image tags to the Private Registry (Harbor)." },
+          { phase: "6. Deploy", action: "Apply K8s Manifest", detail: "Applies K8s configs to update the running cluster." }
+        ],
+        k8sSummary: [
+          "namespace.yaml — Isolates the environment",
+          "configmap.yaml & secret.yaml — Stores configs and hides credentials",
+          "deployment.yaml — Defines Pod creation for services",
+          "service.yaml — Defines internal cluster ports",
+          "ingress.yaml — Defines external routing rules"
+        ]
+      },
+      {
+        kind: "summary",
+        title: "Project Summary",
+        goalAchievement: "Developed a prototype centralized data center that aggregates data, enforces standards, and fully supports Role-Based Access Control as targeted.",
+        qualityAssessment: "The system manages the dataset lifecycle from schema design and template import to export with high security and accuracy.",
+        benefits: [
+          "Reduced data storage redundancy within the university.",
+          "Established a Single Source of Truth for easier analytics.",
+          "Import templates lowered the burden and errors in data entry.",
+          "RBAC ensured data access matches job responsibilities.",
+          "The architecture is ready for future AutoML integration."
+        ],
+        steps: [
+          { phase: "Requirement", action: "Analyzed Data Silo issues", result: "Defined scope of 4 core systems" },
+          { phase: "Design", action: "Designed Database Schema & APIs", result: "Structure ready for dev" },
+          { phase: "Backend", action: "Built APIs with FastAPI + SQLAlchemy", result: "High performance RESTful APIs" },
+          { phase: "Frontend", action: "Built UI with Next.js", result: "Responsive and easy UX for all roles" },
+          { phase: "Deploy", action: "Built CI/CD Pipeline via Jenkins", result: "Smooth production deployment" }
+        ]
+      }
+    ],
   },
   {
     slug: "gpa-prediction-model",
