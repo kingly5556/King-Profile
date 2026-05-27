@@ -73,8 +73,7 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
           { role: "Data Owner", permissions: "จัดการชุดข้อมูลที่ตนเองรับผิดชอบ" },
           { role: "User", permissions: "ดูข้อมูลในหน่วยงานและข้อมูลสาธารณะ" },
           { role: "Guest", permissions: "ดูข้อมูลสาธารณะโดยไม่ต้องล็อกอิน" }
-        ],
-        architectureDiagram: "[Next.js Frontend] ↔ [FastAPI Backend] ↔ [MySQL + SQLAlchemy]\n                           ↕\n                  [AI Model Service (planned)]"
+        ]
       },
       {
         kind: "systemFeature",
