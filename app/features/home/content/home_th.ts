@@ -99,9 +99,9 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
         title: "จัดการชุดข้อมูล (Dataset Management)",
         stats: [
           { label: "การนำเข้า", value: "Excel (.xlsx)", icon: "📥" },
-          { label: "เทมเพลต", value: "ดาวน์โหลดพิมพ์เขียว", icon: "📄" },
-          { label: "การตรวจสอบ", value: "ระดับเซลล์", icon: "🔍" },
-          { label: "การส่งออก", value: "Export", icon: "📤" }
+          { label: "เทมเพลต", value: "ดาวน์โหลดแบบฟอร์ม", icon: "📄" },
+          { label: "การตรวจสอบข้อมูล", value: "ตรวจสอบทีละเซลล์", icon: "🔍" },
+          { label: "การส่งออก", value: "เลือกข้อมูลที่จะส่งออกได้ในรูปแบบ Excel (.xlsx)", icon: "📤" }
         ],
         steps: [
           { step: 1, title: "สำรวจข้อมูล", concept: "ต้องการ UX ที่เข้าถึงข้อมูลได้รวดเร็ว", what: "ค้นหาด้วยชื่อ/รหัส และกรองตามกลุ่มข้อมูล", result: "เข้าถึงชุดข้อมูลที่ต้องการได้ทันที" },
