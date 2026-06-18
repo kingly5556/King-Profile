@@ -768,18 +768,20 @@ export function ProjectDetailClient({ slug }: { slug: string }) {
             </h1>
           </div>
 
-          <div className={`relative mb-16 w-full overflow-hidden border ${accentBorderClass} bg-surface-container-low`}>
-            <Image
-              src={project.imageSrc}
-              alt={project.imageAlt}
-              width={0}
-              height={0}
-              sizes="100vw"
-              style={{ width: '100%', height: 'auto' }}
-              priority
-              className="block"
-            />
-          </div>
+          {project.imageSrc && (
+            <div className={`relative mb-16 w-full overflow-hidden border ${accentBorderClass} bg-surface-container-low`}>
+              <Image
+                src={project.imageSrc}
+                alt={project.imageAlt}
+                width={0}
+                height={0}
+                sizes="100vw"
+                style={{ width: '100%', height: 'auto' }}
+                priority
+                className="block"
+              />
+            </div>
+          )}
 
           <ProjectTabs
             accentBorderClass={accentBorderClass}

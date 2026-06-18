@@ -702,7 +702,7 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
     ],
     ctaLabel: "Email me",
     ctaHref: "mailto:kongkat5556@hotmail.com?subject=Quill%20Remake%20project",
-    imageSrc: "/images/projects/quill-remake.png",
+    imageSrc: "",
     imageAlt: "Quill Platform Remake",
     imagePosition: "object-left-top",
     accent: "blue",

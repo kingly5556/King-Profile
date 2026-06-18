@@ -48,13 +48,15 @@ export function ProjectCard({ project }: { project: PortfolioProject }) {
           <div
             className={`pointer-events-none absolute inset-0 z-10 opacity-0 mix-blend-screen transition-opacity duration-500 group-hover:opacity-100 ${accentOverlay[project.accent]}`}
           />
-          <Image
-            src={project.imageSrc}
-            alt={project.imageAlt}
-            fill
-            className={`object-cover opacity-80 transition-transform duration-700 group-hover:scale-105 group-hover:opacity-100 ${project.imagePosition}`}
-            sizes="(min-width: 768px) 50vw, 100vw"
-          />
+          {project.imageSrc && (
+            <Image
+              src={project.imageSrc}
+              alt={project.imageAlt}
+              fill
+              className={`object-cover opacity-80 transition-transform duration-700 group-hover:scale-105 group-hover:opacity-100 ${project.imagePosition}`}
+              sizes="(min-width: 768px) 50vw, 100vw"
+            />
+          )}
         </div>
 
         <div className="flex flex-col gap-2 pt-2">
