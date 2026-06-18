@@ -21,7 +21,7 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
     slug: "data-center",
     category: "โครงการเว็บไซต์",
     index: 1,
-    total: 1,
+    total: 3,
     meta: "โครงการสหกิจศึกษา · แพลตฟอร์มข้อมูลมหาวิทยาลัย",
     title: "ศูนย์ข้อมูล (DATA CENTER - SANDBOX)",
     description:
@@ -179,7 +179,7 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
     slug: "gpa-prediction-model",
     category: "โครงการข้อมูล",
     index: 2,
-    total: 2,
+    total: 3,
     meta: "การวิเคราะห์ข้อมูล · แมชชีนเลิร์นนิง · ชุดข้อมูลวิชาการ",
     title: "ระบบวิเคราะห์ข้อมูลนักศึกษาสำเร็จการศึกษา & โมเดลทำนายเกรดเฉลี่ยสะสม (GPA)",
     description:
@@ -675,6 +675,119 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
     imagePosition: "object-left-top",
     accent: "purple",
     icon: "school",
+  },
+  {
+    slug: "quill-remake",
+    category: "โครงการเว็บไซต์",
+    index: 3,
+    total: 3,
+    meta: "โครงการส่วนตัว · แพลตฟอร์มนิยายออนไลน์",
+    title: "แพลตฟอร์มนิยาย QUILL (RE-ARCHITECTURE)",
+    description: "การปรับปรุงและเขียนใหม่ทั้งหมดของแพลตฟอร์มอ่านและเขียนนิยายออนไลน์ โดยเปลี่ยนสถาปัตยกรรมระบบจากแบบ Monolithic (Frontend เรียก DB โดยตรง) เป็นแบบ 3-Tier Separated Architecture เพื่อยกระดับความปลอดภัย รวมศูนย์ตรรกะทางธุรกิจ และเชื่อมต่อกับบริการผู้ช่วย AI ภายในอย่างปลอดภัย",
+    bullets: [
+      "ถอด Database Credentials (Supabase Key) ออกจากฝั่ง Frontend ทั้งหมด เพื่อป้องกันการเข้าถึงฐานข้อมูลโดยไม่ได้รับอนุญาต",
+      "รวมศูนย์ Business Logic ทั้งหมดไว้ที่ Node.js/Express Backend เพื่อให้เป็น Single Source of Truth เพียงจุดเดียว",
+      "พัฒนาระบบ REST API เต็มรูปแบบสำหรับ Authentication, ระบบนิยาย, ตอนย่อย, โปรไฟล์ผู้ใช้ และระบบโซเชียล (ติดตาม/คั่นหน้า/คอมเมนต์)",
+      "เชื่อมต่อผู้ช่วย AI (Python FastAPI) เป็น Internal Service ที่เรียกใช้งานได้อย่างปลอดภัยผ่าน Backend Proxy เท่านั้น",
+      "พัฒนาระบบยืนยันตัวตนแบบ Custom JWT ที่รองรับการทำ Access และ Refresh Token Rotation",
+    ],
+    ctaLabel: "ส่งอีเมลหาฉัน",
+    ctaHref: "mailto:kongkat5556@hotmail.com?subject=Quill%20Remake%20project",
+    imageSrc: "/images/projects/quill-remake.png",
+    imageAlt: "Quill Platform Remake",
+    imagePosition: "object-left-top",
+    accent: "blue",
+    icon: "book",
+    detailSections: [
+      {
+        kind: "stack",
+        title: "เครื่องมือ & เทคโนโลยีที่ใช้",
+        items: [
+          { label: "React (Vite) + TS", icon: "code" },
+          { label: "Node.js / Express", icon: "api" },
+          { label: "Supabase", icon: "database" },
+          { label: "JWT Auth", icon: "lock" },
+          { label: "Tailwind CSS v4", icon: "brush" },
+          { label: "react-quill-new", icon: "edit" },
+        ]
+      },
+      {
+        kind: "systemDesign",
+        title: "สถาปัตยกรรม 3-Tier แบบใหม่",
+        problems: [
+          "Frontend เวอร์ชันเก่าเก็บ Database Key ไว้ ทำให้เสี่ยงต่อการโดนขโมยข้อมูลหรือแก้ไขฐานข้อมูลโดยพลการ",
+          "Business logic กระจัดกระจายอยู่ฝั่ง Frontend ทำให้ดูแลรักษา แก้ไขบั๊ก และทดสอบระบบได้ยาก",
+          "การยิง API หาบริการ AI ตรงๆ จาก Frontend ทำให้เสี่ยงต่อการโดนแฮกเกอร์ดูดโควต้า API Key"
+        ],
+        modules: [
+          { title: "Frontend Layer", description: "ส่วนแสดงผล React UI ที่ปลอดภัย ไม่มี DB Credentials ติดต่อผ่าน Backend API เท่านั้น", icon: "💻" },
+          { title: "Backend API Gateway", description: "เซิร์ฟเวอร์ Express จัดการ JWT, Business Logic, Rate Limit และคัดกรองข้อมูล", icon: "⚙️" },
+          { title: "Database Layer", description: "ฐานข้อมูลและ Storage บน Supabase ซึ่งเข้าถึงได้จาก Backend ด้วย Service Role Key เท่านั้น", icon: "🗄️" },
+          { title: "AI Service", description: "บริการ AI ภาษา Python (FastAPI) ที่ซ่อนอยู่หลังบ้าน เรียกใช้งานผ่าน Backend Proxy เท่านั้น", icon: "🤖" }
+        ],
+        roles: [
+          { role: "Guest", permissions: "สามารถเข้าชมและอ่านนิยายที่เผยแพร่แล้วได้" },
+          { role: "Reader", permissions: "สามารถกดติดตามนักเขียน คั่นหน้าตอนนิยาย และแสดงความคิดเห็นได้ (ต้องล็อกอิน)" },
+          { role: "Writer", permissions: "สร้างนิยาย แต่งตอนย่อย เผยแพร่ผลงาน และใช้งานผู้ช่วย AI ได้" }
+        ],
+        architectureDiagram: `Browser\n  └── Frontend (React :5173)\n        └── Backend API (Express :4000)\n              ├── Supabase PostgreSQL  [เข้าถึงได้เฉพาะฝั่ง Backend เท่านั้น]\n              ├── Supabase Storage     [อัปโหลดไฟล์ผ่าน Backend เท่านั้น]\n              └── AI Service (FastAPI :8000) [ซ่อนเป็น Internal Service เท่านั้น]`
+      },
+      {
+        kind: "systemFeature",
+        id: "auth",
+        title: "ระบบผู้ใช้งาน (Auth & Users)",
+        stats: [
+          { label: "ระบบยืนยันตัวตน", value: "Custom JWT", icon: "🔑" },
+          { label: "กลยุทธ์โทเคน", value: "Access + Refresh", icon: "🔄" },
+          { label: "อายุ Access Token", value: "7 วัน", icon: "⏱️" },
+          { label: "การเก็บ DB Key", value: "เฉพาะฝั่ง Backend", icon: "🔐" }
+        ],
+        steps: [
+          { step: 1, title: "Register", concept: "สมัครสมาชิกอย่างปลอดภัย", what: "Backend รับเรื่อง ส่งต่อให้ Supabase Auth และสร้างโปรไฟล์พื้นฐานให้", result: "ได้บัญชีผู้ใช้ใหม่พร้อมใช้งาน" },
+          { step: 2, title: "Login", concept: "ยืนยันตัวตน", what: "Backend ตรวจสอบรหัสผ่าน และออก JWT พร้อม Refresh Token ให้", result: "Client ได้รับ Token ที่ปลอดภัย" },
+          { step: 3, title: "Authenticated Request", concept: "ปกป้อง API ด้วย Token", what: "JWT Middleware จะสกัด userId และตรวจสอบความถูกต้องก่อนให้ผ่าน", result: "ป้องกันการเข้าถึงโดยพลการ" },
+          { step: 4, title: "Token Refresh", concept: "รักษาการเชื่อมต่อแบบไร้รอยต่อ", what: "แลกเปลี่ยน Refresh Token ที่ยังไม่หมดอายุ เพื่อขอรับ Access Token ชุดใหม่", result: "ผู้ใช้ไม่ต้องล็อกอินใหม่บ่อยๆ" },
+          { step: 5, title: "Avatar Upload", concept: "จัดการไฟล์อย่างรัดกุม", what: "อัปโหลดรูปผ่าน Backend ด้วย multer แล้วค่อยส่งต่อให้ Supabase Storage", result: "โปรไฟล์ได้รับการอัปเดตอย่างปลอดภัย" }
+        ]
+      },
+      {
+        kind: "systemFeature",
+        id: "dataset",
+        title: "API Endpoints ทั้งหมด",
+        stats: [
+          { label: "ระบบนิยาย (Novel)", value: "8 Endpoints", icon: "📝" },
+          { label: "ระบบตอน (Chapter)", value: "7 Endpoints", icon: "📖" },
+          { label: "ระบบโซเชียล", value: "5 Endpoints", icon: "👥" },
+          { label: "ระบบโปรไฟล์", value: "4 Endpoints", icon: "👤" }
+        ],
+        steps: [
+          { step: 1, title: "Auth Routes", concept: "จัดการตัวตนผู้ใช้", what: "Login, Register, Logout, Refresh Token", result: "ควบคุม Session ผู้ใช้ทั้งหมด" },
+          { step: 2, title: "Novel Routes", concept: "จัดการนิยายหลัก", what: "สร้าง/ลบ/แก้ไข, จัดการเผยแพร่, นับยอดวิว, ระบบค้นหา", result: "วงจรชีวิตของนิยาย" },
+          { step: 3, title: "Chapter Routes", concept: "จัดการเนื้อหา", what: "ระบบ Auto-save แบบเบื้องหลัง, เพิ่มตอน, นับยอดวิวตอน", result: "ประสบการณ์เขียนและอ่านที่ลื่นไหล" },
+          { step: 4, title: "Social Routes", concept: "ปฏิสัมพันธ์", what: "กดติดตาม (Follow), คั่นหน้าเว็บ (Bookmark), คอมเมนต์", result: "สร้างสังคมการอ่าน" },
+          { step: 5, title: "Profile Routes", concept: "จัดการข้อมูลส่วนตัว", what: "ดึงโปรไฟล์, อัปเดตรายละเอียด, อัปโหลดอวตาร์", result: "ปรับแต่งโปรไฟล์ส่วนตัว" }
+        ]
+      },
+      {
+        kind: "summary",
+        title: "สรุปผลการดำเนินงาน",
+        goalAchievement: "ประสบความสำเร็จในการยกระดับโครงสร้างระบบแบบเดิมที่พึ่งพา Frontend อย่างหนัก ให้กลายเป็นสถาปัตยกรรมแบบ 3-Tier ที่มั่นคง ระบบมีความปลอดภัยสูงขึ้นอย่างมากจากการปิดกั้นไม่ให้ Client เข้าถึงฐานข้อมูลได้โดยตรงอีกต่อไป",
+        qualityAssessment: "ฝั่ง Backend ถูกออกแบบมาพร้อมคุณสมบัติสำหรับ Production ครบถ้วน ทั้ง JWT Auth, Rate Limiting, ตัวจัดการ Error ส่วนกลาง, นโยบาย CORS และ Security Headers ผ่าน Helmet นอกจากนี้ระบบ AI ยังถูกแยกส่วนทำงานอยู่ภายในเน็ตเวิร์กส่วนตัวอย่างปลอดภัย",
+        benefits: [
+          "ปิดความเสี่ยงเรื่องการขโมยข้อมูลโดยสมบูรณ์ เนื่องจากไม่มี Database Credentials หลุดไปถึงฝั่งผู้ใช้งานเลย",
+          "Business Logic อยู่รวมกันในจุดเดียว (Backend) ทำให้ค้นหาบั๊ก ทดสอบ และบำรุงรักษาโค้ดได้ง่ายขึ้นมาก",
+          "สถาปัตยกรรม AI Service แบบ Internal ป้องกันไม่ให้แฮกเกอร์ดูดโควต้า API Key ของ AI ได้",
+          "ระบบสามารถปรับขยาย (Scale) ได้อิสระ Frontend, Backend และ AI สามารถแยกเซิร์ฟเวอร์รันกันคนละที่ได้"
+        ],
+        steps: [
+          { phase: "การออกแบบระบบ", action: "วางแผนสถาปัตยกรรม 3-Tier และกำหนดโครงสร้าง REST API ทั้งหมด", result: "ได้แผนผังและเส้นทางการทำงานที่ชัดเจน" },
+          { phase: "จัดการฐานข้อมูล", action: "ปรับโครงสร้างตารางใหม่ทั้ง 7 ตารางและ Bypass RLS ด้วย Backend", result: "รากฐานข้อมูลที่แข็งแกร่ง" },
+          { phase: "พัฒนาเซิร์ฟเวอร์", action: "สร้าง Express Backend ที่มี JWT, Rate Limit, Helmet และ Multer", result: "ได้ API Gateway ที่แข็งแกร่งและปลอดภัย" },
+          { phase: "เชื่อมต่อส่วนแสดงผล", action: "ปรับแก้ React UI ให้มาใช้งานผ่าน REST API แทน และจัดการ State ของ JWT", result: "ปิดช่องโหว่ทางฝั่ง Frontend" },
+          { phase: "เชื่อมต่อระบบ AI", action: "สร้าง Backend Proxy เพื่อ Stream ข้อมูลการตอบกลับจาก AI Service ภาษา Python อย่างปลอดภัย", result: "ผู้ช่วย AI พร้อมใช้งาน" }
+        ]
+      }
+    ]
   },
 ];
 

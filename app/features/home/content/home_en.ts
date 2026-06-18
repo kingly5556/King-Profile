@@ -21,7 +21,7 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
     slug: "data-center",
     category: "Website project",
     index: 1,
-    total: 1,
+    total: 3,
     meta: "Cooperative project · University data platform",
     title: "DATA CENTER (SANDBOX)",
     description:
@@ -179,7 +179,7 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
     slug: "gpa-prediction-model",
     category: "Data Project",
     index: 2,
-    total: 2,
+    total: 3,
     meta: "Data Analysis · Machine Learning · Academic Dataset",
     title: "GRADUATE STUDENT ANALYTICS & GPA PREDICTION MODEL",
     description:
@@ -684,6 +684,119 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
     imagePosition: "object-left-top",
     accent: "purple",
     icon: "school",
+  },
+  {
+    slug: "quill-remake",
+    category: "Website project",
+    index: 3,
+    total: 3,
+    meta: "Personal Project · Novel Writing Platform",
+    title: "QUILL PLATFORM (RE-ARCHITECTURE)",
+    description: "A modernized remake of a novel reading and writing platform. The system was completely re-architected into a 3-Tier Separated Architecture from a monolithic client-DB pattern. It enhances security by centralizing business logic, removes all DB credentials from the frontend, and integrates an internal AI writing assistant securely.",
+    bullets: [
+      "Removed all direct database credentials (Supabase Key) from the Frontend to prevent unauthorized access.",
+      "Centralized business logic in a dedicated Node.js/Express backend, serving as the Single Source of Truth.",
+      "Implemented full REST APIs for Authentication, Novels, Chapters, Profiles, and Social features (Follow/Bookmark/Comment).",
+      "Integrated a Python FastAPI AI Assistant as an internal-only service, accessed securely via a backend proxy.",
+      "Developed a custom JWT Authentication system with Access and Refresh Token rotation.",
+    ],
+    ctaLabel: "Email me",
+    ctaHref: "mailto:kongkat5556@hotmail.com?subject=Quill%20Remake%20project",
+    imageSrc: "/images/projects/quill-remake.png",
+    imageAlt: "Quill Platform Remake",
+    imagePosition: "object-left-top",
+    accent: "blue",
+    icon: "book",
+    detailSections: [
+      {
+        kind: "stack",
+        title: "Tools & Tech Stack",
+        items: [
+          { label: "React (Vite) + TS", icon: "code" },
+          { label: "Node.js / Express", icon: "api" },
+          { label: "Supabase", icon: "database" },
+          { label: "JWT Auth", icon: "lock" },
+          { label: "Tailwind CSS v4", icon: "brush" },
+          { label: "react-quill-new", icon: "edit" },
+        ]
+      },
+      {
+        kind: "systemDesign",
+        title: "New 3-Tier Architecture",
+        problems: [
+          "Frontend previously held database credentials (Supabase Key), risking security and quota theft.",
+          "Business logic was scattered across the frontend, making it hard to maintain and test.",
+          "Direct API calls to AI services from the frontend exposed the LLM API keys to the public."
+        ],
+        modules: [
+          { title: "Frontend Layer", description: "React UI, completely isolated from DB credentials. Communicates only via Backend API.", icon: "💻" },
+          { title: "Backend API Gateway", description: "Express server handling JWT auth, business logic, rate limiting, and request validation.", icon: "⚙️" },
+          { title: "Database Layer", description: "Supabase PostgreSQL and Storage accessed exclusively by the backend via Service Role Key.", icon: "🗄️" },
+          { title: "AI Service", description: "Internal Python FastAPI service (RAGEngine), callable only through the secure backend proxy.", icon: "🤖" }
+        ],
+        roles: [
+          { role: "Guest", permissions: "Browse and read published novels" },
+          { role: "Reader", permissions: "Follow authors, bookmark chapters, and post comments" },
+          { role: "Writer", permissions: "Create novels, publish chapters, and use AI Assistant" }
+        ],
+        architectureDiagram: `Browser\n  └── Frontend (React :5173)\n        └── Backend API (Express :4000)\n              ├── Supabase PostgreSQL  [DB Access — Backend Only]\n              ├── Supabase Storage     [File Upload — Backend Only]\n              └── AI Service (FastAPI :8000) [Internal Only]`
+      },
+      {
+        kind: "systemFeature",
+        id: "auth",
+        title: "Auth & Users",
+        stats: [
+          { label: "Authentication", value: "Custom JWT", icon: "🔑" },
+          { label: "Token Strategy", value: "Access + Refresh", icon: "🔄" },
+          { label: "Access Token", value: "7 Days", icon: "⏱️" },
+          { label: "DB Credentials", value: "Backend Only", icon: "🔐" }
+        ],
+        steps: [
+          { step: 1, title: "Register", concept: "Create new account securely", what: "Backend proxies creation to Supabase Auth and sets up user profile", result: "User account created" },
+          { step: 2, title: "Login", concept: "Verify credentials", what: "Backend verifies password and issues signed JWT and Refresh Token", result: "Client receives secure token" },
+          { step: 3, title: "Authenticated Request", concept: "Secure API access", what: "JWT Middleware verifies token validity and extracts userId before routing", result: "Protected resource accessed" },
+          { step: 4, title: "Token Refresh", concept: "Maintain session smoothly", what: "Client swaps expired Access Token and valid Refresh Token for a new pair", result: "Uninterrupted UX" },
+          { step: 5, title: "Avatar Upload", concept: "Secure file handling", what: "Backend receives image via multer, uploads to Supabase Storage, and saves URL", result: "Profile updated securely" }
+        ]
+      },
+      {
+        kind: "systemFeature",
+        id: "dataset",
+        title: "API Endpoints",
+        stats: [
+          { label: "Novel API", value: "8 Endpoints", icon: "📝" },
+          { label: "Chapter API", value: "7 Endpoints", icon: "📖" },
+          { label: "Social API", value: "5 Endpoints", icon: "👥" },
+          { label: "Profile API", value: "4 Endpoints", icon: "👤" }
+        ],
+        steps: [
+          { step: 1, title: "Auth Routes", concept: "Identity management", what: "Login, Register, Logout, Refresh Token", result: "Handles all user sessions" },
+          { step: 2, title: "Novel Routes", concept: "Core content management", what: "CRUD, Publish/Unpublish, View Count, Search", result: "Manages novel lifecycle" },
+          { step: 3, title: "Chapter Routes", concept: "Content delivery", what: "CRUD, Auto-save (background syncing), Chapter View Count", result: "Smooth writing and reading" },
+          { step: 4, title: "Social Routes", concept: "User engagement", what: "Follow User, Bookmark Chapter, Add/Get Comments, Reading History", result: "Community interactions" },
+          { step: 5, title: "Profile Routes", concept: "User personalization", what: "Get Profile, Update Profile, Avatar Upload, Search Users", result: "Profile customization" }
+        ]
+      },
+      {
+        kind: "summary",
+        title: "Project Summary",
+        goalAchievement: "Successfully transitioned a monolithic, frontend-heavy application into a robust 3-Tier Separated Architecture. The system is now significantly more secure by eliminating direct database access from the client side.",
+        qualityAssessment: "The backend is equipped with essential production features including JWT Auth, Rate Limiting, Global Error Handling, CORS policies, and Security Headers via Helmet. The AI integration is securely isolated within the internal network.",
+        benefits: [
+          "Zero database credentials in the frontend entirely mitigates client-side data breach risks.",
+          "Centralized Business Logic allows for much easier testing, maintenance, and bug fixing.",
+          "Internal AI Service architecture prevents unauthorized external usage and API quota theft.",
+          "The decoupled architecture is scalable—the frontend, backend, and AI service can be deployed independently."
+        ],
+        steps: [
+          { phase: "Architecture Design", action: "Planned the 3-Tier architecture and defined all REST API contracts.", result: "Clear roadmap for migration." },
+          { phase: "Database Setup", action: "Restructured 7 core tables and applied RLS bypass via Backend Service Role.", result: "Secure database foundation." },
+          { phase: "Backend Dev", action: "Built the Express server featuring JWT, Multer, Rate Limiting, and Helmet.", result: "Secure API Gateway ready." },
+          { phase: "Frontend Integration", action: "Refactored React UI to consume the new REST APIs and manage JWT state.", result: "Client safely connected." },
+          { phase: "AI Proxy", action: "Built a backend proxy to securely stream responses from the Python FastAPI service.", result: "Secure AI Assistant integration." }
+        ]
+      }
+    ]
   },
 ];
 
