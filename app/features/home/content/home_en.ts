@@ -691,7 +691,7 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
     index: 3,
     total: 3,
     meta: "Personal Project · Novel Writing Platform",
-    title: "QUILL PLATFORM (RE-ARCHITECTURE)",
+    title: "QUILL PLATFORM",
     description: "A modernized remake of a novel reading and writing platform. The system was completely re-architected into a 3-Tier Separated Architecture from a monolithic client-DB pattern. It enhances security by centralizing business logic, removes all DB credentials from the frontend, and integrates an internal AI writing assistant securely.",
     bullets: [
       "Removed all direct database credentials (Supabase Key) from the Frontend to prevent unauthorized access.",

@@ -682,7 +682,7 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
     index: 3,
     total: 3,
     meta: "โครงการส่วนตัว · แพลตฟอร์มนิยายออนไลน์",
-    title: "แพลตฟอร์มนิยาย QUILL (RE-ARCHITECTURE)",
+    title: "แพลตฟอร์มนิยาย QUILL",
     description: "การปรับปรุงและเขียนใหม่ทั้งหมดของแพลตฟอร์มอ่านและเขียนนิยายออนไลน์ โดยเปลี่ยนสถาปัตยกรรมระบบจากแบบ Monolithic (Frontend เรียก DB โดยตรง) เป็นแบบ 3-Tier Separated Architecture เพื่อยกระดับความปลอดภัย รวมศูนย์ตรรกะทางธุรกิจ และเชื่อมต่อกับบริการผู้ช่วย AI ภายในอย่างปลอดภัย",
     bullets: [
       "ถอด Database Credentials (Supabase Key) ออกจากฝั่ง Frontend ทั้งหมด เพื่อป้องกันการเข้าถึงฐานข้อมูลโดยไม่ได้รับอนุญาต",
