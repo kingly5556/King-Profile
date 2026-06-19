@@ -134,21 +134,23 @@ function CleaningSection({ section, accentColorClass, accentBorderClass }: {
   return (
     <div className="flex flex-col gap-16">
       {/* Stats */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        {section.stats.map((stat) => (
-          <div key={stat.label} className={`border ${accentBorderClass} bg-surface-container-low p-5 flex flex-col gap-3`}>
-            <div className="flex items-center gap-2">
-              <MaterialIcon name={stat.icon} sizeClass="text-base" className={accentColorClass} />
-              <span className="font-label-mono text-[10px] uppercase tracking-widest text-secondary">{stat.label}</span>
+      {section.stats && section.stats.length > 0 && (
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          {section.stats.map((stat) => (
+            <div key={stat.label} className={`border ${accentBorderClass} bg-surface-container-low p-5 flex flex-col gap-3`}>
+              <div className="flex items-center gap-2">
+                <MaterialIcon name={stat.icon} sizeClass="text-base" className={accentColorClass} />
+                <span className="font-label-mono text-[10px] uppercase tracking-widest text-secondary">{stat.label}</span>
+              </div>
+              <div className="flex items-end gap-2">
+                <span className="font-mono text-sm text-secondary line-through">{stat.before}</span>
+                <span className="font-label-mono text-xs text-secondary">→</span>
+                <span className={`font-headline-md text-xl font-bold ${accentColorClass}`}>{stat.after}</span>
+              </div>
             </div>
-            <div className="flex items-end gap-2">
-              <span className="font-mono text-sm text-secondary line-through">{stat.before}</span>
-              <span className="font-label-mono text-xs text-secondary">→</span>
-              <span className={`font-headline-md text-xl font-bold ${accentColorClass}`}>{stat.after}</span>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Steps */}
       <div className="flex flex-col gap-8">
@@ -194,17 +196,19 @@ function FeatureEngineeringSection({ section, accentColorClass, accentBorderClas
   return (
     <div className="flex flex-col gap-16">
       {/* Stats */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        {section.stats.map((stat) => (
-          <div key={stat.label} className={`border ${accentBorderClass} bg-surface-container-low p-5 flex flex-col gap-3`}>
-            <div className="flex items-center gap-2">
-              <MaterialIcon name={stat.icon} sizeClass="text-base" className={accentColorClass} />
-              <span className="font-label-mono text-[10px] uppercase tracking-widest text-secondary">{stat.label}</span>
+      {section.stats && section.stats.length > 0 && (
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          {section.stats.map((stat) => (
+            <div key={stat.label} className={`border ${accentBorderClass} bg-surface-container-low p-5 flex flex-col gap-3`}>
+              <div className="flex items-center gap-2">
+                <MaterialIcon name={stat.icon} sizeClass="text-base" className={accentColorClass} />
+                <span className="font-label-mono text-[10px] uppercase tracking-widest text-secondary">{stat.label}</span>
+              </div>
+              <span className={`font-headline-md text-2xl font-bold ${accentColorClass}`}>{stat.value}</span>
             </div>
-            <span className={`font-headline-md text-2xl font-bold ${accentColorClass}`}>{stat.value}</span>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Steps */}
       <div className="flex flex-col gap-8">
@@ -555,17 +559,19 @@ function SystemDesignSection({ section, accentColorClass, accentBorderClass }: {
   const { t } = useLanguage();
   return (
     <div className="flex flex-col gap-16">
-      <div className="flex flex-col gap-4">
-        <h3 className="font-headline-sm text-headline-sm text-primary">💡 {t("problemsSolved") || "Problems Solved"}</h3>
-        <ul className="flex flex-col gap-3">
-          {section.problems.map((problem, i) => (
-            <li key={i} className="flex gap-3 text-sm text-secondary font-body-md leading-relaxed">
-              <span className={`mt-0.5 shrink-0 ${accentColorClass}`}>→</span>
-              {problem}
-            </li>
-          ))}
-        </ul>
-      </div>
+      {section.problems && section.problems.length > 0 && (
+        <div className="flex flex-col gap-4">
+          <h3 className="font-headline-sm text-headline-sm text-primary">💡 {t("problemsSolved") || "Problems Solved"}</h3>
+          <ul className="flex flex-col gap-3">
+            {section.problems.map((problem, i) => (
+              <li key={i} className="flex gap-3 text-sm text-secondary font-body-md leading-relaxed">
+                <span className={`mt-0.5 shrink-0 ${accentColorClass}`}>→</span>
+                {problem}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <div className="flex flex-col gap-6">
         <h3 className="font-headline-sm text-headline-sm text-primary">🧩 {t("coreModules") || "Core Modules"}</h3>

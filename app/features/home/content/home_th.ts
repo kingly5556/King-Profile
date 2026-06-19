@@ -326,12 +326,6 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
       {
         kind: "cleaning",
         title: "ขั้นตอนคลีนข้อมูล (Data Cleaning)",
-        stats: [
-          { label: "จำนวนแถวข้อมูล (ก่อน → หลัง)", before: "6,520", after: "6,520", icon: "table_rows" },
-          { label: "จำนวนคอลัมน์", before: "42", after: "45", icon: "view_column" },
-          { label: "จำนวนช่องข้อมูลสูญหาย", before: "6,728", after: "133", icon: "healing" },
-          { label: "คอลัมน์ข้อมูลส่วนบุคคลที่นำออก", before: "11 คอลัมน์", after: "0 คอลัมน์", icon: "lock" },
-        ],
         steps: [
           {
             step: 1,
@@ -396,11 +390,6 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
       {
         kind: "featureEngineering",
         title: "การสร้างฟีเจอร์ใหม่ (Feature Engineering)",
-        stats: [
-          { label: "ฟีเจอร์ที่เพิ่มทั้งหมด", value: "21 ฟีเจอร์", icon: "add_circle" },
-          { label: "จำนวนคอลัมน์สุดท้าย", value: "66 คอลัมน์", icon: "view_column" },
-          { label: "แก้ไขอายุที่สูญหายสำเร็จ", value: "100%", icon: "done_all" },
-        ],
         steps: [
           {
             task: 1,
@@ -724,11 +713,6 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
       {
         kind: "systemDesign",
         title: "สถาปัตยกรรม 3-Tier แบบใหม่",
-        problems: [
-          "Frontend เวอร์ชันเก่าเก็บ Database Key ไว้ ทำให้เสี่ยงต่อการโดนขโมยข้อมูลหรือแก้ไขฐานข้อมูลโดยพลการ",
-          "Business logic กระจัดกระจายอยู่ฝั่ง Frontend ทำให้ดูแลรักษา แก้ไขบั๊ก และทดสอบระบบได้ยาก",
-          "การยิง API หาบริการ AI ตรงๆ จาก Frontend ทำให้เสี่ยงต่อการโดนแฮกเกอร์ดูดโควต้า API Key"
-        ],
         modules: [
           { title: "Frontend Layer", description: "ส่วนแสดงผล React UI ที่ปลอดภัย ไม่มี DB Credentials ติดต่อผ่าน Backend API เท่านั้น", icon: "💻" },
           { title: "Backend API Gateway", description: "เซิร์ฟเวอร์ Express จัดการ JWT, Business Logic, Rate Limit และคัดกรองข้อมูล", icon: "⚙️" },

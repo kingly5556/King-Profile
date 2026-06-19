@@ -326,12 +326,6 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
       {
         kind: "cleaning",
         title: "Data Cleaning",
-        stats: [
-          { label: "Rows (before → after)", before: "6,520", after: "6,520", icon: "table_rows" },
-          { label: "Columns", before: "42", after: "45", icon: "view_column" },
-          { label: "Missing Cells", before: "6,728", after: "133", icon: "healing" },
-          { label: "PII Removed", before: "11 columns", after: "0 columns", icon: "lock" },
-        ],
         steps: [
           {
             step: 1,
@@ -396,11 +390,6 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
       {
         kind: "featureEngineering",
         title: "Feature Engineering",
-        stats: [
-          { label: "Total Features Added", value: "21", icon: "add_circle" },
-          { label: "Final Column Count", value: "66", icon: "view_column" },
-          { label: "Missing AGE Fixed", value: "100%", icon: "done_all" },
-        ],
         steps: [
           {
             task: 1,
@@ -733,11 +722,6 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
       {
         kind: "systemDesign",
         title: "New 3-Tier Architecture",
-        problems: [
-          "Frontend previously held database credentials (Supabase Key), risking security and quota theft.",
-          "Business logic was scattered across the frontend, making it hard to maintain and test.",
-          "Direct API calls to AI services from the frontend exposed the LLM API keys to the public."
-        ],
         modules: [
           { title: "Frontend Layer", description: "React UI, completely isolated from DB credentials. Communicates only via Backend API.", icon: "💻" },
           { title: "Backend API Gateway", description: "Express server handling JWT auth, business logic, rate limiting, and request validation.", icon: "⚙️" },

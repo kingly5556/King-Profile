@@ -136,8 +136,8 @@ export type ProjectDetailSection =
   | { kind: "pdpa"; title: string; piiColumns: string[]; principles: { label: string; detail: string }[] }
   | { kind: "stack"; title: string; items: { label: string; icon: string }[] }
   | { kind: "eda"; title: string; stats: EDAStatCard[]; charts: EDAChart[] }
-  | { kind: "cleaning"; title: string; stats: CleaningStat[]; steps: CleaningStep[]; issues: { title: string; detail: string }[] }
-  | { kind: "featureEngineering"; title: string; stats: FeatureEngineeringStat[]; steps: FeatureEngineeringStep[] }
+  | { kind: "cleaning"; title: string; stats?: CleaningStat[]; steps: CleaningStep[]; issues: { title: string; detail: string }[] }
+  | { kind: "featureEngineering"; title: string; stats?: FeatureEngineeringStat[]; steps: FeatureEngineeringStep[] }
   | { kind: "statisticalTesting"; title: string; summary: string; groups: StatisticalTestGroup[]; keyFindings: string[] }
   | {
       kind: "predictiveModeling";
@@ -165,7 +165,7 @@ export type ProjectDetailSection =
   | {
       kind: "systemDesign";
       title: string;
-      problems: string[];
+      problems?: string[];
       modules: SystemDesignModule[];
       roles: SystemDesignRole[];
       architectureDiagram?: string;
