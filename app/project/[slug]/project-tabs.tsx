@@ -30,6 +30,8 @@ export function ProjectTabs({
   authContent?: React.ReactNode;
   datasetContent?: React.ReactNode;
   schemaContent?: React.ReactNode;
+  aiContent?: React.ReactNode;
+  coreContent?: React.ReactNode;
   deploymentContent?: React.ReactNode;
   summaryContent?: React.ReactNode;
   accentBorderClass: string;
@@ -47,8 +49,10 @@ export function ProjectTabs({
     ...(predictiveModelingContent ? [{ id: "PredModel", label: t("predictiveModeling") }] : []),
     ...(systemDesignContent ? [{ id: "SystemDesign", label: t("systemDesign") }] : []),
     ...(authContent ? [{ id: "Auth", label: t("authAndUsers") }] : []),
+    ...(aiContent ? [{ id: "AI", label: t("aiAssistant") }] : []),
     ...(datasetContent ? [{ id: "Dataset", label: t("datasetManagement") }] : []),
     ...(schemaContent ? [{ id: "Schema", label: t("schemaManagement") }] : []),
+    ...(coreContent ? [{ id: "Core", label: t("platformFeatures") }] : []),
     ...(deploymentContent ? [{ id: "Deployment", label: t("deployment") }] : []),
     ...(summaryContent ? [{ id: "Summary", label: t("projectSummary") }] : []),
   ];
@@ -80,8 +84,10 @@ export function ProjectTabs({
         {activeTab === "PredModel" && predictiveModelingContent}
         {activeTab === "SystemDesign" && systemDesignContent}
         {activeTab === "Auth" && authContent}
+        {activeTab === "AI" && aiContent}
         {activeTab === "Dataset" && datasetContent}
         {activeTab === "Schema" && schemaContent}
+        {activeTab === "Core" && coreContent}
         {activeTab === "Deployment" && deploymentContent}
         {activeTab === "Summary" && summaryContent}
       </div>

@@ -961,6 +961,18 @@ export function ProjectDetailClient({ slug }: { slug: string }) {
                 </>
               ) : undefined
             }
+            aiContent={
+              project.detailSections?.some(s => s.kind === "systemFeature" && (s as any).id === "ai") ? (
+                <>
+                  {project.detailSections.map((section, idx) => {
+                    if (section.kind === "systemFeature" && (section as any).id === "ai") {
+                      return <SystemFeatureSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
+                    }
+                    return null;
+                  })}
+                </>
+              ) : undefined
+            }
             datasetContent={
               project.detailSections?.some(s => s.kind === "systemFeature" && (s as any).id === "dataset") ? (
                 <>
@@ -978,6 +990,18 @@ export function ProjectDetailClient({ slug }: { slug: string }) {
                 <>
                   {project.detailSections.map((section, idx) => {
                     if (section.kind === "systemFeature" && (section as any).id === "schema") {
+                      return <SystemFeatureSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
+                    }
+                    return null;
+                  })}
+                </>
+              ) : undefined
+            }
+            coreContent={
+              project.detailSections?.some(s => s.kind === "systemFeature" && (s as any).id === "core") ? (
+                <>
+                  {project.detailSections.map((section, idx) => {
+                    if (section.kind === "systemFeature" && (section as any).id === "core") {
                       return <SystemFeatureSection key={idx} section={section} accentColorClass={accentColorClass} accentBorderClass={accentBorderClass} />;
                     }
                     return null;
