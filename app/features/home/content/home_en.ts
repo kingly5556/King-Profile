@@ -33,6 +33,11 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
       "Semi-automated validation: data types, constraints, cross-table references, and precise error reporting.",
       "Security & governance via RBAC across departments and user levels.",
     ],
+    overviewImage: {
+      src: "/images/certificated_pic/Datacenter_RmutiAward.png",
+      alt: "RMUTI Innovation Award Certificate",
+      caption: "Awarded at RMUTI Cooperative Education Project Contest (Innovation)",
+    },
     ctaLabel: "Email me",
     ctaHref: "mailto:kongkat5556@hotmail.com?subject=Data%20Center%20project",
     imageSrc: "/images/projects/data-center-v2.png",

@@ -33,6 +33,11 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
       "การตรวจสอบความถูกต้องแบบกึ่งอัตโนมัติ: การตรวจสอบประเภทข้อมูล ข้อจำกัด (Constraints) การอ้างอิงข้ามตาราง และการรายงานข้อผิดพลาดที่แม่นยำ",
       "ความปลอดภัยและธรรมาภิบาลข้อมูล: ควบคุมสิทธิ์การเข้าถึงข้อมูลตามบทบาทหน้าที่ (RBAC) แยกตามแผนกและระดับผู้ใช้งาน",
     ],
+    overviewImage: {
+      src: "/images/certificated_pic/Datacenter_RmutiAward.png",
+      alt: "RMUTI Innovation Award Certificate",
+      caption: "รางวัลประกวดโครงงานสหกิจศึกษา มทร.อีสาน สาขานวัตกรรม",
+    },
     ctaLabel: "ส่งอีเมลหาฉัน",
     ctaHref: "mailto:kongkat5556@hotmail.com?subject=Data%20Center%20project",
     imageSrc: "/images/projects/data-center-v2.png",
