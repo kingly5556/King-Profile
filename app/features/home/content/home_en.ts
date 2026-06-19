@@ -721,73 +721,67 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
       },
       {
         kind: "systemDesign",
-        title: "New 3-Tier Architecture",
+        title: "System Architecture & Tech Stack",
         modules: [
-          { title: "Frontend Layer", description: "React UI, completely isolated from DB credentials. Communicates only via Backend API.", icon: "💻" },
-          { title: "Backend API Gateway", description: "Express server handling JWT auth, business logic, rate limiting, and request validation.", icon: "⚙️" },
-          { title: "Database Layer", description: "Supabase PostgreSQL and Storage accessed exclusively by the backend via Service Role Key.", icon: "🗄️" },
-          { title: "AI Service", description: "Internal Python FastAPI service (RAGEngine), callable only through the secure backend proxy.", icon: "🤖" }
+          { title: "Frontend Layer (Client)", description: "React UI connected exclusively via REST API, completely isolated from DB credentials for maximum security.", icon: "💻" },
+          { title: "API Gateway (Node.js/Express)", description: "Central server managing Business Logic, JWT Authentication, Rate Limiting, and acting as a secure proxy.", icon: "⚙️" },
+          { title: "Database Layer (Supabase)", description: "PostgreSQL Database and Storage with strict security configurations, accessed only via Service Role Key from the Backend.", icon: "🗄️" },
+          { title: "AI Microservice (Python/FastAPI)", description: "Isolated AI Assistant service communicating securely with the Backend over an internal network.", icon: "🤖" }
         ],
         roles: [
-          { role: "Guest", permissions: "Browse and read published novels" },
-          { role: "Reader", permissions: "Follow authors, bookmark chapters, and post comments" },
-          { role: "Writer", permissions: "Create novels, publish chapters, and use AI Assistant" }
+          { role: "Guest", permissions: "Can browse, explore novels, and read publicly available chapters." },
+          { role: "Reader", permissions: "Can create a profile, follow authors, bookmark favorite novels, and post comments." },
+          { role: "Writer", permissions: "Full access to the novel management system, content formatting, publishing, and the AI Writing Assistant." }
         ],
-        architectureDiagram: `Browser\n  └── Frontend (React :5173)\n        └── Backend API (Express :4000)\n              ├── Supabase PostgreSQL  [DB Access — Backend Only]\n              ├── Supabase Storage     [File Upload — Backend Only]\n              └── AI Service (FastAPI :8000) [Internal Only]`
+        architectureDiagram: `Browser\n  └── React UI (Frontend)\n        └── Node.js/Express (Backend API Gateway)\n              ├── PostgreSQL & Storage (Database)\n              └── FastAPI (AI Microservice)`
       },
       {
         kind: "systemFeature",
         id: "auth",
-        title: "Auth & Users",
+        title: "Advanced Authentication & Security",
         stats: [
           { label: "Authentication", value: "Custom JWT", icon: "🔑" },
-          { label: "Token Strategy", value: "Access + Refresh", icon: "🔄" },
-          { label: "Access Token", value: "7 Days", icon: "⏱️" },
-          { label: "DB Credentials", value: "Backend Only", icon: "🔐" }
+          { label: "Token Security", value: "Token Rotation", icon: "🔄" },
+          { label: "API Protection", value: "Rate Limiting", icon: "🛡️" },
+          { label: "Headers Security", value: "Helmet.js", icon: "🔒" }
         ],
         steps: [
-          { step: 1, title: "Register", concept: "Create new account securely", what: "Backend proxies creation to Supabase Auth and sets up user profile", result: "User account created" },
-          { step: 2, title: "Login", concept: "Verify credentials", what: "Backend verifies password and issues signed JWT and Refresh Token", result: "Client receives secure token" },
-          { step: 3, title: "Authenticated Request", concept: "Secure API access", what: "JWT Middleware verifies token validity and extracts userId before routing", result: "Protected resource accessed" },
-          { step: 4, title: "Token Refresh", concept: "Maintain session smoothly", what: "Client swaps expired Access Token and valid Refresh Token for a new pair", result: "Uninterrupted UX" },
-          { step: 5, title: "Avatar Upload", concept: "Secure file handling", what: "Backend receives image via multer, uploads to Supabase Storage, and saves URL", result: "Profile updated securely" }
+          { step: 1, title: "Token Generation", concept: "Secure Identity Creation", what: "Upon login, the system issues a short-lived Access Token and a long-lived Refresh Token.", result: "User gains Role-based API access." },
+          { step: 2, title: "Middleware Protection", concept: "Access Control Gate", what: "JWT Middleware extracts and verifies the token's cryptographic signature before routing to Business Logic.", result: "Prevents unauthorized API requests." },
+          { step: 3, title: "Token Rotation", concept: "Seamless Connection", what: "When the Access Token expires, the system automatically uses the Refresh Token to securely exchange for a new token pair in the background.", result: "Users stay logged in securely without interruptions." },
+          { step: 4, title: "Secure File Upload", concept: "Strict File Handling", what: "Backend receives profile images via Multer in memory, then directly streams them to Storage.", result: "Mitigates malicious file upload vulnerabilities." }
         ]
       },
       {
         kind: "systemFeature",
-        id: "dataset",
-        title: "API Endpoints",
+        id: "ai",
+        title: "AI Writing Assistant Microservice",
         stats: [
-          { label: "Novel API", value: "8 Endpoints", icon: "📝" },
-          { label: "Chapter API", value: "7 Endpoints", icon: "📖" },
-          { label: "Social API", value: "5 Endpoints", icon: "👥" },
-          { label: "Profile API", value: "4 Endpoints", icon: "👤" }
+          { label: "Language", value: "Python", icon: "🐍" },
+          { label: "Framework", value: "FastAPI", icon: "⚡" },
+          { label: "Architecture", value: "Internal Proxy", icon: "🌐" },
+          { label: "Data Transport", value: "SSE Streaming", icon: "📡" }
         ],
         steps: [
-          { step: 1, title: "Auth Routes", concept: "Identity management", what: "Login, Register, Logout, Refresh Token", result: "Handles all user sessions" },
-          { step: 2, title: "Novel Routes", concept: "Core content management", what: "CRUD, Publish/Unpublish, View Count, Search", result: "Manages novel lifecycle" },
-          { step: 3, title: "Chapter Routes", concept: "Content delivery", what: "CRUD, Auto-save (background syncing), Chapter View Count", result: "Smooth writing and reading" },
-          { step: 4, title: "Social Routes", concept: "User engagement", what: "Follow User, Bookmark Chapter, Add/Get Comments, Reading History", result: "Community interactions" },
-          { step: 5, title: "Profile Routes", concept: "User personalization", what: "Get Profile, Update Profile, Avatar Upload, Search Users", result: "Profile customization" }
+          { step: 1, title: "Isolate AI Logic", concept: "Decoupled Processing", what: "The AI Service is developed separately in Python, ensuring the Node.js backend remains unaffected during heavy AI processing.", result: "Main system maintains high performance." },
+          { step: 2, title: "Backend Proxy", concept: "Concealed Connection", what: "The Frontend cannot communicate directly with the AI service. All requests must pass through the Node.js Backend API Gateway.", result: "LLM API Keys are completely secured from client-side exposure." },
+          { step: 3, title: "Streaming Response", concept: "Real-time Experience", what: "AI responses are streamed back to the user token-by-token via Server-Sent Events (SSE) through the Backend Proxy.", result: "Users experience instant, typing-like feedback without long wait times." }
         ]
       },
       {
-        kind: "summary",
-        title: "Project Summary",
-        goalAchievement: "Successfully transitioned a monolithic, frontend-heavy application into a robust 3-Tier Separated Architecture. The system is now significantly more secure by eliminating direct database access from the client side.",
-        qualityAssessment: "The backend is equipped with essential production features including JWT Auth, Rate Limiting, Global Error Handling, CORS policies, and Security Headers via Helmet. The AI integration is securely isolated within the internal network.",
-        benefits: [
-          "Zero database credentials in the frontend entirely mitigates client-side data breach risks.",
-          "Centralized Business Logic allows for much easier testing, maintenance, and bug fixing.",
-          "Internal AI Service architecture prevents unauthorized external usage and API quota theft.",
-          "The decoupled architecture is scalable—the frontend, backend, and AI service can be deployed independently."
+        kind: "systemFeature",
+        id: "core",
+        title: "Platform Features & REST API",
+        stats: [
+          { label: "Novel Management", value: "Automated CRUD", icon: "📝" },
+          { label: "Writing System", value: "Rich Text", icon: "📖" },
+          { label: "Social System", value: "Follow & Comment", icon: "👥" },
+          { label: "Data Structure", value: "Relational DB", icon: "🗄️" }
         ],
         steps: [
-          { phase: "Architecture Design", action: "Planned the 3-Tier architecture and defined all REST API contracts.", result: "Clear roadmap for migration." },
-          { phase: "Database Setup", action: "Restructured 7 core tables and applied RLS bypass via Backend Service Role.", result: "Secure database foundation." },
-          { phase: "Backend Dev", action: "Built the Express server featuring JWT, Multer, Rate Limiting, and Helmet.", result: "Secure API Gateway ready." },
-          { phase: "Frontend Integration", action: "Refactored React UI to consume the new REST APIs and manage JWT state.", result: "Client safely connected." },
-          { phase: "AI Proxy", action: "Built a backend proxy to securely stream responses from the Python FastAPI service.", result: "Secure AI Assistant integration." }
+          { step: 1, title: "Novel Management", concept: "Novel Lifecycle", what: "API supports creating new novels, attaching cover images, setting categories, and managing publication statuses.", result: "Writers have full control over their work." },
+          { step: 2, title: "Chapter Workspace", concept: "Creative Space", what: "System handles chapter creation and editing, supporting draft saving and automated view count calculations.", result: "A complete online writing toolset." },
+          { step: 3, title: "Social Interaction", concept: "Community Building", what: "The database architecture is designed to support following favorite authors, posting comments, and bookmarking.", result: "An engaging and lively platform." }
         ]
       }
     ]

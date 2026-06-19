@@ -712,73 +712,67 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
       },
       {
         kind: "systemDesign",
-        title: "สถาปัตยกรรม 3-Tier แบบใหม่",
+        title: "สถาปัตยกรรมและเทคโนโลยีหลัก",
         modules: [
-          { title: "Frontend Layer", description: "ส่วนแสดงผล React UI ที่ปลอดภัย ไม่มี DB Credentials ติดต่อผ่าน Backend API เท่านั้น", icon: "💻" },
-          { title: "Backend API Gateway", description: "เซิร์ฟเวอร์ Express จัดการ JWT, Business Logic, Rate Limit และคัดกรองข้อมูล", icon: "⚙️" },
-          { title: "Database Layer", description: "ฐานข้อมูลและ Storage บน Supabase ซึ่งเข้าถึงได้จาก Backend ด้วย Service Role Key เท่านั้น", icon: "🗄️" },
-          { title: "AI Service", description: "บริการ AI ภาษา Python (FastAPI) ที่ซ่อนอยู่หลังบ้าน เรียกใช้งานผ่าน Backend Proxy เท่านั้น", icon: "🤖" }
+          { title: "Frontend Layer (Client)", description: "ส่วนแสดงผล React UI ที่เชื่อมต่อผ่าน REST API เท่านั้น โดยไม่มีการเก็บ Database Credentials ไว้ในโค้ดฝั่ง Client เพื่อความปลอดภัยสูงสุด", icon: "💻" },
+          { title: "API Gateway (Node.js/Express)", description: "เซิร์ฟเวอร์ศูนย์กลางสำหรับจัดการ Business Logic, ตรวจสอบสิทธิ์ (JWT), Rate Limiting และเป็น Proxy ซ่อนหลังบ้าน", icon: "⚙️" },
+          { title: "Database Layer (Supabase)", description: "ฐานข้อมูล PostgreSQL และ Storage ที่ตั้งค่าความปลอดภัยรัดกุม เข้าถึงได้ผ่าน Service Role Key จาก Backend เท่านั้น", icon: "🗄️" },
+          { title: "AI Microservice (Python/FastAPI)", description: "บริการผู้ช่วย AI แบบแยกส่วน (Internal Service) ที่สื่อสารกับ Backend ผ่านวงแลนภายในอย่างปลอดภัย", icon: "🤖" }
         ],
         roles: [
-          { role: "Guest", permissions: "สามารถเข้าชมและอ่านนิยายที่เผยแพร่แล้วได้" },
-          { role: "Reader", permissions: "สามารถกดติดตามนักเขียน คั่นหน้าตอนนิยาย และแสดงความคิดเห็นได้ (ต้องล็อกอิน)" },
-          { role: "Writer", permissions: "สร้างนิยาย แต่งตอนย่อย เผยแพร่ผลงาน และใช้งานผู้ช่วย AI ได้" }
+          { role: "Guest", permissions: "สามารถเข้าชม สำรวจนิยาย และอ่านตอนย่อยที่ถูกเผยแพร่สู่สาธารณะแล้วได้" },
+          { role: "Reader", permissions: "สามารถสร้างโปรไฟล์ กดติดตามนักเขียน คั่นหน้านิยายโปรด และแสดงความคิดเห็นโต้ตอบได้" },
+          { role: "Writer", permissions: "เข้าถึงระบบจัดการนิยาย เขียนและจัดรูปแบบเนื้อหา เผยแพร่ผลงาน และใช้งานผู้ช่วย AI อัจฉริยะ" }
         ],
-        architectureDiagram: `Browser\n  └── Frontend (React :5173)\n        └── Backend API (Express :4000)\n              ├── Supabase PostgreSQL  [เข้าถึงได้เฉพาะฝั่ง Backend เท่านั้น]\n              ├── Supabase Storage     [อัปโหลดไฟล์ผ่าน Backend เท่านั้น]\n              └── AI Service (FastAPI :8000) [ซ่อนเป็น Internal Service เท่านั้น]`
+        architectureDiagram: `Browser\n  └── React UI (Frontend)\n        └── Node.js/Express (Backend API Gateway)\n              ├── PostgreSQL & Storage (Database)\n              └── FastAPI (AI Microservice)`
       },
       {
         kind: "systemFeature",
         id: "auth",
-        title: "ระบบผู้ใช้งาน (Auth & Users)",
+        title: "ระบบยืนยันตัวตนและความปลอดภัย",
         stats: [
           { label: "ระบบยืนยันตัวตน", value: "Custom JWT", icon: "🔑" },
-          { label: "กลยุทธ์โทเคน", value: "Access + Refresh", icon: "🔄" },
-          { label: "อายุ Access Token", value: "7 วัน", icon: "⏱️" },
-          { label: "การเก็บ DB Key", value: "เฉพาะฝั่ง Backend", icon: "🔐" }
+          { label: "ความปลอดภัย", value: "Token Rotation", icon: "🔄" },
+          { label: "การป้องกัน API", value: "Rate Limiting", icon: "🛡️" },
+          { label: "ปกป้อง Headers", value: "Helmet.js", icon: "🔒" }
         ],
         steps: [
-          { step: 1, title: "Register", concept: "สมัครสมาชิกอย่างปลอดภัย", what: "Backend รับเรื่อง ส่งต่อให้ Supabase Auth และสร้างโปรไฟล์พื้นฐานให้", result: "ได้บัญชีผู้ใช้ใหม่พร้อมใช้งาน" },
-          { step: 2, title: "Login", concept: "ยืนยันตัวตน", what: "Backend ตรวจสอบรหัสผ่าน และออก JWT พร้อม Refresh Token ให้", result: "Client ได้รับ Token ที่ปลอดภัย" },
-          { step: 3, title: "Authenticated Request", concept: "ปกป้อง API ด้วย Token", what: "JWT Middleware จะสกัด userId และตรวจสอบความถูกต้องก่อนให้ผ่าน", result: "ป้องกันการเข้าถึงโดยพลการ" },
-          { step: 4, title: "Token Refresh", concept: "รักษาการเชื่อมต่อแบบไร้รอยต่อ", what: "แลกเปลี่ยน Refresh Token ที่ยังไม่หมดอายุ เพื่อขอรับ Access Token ชุดใหม่", result: "ผู้ใช้ไม่ต้องล็อกอินใหม่บ่อยๆ" },
-          { step: 5, title: "Avatar Upload", concept: "จัดการไฟล์อย่างรัดกุม", what: "อัปโหลดรูปผ่าน Backend ด้วย multer แล้วค่อยส่งต่อให้ Supabase Storage", result: "โปรไฟล์ได้รับการอัปเดตอย่างปลอดภัย" }
+          { step: 1, title: "Token Generation", concept: "สร้างตัวตนที่ปลอดภัย", what: "เมื่อผู้ใช้ล็อกอิน ระบบจะออก Access Token (อายุสั้น) และ Refresh Token (อายุยาว) กลับไปให้", result: "ผู้ใช้มีสิทธิ์เข้าถึง API ตามระดับ Role" },
+          { step: 2, title: "Middleware Protection", concept: "ด่านคัดกรองการเข้าถึง", what: "JWT Middleware จะสกัด Token จาก Header เพื่อตรวจสอบลายเซ็น (Signature) ก่อนให้ผ่านเข้าสู่ Business Logic", result: "ป้องกัน Request ที่ไม่ได้รับอนุญาต" },
+          { step: 3, title: "Token Rotation", concept: "รักษาการเชื่อมต่อไร้รอยต่อ", what: "เมื่อ Access Token หมดอายุ ระบบสามารถใช้ Refresh Token แลกรับ Access Token ชุดใหม่ได้อัตโนมัติเบื้องหลัง", result: "ผู้ใช้ไม่ต้องล็อกอินใหม่บ่อยๆ และมีความปลอดภัยสูง" },
+          { step: 4, title: "Secure File Upload", concept: "จัดการไฟล์อย่างรัดกุม", what: "รับไฟล์รูปโปรไฟล์ผ่าน Multer ในหน่วยความจำ แล้วอัปโหลดเข้า Storage โดยตรงจากฝั่ง Backend", result: "ปิดช่องโหว่การอัปโหลดไฟล์อันตรายโดยตรง" }
         ]
       },
       {
         kind: "systemFeature",
-        id: "dataset",
-        title: "API Endpoints ทั้งหมด",
+        id: "ai",
+        title: "บริการผู้ช่วยเขียนนิยายอัจฉริยะ",
         stats: [
-          { label: "ระบบนิยาย (Novel)", value: "8 Endpoints", icon: "📝" },
-          { label: "ระบบตอน (Chapter)", value: "7 Endpoints", icon: "📖" },
-          { label: "ระบบโซเชียล", value: "5 Endpoints", icon: "👥" },
-          { label: "ระบบโปรไฟล์", value: "4 Endpoints", icon: "👤" }
+          { label: "ภาษาที่ใช้", value: "Python", icon: "🐍" },
+          { label: "เฟรมเวิร์ก", value: "FastAPI", icon: "⚡" },
+          { label: "รูปแบบ", value: "Internal Proxy", icon: "🌐" },
+          { label: "การส่งข้อมูล", value: "SSE Streaming", icon: "📡" }
         ],
         steps: [
-          { step: 1, title: "Auth Routes", concept: "จัดการตัวตนผู้ใช้", what: "Login, Register, Logout, Refresh Token", result: "ควบคุม Session ผู้ใช้ทั้งหมด" },
-          { step: 2, title: "Novel Routes", concept: "จัดการนิยายหลัก", what: "สร้าง/ลบ/แก้ไข, จัดการเผยแพร่, นับยอดวิว, ระบบค้นหา", result: "วงจรชีวิตของนิยาย" },
-          { step: 3, title: "Chapter Routes", concept: "จัดการเนื้อหา", what: "ระบบ Auto-save แบบเบื้องหลัง, เพิ่มตอน, นับยอดวิวตอน", result: "ประสบการณ์เขียนและอ่านที่ลื่นไหล" },
-          { step: 4, title: "Social Routes", concept: "ปฏิสัมพันธ์", what: "กดติดตาม (Follow), คั่นหน้าเว็บ (Bookmark), คอมเมนต์", result: "สร้างสังคมการอ่าน" },
-          { step: 5, title: "Profile Routes", concept: "จัดการข้อมูลส่วนตัว", what: "ดึงโปรไฟล์, อัปเดตรายละเอียด, อัปโหลดอวตาร์", result: "ปรับแต่งโปรไฟล์ส่วนตัว" }
+          { step: 1, title: "Isolate AI Logic", concept: "แยกส่วนการประมวลผล", what: "พัฒนา Service ของ AI แยกออกจาก Node.js หลัก โดยเขียนด้วย Python เพื่อรองรับงานด้าน Data และ AI ในอนาคตได้ดีกว่า", result: "ระบบหลักไม่หน่วงเมื่อ AI ทำงานหนัก" },
+          { step: 2, title: "Backend Proxy", concept: "ซ่อนการเชื่อมต่อ", what: "Frontend จะไม่เห็นและไม่สามารถยิง API ข้ามไปหาบริการ AI ได้โดยตรง ต้องส่งคำขอผ่าน Node.js Backend เสมอ", result: "ป้องกัน API Key ของ LLM ถูกแฮก" },
+          { step: 3, title: "Streaming Response", concept: "ประสบการณ์แบบ Real-time", what: "ส่งคำตอบจาก AI กลับไปให้ผู้ใช้ทีละคำในรูปแบบ Server-Sent Events (SSE) ผ่าน Backend Proxy", result: "ผู้ใช้งานไม่ต้องรอนาน ได้เห็นข้อความค่อยๆ พิมพ์แบบ Real-time" }
         ]
       },
       {
-        kind: "summary",
-        title: "สรุปผลการดำเนินงาน",
-        goalAchievement: "ประสบความสำเร็จในการยกระดับโครงสร้างระบบแบบเดิมที่พึ่งพา Frontend อย่างหนัก ให้กลายเป็นสถาปัตยกรรมแบบ 3-Tier ที่มั่นคง ระบบมีความปลอดภัยสูงขึ้นอย่างมากจากการปิดกั้นไม่ให้ Client เข้าถึงฐานข้อมูลได้โดยตรงอีกต่อไป",
-        qualityAssessment: "ฝั่ง Backend ถูกออกแบบมาพร้อมคุณสมบัติสำหรับ Production ครบถ้วน ทั้ง JWT Auth, Rate Limiting, ตัวจัดการ Error ส่วนกลาง, นโยบาย CORS และ Security Headers ผ่าน Helmet นอกจากนี้ระบบ AI ยังถูกแยกส่วนทำงานอยู่ภายในเน็ตเวิร์กส่วนตัวอย่างปลอดภัย",
-        benefits: [
-          "ปิดความเสี่ยงเรื่องการขโมยข้อมูลโดยสมบูรณ์ เนื่องจากไม่มี Database Credentials หลุดไปถึงฝั่งผู้ใช้งานเลย",
-          "Business Logic อยู่รวมกันในจุดเดียว (Backend) ทำให้ค้นหาบั๊ก ทดสอบ และบำรุงรักษาโค้ดได้ง่ายขึ้นมาก",
-          "สถาปัตยกรรม AI Service แบบ Internal ป้องกันไม่ให้แฮกเกอร์ดูดโควต้า API Key ของ AI ได้",
-          "ระบบสามารถปรับขยาย (Scale) ได้อิสระ Frontend, Backend และ AI สามารถแยกเซิร์ฟเวอร์รันกันคนละที่ได้"
+        kind: "systemFeature",
+        id: "core",
+        title: "การจัดการฟีเจอร์นิยายและสังคมออนไลน์",
+        stats: [
+          { label: "ระบบจัดการนิยาย", value: "CRUD อัตโนมัติ", icon: "📝" },
+          { label: "ระบบเขียนบท", value: "Rich Text", icon: "📖" },
+          { label: "ระบบโซเชียล", value: "Follow & Comment", icon: "👥" },
+          { label: "โครงสร้างข้อมูล", value: "Relational DB", icon: "🗄️" }
         ],
         steps: [
-          { phase: "การออกแบบระบบ", action: "วางแผนสถาปัตยกรรม 3-Tier และกำหนดโครงสร้าง REST API ทั้งหมด", result: "ได้แผนผังและเส้นทางการทำงานที่ชัดเจน" },
-          { phase: "จัดการฐานข้อมูล", action: "ปรับโครงสร้างตารางใหม่ทั้ง 7 ตารางและ Bypass RLS ด้วย Backend", result: "รากฐานข้อมูลที่แข็งแกร่ง" },
-          { phase: "พัฒนาเซิร์ฟเวอร์", action: "สร้าง Express Backend ที่มี JWT, Rate Limit, Helmet และ Multer", result: "ได้ API Gateway ที่แข็งแกร่งและปลอดภัย" },
-          { phase: "เชื่อมต่อส่วนแสดงผล", action: "ปรับแก้ React UI ให้มาใช้งานผ่าน REST API แทน และจัดการ State ของ JWT", result: "ปิดช่องโหว่ทางฝั่ง Frontend" },
-          { phase: "เชื่อมต่อระบบ AI", action: "สร้าง Backend Proxy เพื่อ Stream ข้อมูลการตอบกลับจาก AI Service ภาษา Python อย่างปลอดภัย", result: "ผู้ช่วย AI พร้อมใช้งาน" }
+          { step: 1, title: "Novel Management", concept: "วงจรชีวิตของนิยาย", what: "API รองรับการสร้างนิยายใหม่ แนบรูปหน้าปก กำหนดหมวดหมู่ และจัดการสถานะการเผยแพร่", result: "นักเขียนมีอิสระในการจัดระเบียบผลงาน" },
+          { step: 2, title: "Chapter Workspace", concept: "พื้นที่สร้างสรรค์", what: "ระบบสร้างและแก้ไขตอนย่อย รองรับการบันทึกฉบับร่าง (Draft) และคำนวณจำนวนยอดเข้าชมอัตโนมัติ", result: "ได้เครื่องมือเขียนหนังสือออนไลน์ที่สมบูรณ์" },
+          { step: 3, title: "Social Interaction", concept: "สร้างคอมมูนิตี้", what: "โครงสร้างฐานข้อมูลออกแบบมารองรับการกดติดตามนักเขียนที่ชื่นชอบ การคอมเมนต์พูดคุย และการคั่นหน้า", result: "แพลตฟอร์มมีชีวิตชีวาและดึงดูดผู้ใช้งาน" }
         ]
       }
     ]
