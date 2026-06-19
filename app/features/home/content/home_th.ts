@@ -691,6 +691,11 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
       "เชื่อมต่อผู้ช่วย AI (Python FastAPI) เป็น Internal Service ที่เรียกใช้งานได้อย่างปลอดภัยผ่าน Backend Proxy เท่านั้น",
       "พัฒนาระบบยืนยันตัวตนแบบ Custom JWT ที่รองรับการทำ Access และ Refresh Token Rotation",
     ],
+    overviewImage: {
+      src: "/images/certificated_pic/Quill_AUCC.png",
+      alt: "AUCC Competition Certificate",
+      caption: "ประกาศนียบัตรจากการประกวด AUCC",
+    },
     ctaLabel: "ส่งอีเมลหาฉัน",
     ctaHref: "mailto:kongkat5556@hotmail.com?subject=Quill%20Remake%20project",
     imageSrc: "",

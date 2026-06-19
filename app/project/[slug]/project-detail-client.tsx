@@ -806,6 +806,25 @@ export function ProjectDetailClient({ slug }: { slug: string }) {
                         </ul>
                       </>
                     )}
+
+                    {project.overviewImage && (
+                      <div className={`mt-12 w-full overflow-hidden border border-outline bg-surface p-2`}>
+                        <div className="relative w-full aspect-video">
+                          <Image 
+                            src={project.overviewImage.src} 
+                            alt={project.overviewImage.alt}
+                            fill
+                            className="object-contain"
+                            sizes="(max-width: 768px) 100vw, 66vw"
+                          />
+                        </div>
+                        {project.overviewImage.caption && (
+                          <p className="mt-4 pb-2 text-center font-label-mono text-xs uppercase tracking-widest text-secondary">
+                            {project.overviewImage.caption}
+                          </p>
+                        )}
+                      </div>
+                    )}
                   </div>
 
                   <div>

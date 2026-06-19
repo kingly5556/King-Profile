@@ -700,6 +700,11 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
       "Integrated a Python FastAPI AI Assistant as an internal-only service, accessed securely via a backend proxy.",
       "Developed a custom JWT Authentication system with Access and Refresh Token rotation.",
     ],
+    overviewImage: {
+      src: "/images/certificated_pic/Quill_AUCC.png",
+      alt: "AUCC Competition Certificate",
+      caption: "Certificate from the AUCC Competition",
+    },
     ctaLabel: "Email me",
     ctaHref: "mailto:kongkat5556@hotmail.com?subject=Quill%20Remake%20project",
     imageSrc: "",

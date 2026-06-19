@@ -195,6 +195,12 @@ export type PortfolioProject = {
   description: string;
   /** Optional bullet highlights (e.g. resume achievements) */
   bullets?: readonly string[];
+  /** Optional image displayed in the Overview tab (e.g. for certificates or architecture diagrams) */
+  overviewImage?: {
+    src: string;
+    alt: string;
+    caption?: string;
+  };
   /** Optional rich detail sections rendered on the project page */
   detailSections?: ProjectDetailSection[];
   ctaLabel: string;
