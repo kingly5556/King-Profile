@@ -15,6 +15,8 @@ export function ProjectTabs({
   authContent,
   datasetContent,
   schemaContent,
+  aiContent,
+  coreContent,
   deploymentContent,
   summaryContent,
   accentBorderClass,
