@@ -1,8 +1,6 @@
 "use client";
 
 import {
-  AreaChart,
-  Area,
   BarChart,
   Bar,
   ScatterChart,
@@ -19,12 +17,9 @@ import {
 
 // ── Design tokens (match site palette) ──────────────────────────
 const PURPLE = "#a78bfa";
-const PURPLE_DIM = "#7c3aed33";
 const BLUE = "#60a5fa";
 const TEAL = "#34d399";
 const ORANGE = "#fb923c";
-const MUTED = "#6b7280";
-const SURFACE = "#1e1e2a";
 const OUTLINE = "#2a2a3a";
 const TEXT_PRI = "#e2e8f0";
 const TEXT_SEC = "#94a3b8";
@@ -75,7 +70,7 @@ export function GPADistributionChart() {
           contentStyle={tooltipStyle}
           labelStyle={tooltipLabelStyle}
           itemStyle={tooltipItemStyle}
-          formatter={(v: any) => [`${Number(v).toLocaleString()} students`, "Count"]}
+          formatter={(v) => [`${Number(v).toLocaleString()} students`, "Count"]}
         />
         <ReferenceLine x="3.0–3.2" stroke={ORANGE} strokeDasharray="4 2" label={{ value: "Mean ≈ 3.06", fill: ORANGE, fontSize: 11 }} />
         {bins.map((_, i) => (
@@ -115,7 +110,7 @@ export function GPAByGenderChart() {
           contentStyle={tooltipStyle}
           labelStyle={tooltipLabelStyle}
           itemStyle={tooltipItemStyle}
-          formatter={(v: any, name: any) => [Number(v).toFixed(3), name]}
+          formatter={(v, name) => [Number(v).toFixed(3), name]}
         />
         <Legend wrapperStyle={{ color: TEXT_SEC, fontSize: 12 }} />
         <Bar dataKey="mean" name="Avg GPA" radius={[0, 2, 2, 0]}>
@@ -177,7 +172,7 @@ export function ScatterOldGPAChart() {
           contentStyle={tooltipStyle}
           labelStyle={tooltipLabelStyle}
           itemStyle={tooltipItemStyle}
-          formatter={(v: any, name: any) => [Number(v).toFixed(2), name === "hs" ? "HS GPA" : "Uni GPA"]}
+          formatter={(v, name) => [Number(v).toFixed(2), name === "hs" ? "HS GPA" : "Uni GPA"]}
           cursor={{ stroke: PURPLE, strokeDasharray: "3 3" }}
         />
         <Scatter data={data} fill={PURPLE} fillOpacity={0.55} r={5} />
@@ -216,7 +211,7 @@ export function CorrelationChart() {
           contentStyle={tooltipStyle}
           labelStyle={tooltipLabelStyle}
           itemStyle={tooltipItemStyle}
-          formatter={(v: any) => [`r = ${Number(v).toFixed(3)}`, "Correlation"]}
+          formatter={(v) => [`r = ${Number(v).toFixed(3)}`, "Correlation"]}
         />
         <Bar dataKey="r" radius={[0, 3, 3, 0]}>
           {data.map((d, i) => (
@@ -259,7 +254,7 @@ export function MissingValuesChart() {
           contentStyle={tooltipStyle}
           labelStyle={tooltipLabelStyle}
           itemStyle={tooltipItemStyle}
-          formatter={(v: any) => [`${v}% missing`, "Missing"]}
+          formatter={(v) => [`${v}% missing`, "Missing"]}
         />
         <Bar dataKey="pct" name="Missing %" radius={[0, 3, 3, 0]}>
           {data.map((_, i) => (

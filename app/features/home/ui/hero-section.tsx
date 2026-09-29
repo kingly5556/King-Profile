@@ -5,20 +5,12 @@ import Image from "next/image";
 import { useRef } from "react";
 
 import { useLanguage } from "@/app/context/LanguageContext";
-import {
-  HERO_HEADLINE_NAME_LINES_EN,
-  HERO_HEADLINE_NAME_LINES_TH,
-  HERO_HEADLINE_ROLE_EN,
-  HERO_HEADLINE_ROLE_TH,
-  HERO_PORTRAIT_SRC,
-  HERO_SUBTITLE_EN,
-  HERO_SUBTITLE_TH,
-} from "../content/home";
+import { HERO_PORTRAIT_SRC } from "../content/constants";
 import { MaterialIcon } from "./material-icon";
 import { easeOutExpo, fadeUp, springSoft } from "./motion-variants";
 
 export function HeroSection() {
-  const { locale, t } = useLanguage();
+  const { locale, content, t } = useLanguage();
   const reduceMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -27,9 +19,7 @@ export function HeroSection() {
   });
   const portraitInnerY = useTransform(scrollYProgress, [0, 1], [0, -32]);
 
-  const nameLines = locale === "en" ? HERO_HEADLINE_NAME_LINES_EN : HERO_HEADLINE_NAME_LINES_TH;
-  const role = locale === "en" ? HERO_HEADLINE_ROLE_EN : HERO_HEADLINE_ROLE_TH;
-  const subtitle = locale === "en" ? HERO_SUBTITLE_EN : HERO_SUBTITLE_TH;
+  const { nameLines, role, subtitle } = content.hero;
 
   return (
     <section

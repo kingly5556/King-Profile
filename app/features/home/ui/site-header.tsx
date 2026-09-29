@@ -11,14 +11,7 @@ import {
 import { useCallback, useEffect, useState } from "react";
 
 import { useLanguage } from "@/app/context/LanguageContext";
-import {
-  CONTACT_EMAIL,
-  NAV_SECTION_ORDER,
-  SITE_BRAND_EN,
-  SITE_BRAND_TH,
-  SITE_NAV_EN,
-  SITE_NAV_TH,
-} from "../content/home";
+import { contactMailto, NAV_SECTION_ORDER } from "../content/constants";
 import { MaterialIcon } from "./material-icon";
 import { navItem, staggerContainer } from "./motion-variants";
 
@@ -54,38 +47,9 @@ function readActiveSectionId(): (typeof NAV_SECTION_ORDER)[number] {
   return active;
 }
 
-export function SiteHeader() {
-  const { locale, setLocale, t } = useLanguage();
-  const reduceMotion = useReducedMotion();
-  const { scrollY } = useScroll();
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeSectionId, setActiveSectionId] = useState<(typeof NAV_SECTION_ORDER)[number]>(NAV_SECTION_ORDER[0]);
-
-  const syncActive = useCallback(() => {
-    setActiveSectionId(readActiveSectionId());
-  }, []);
-
-  const brand = locale === "en" ? SITE_BRAND_EN : SITE_BRAND_TH;
-  const nav = locale === "en" ? SITE_NAV_EN : SITE_NAV_TH;
-
-  useMotionValueEvent(scrollY, "change", syncActive);
-
-  useEffect(() => {
-    const frame = requestAnimationFrame(() => syncActive());
-    window.addEventListener("resize", syncActive);
-    window.addEventListener("hashchange", syncActive);
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("resize", syncActive);
-      window.removeEventListener("hashchange", syncActive);
-    };
-  }, [syncActive]);
-
-  const navBg = useTransform(scrollY, [0, 100], ["rgba(10, 10, 10, 0)", "rgba(10, 10, 10, 0.88)"]);
-  const navBorder = useTransform(scrollY, [0, 80], ["rgba(51, 51, 51, 0)", "rgba(51, 51, 51, 0.85)"]);
-  const navBlur = useTransform(scrollY, [0, 100], ["blur(0px)", "blur(14px)"]);
-
-  const LanguageToggle = () => (
+function LanguageToggle() {
+  const { locale, setLocale } = useLanguage();
+  return (
     <div className="flex h-10 items-center rounded-full border border-outline bg-surface-container-low/40 p-1 shadow-[0_0_12px_rgba(0,0,0,0.2)] backdrop-blur-md">
       {(["en", "th"] as const).map((lang) => {
         const active = locale === lang;
@@ -111,6 +75,37 @@ export function SiteHeader() {
       })}
     </div>
   );
+}
+
+export function SiteHeader() {
+  const { locale, t, content } = useLanguage();
+  const reduceMotion = useReducedMotion();
+  const { scrollY } = useScroll();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSectionId, setActiveSectionId] = useState<(typeof NAV_SECTION_ORDER)[number]>(NAV_SECTION_ORDER[0]);
+
+  const syncActive = useCallback(() => {
+    setActiveSectionId(readActiveSectionId());
+  }, []);
+
+  const { brand, nav } = content;
+
+  useMotionValueEvent(scrollY, "change", syncActive);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => syncActive());
+    window.addEventListener("resize", syncActive);
+    window.addEventListener("hashchange", syncActive);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", syncActive);
+      window.removeEventListener("hashchange", syncActive);
+    };
+  }, [syncActive]);
+
+  const navBg = useTransform(scrollY, [0, 100], ["rgba(10, 10, 10, 0)", "rgba(10, 10, 10, 0.88)"]);
+  const navBorder = useTransform(scrollY, [0, 80], ["rgba(51, 51, 51, 0)", "rgba(51, 51, 51, 0.85)"]);
+  const navBlur = useTransform(scrollY, [0, 100], ["blur(0px)", "blur(14px)"]);
 
   return (
     <>
@@ -199,7 +194,7 @@ export function SiteHeader() {
             transition={{ delay: 0.15, type: "spring", stiffness: 320, damping: 26 }}
           >
             <a
-              href={`mailto:${CONTACT_EMAIL}`}
+              href={contactMailto()}
               className="inline-flex items-center gap-2 border border-outline px-6 py-3 font-label-mono text-label-mono uppercase tracking-widest transition-all duration-200 hover:bg-primary hover:text-on-primary"
             >
               <MaterialIcon name="forum" sizeClass="text-base" />
@@ -300,7 +295,7 @@ export function SiteHeader() {
                 <LanguageToggle />
               </div>
               <a
-                href={`mailto:${CONTACT_EMAIL}`}
+                href={contactMailto()}
                 className="inline-flex w-max items-center gap-2 border border-outline px-6 py-4 font-label-mono text-label-mono uppercase tracking-widest hover:bg-primary hover:text-on-primary"
                 onClick={() => setMobileOpen(false)}
               >

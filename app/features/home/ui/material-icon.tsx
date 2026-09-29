@@ -1,10 +1,12 @@
 import type { CSSProperties } from "react";
+import { FILLED_ICONS, ICONS } from "./icon-paths";
 
 type MaterialIconProps = {
+  /** Key in `icon-paths.ts` (legacy Material Symbols ligature names) */
   name: string;
   className?: string;
   filled?: boolean;
-  /** Tailwind text size class, e.g. text-sm */
+  /** Tailwind text size class, e.g. text-sm — the SVG scales with font-size */
   sizeClass?: string;
   style?: CSSProperties;
 };
@@ -16,13 +18,21 @@ export function MaterialIcon({
   sizeClass = "text-xl",
   style,
 }: MaterialIconProps) {
+  const icon = (filled && FILLED_ICONS[name]) || ICONS[name];
+  if (!icon) return null;
+
   return (
-    <span
-      className={`select-none ${sizeClass} material-symbols-outlined ${filled ? "material-symbols-outlined--filled" : ""} ${className}`.trim()}
+    <svg
+      viewBox={icon.viewBox}
+      fill="currentColor"
+      width="1em"
+      height="1em"
+      className={`inline-block shrink-0 select-none ${sizeClass} ${className}`.trim()}
       style={style}
       aria-hidden
+      focusable="false"
     >
-      {name}
-    </span>
+      <path d={icon.d} />
+    </svg>
   );
 }

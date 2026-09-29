@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Hanken_Grotesk, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import { LanguageProvider } from "@/app/context/LanguageContext";
+import { getSiteContent } from "@/app/features/home/content/home";
+import { getRequestLocale } from "@/app/locale";
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "@/app/site-config";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -21,37 +25,42 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kongkat Thanalertrungroj — Programmer & AI Engineer",
-  description:
-    "Portfolio of Kongkat Thanalertrungroj — programmer, AI engineer, B.Sc. Computer Science (RMUTI). Data platforms, full-stack, and ML.",
+  metadataBase: new URL(SITE_URL),
+  title: { default: SITE_TITLE, template: "%s | Kongkat Thanalertrungroj" },
+  description: SITE_DESCRIPTION,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: "Kongkat Thanalertrungroj",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    url: "/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+  },
 };
 
-import { LanguageProvider } from "@/app/context/LanguageContext";
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getRequestLocale();
+
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`dark ${spaceGrotesk.variable} ${hankenGrotesk.variable} ${jetbrainsMono.variable}`}
     >
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
-          rel="stylesheet"
-        />
-      </head>
       <body>
         {/*
           Site-wide background + grid: see @layer base `html` in globals.css.
           Do not put `bg-background` on body here — it resets `background-image`.
         */}
-        <LanguageProvider>
+        <LanguageProvider initialLocale={locale} content={getSiteContent(locale)}>
           {children}
         </LanguageProvider>
       </body>

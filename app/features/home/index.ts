@@ -8,20 +8,15 @@ export type {
   SiteNavLink,
   SkillItem,
   SocialLink,
+  SiteContent,
+  ProjectSummary,
 } from "./model/types";
 export {
   CONTACT_EMAIL,
-  FOOTER_SOCIAL_LINKS,
-  HERO_HEADLINE_NAME_LINES,
-  HERO_HEADLINE_ROLE,
   HERO_PORTRAIT_SRC,
-  HERO_SUBTITLE,
   NAV_SECTION_ORDER,
-  PORTFOLIO_PROJECTS,
   SITE_BRAND,
-  SITE_NAV,
-  SKILL_ITEMS,
-} from "./content/home";
+} from "./content/constants";
 export { HomePageContent } from "./ui/home-page-content";
 export { HeroSection } from "./ui/hero-section";
 export { ProjectCard } from "./ui/project-card";

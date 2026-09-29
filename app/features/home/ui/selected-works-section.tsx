@@ -4,17 +4,15 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useState, useMemo } from "react";
 
 import { useLanguage } from "@/app/context/LanguageContext";
-import { PORTFOLIO_PROJECTS_EN, PORTFOLIO_PROJECTS_TH } from "../content/home";
+import type { ProjectSummary } from "../model/types";
 import { MaterialIcon } from "./material-icon";
 import { fadeUp, viewportScroll } from "./motion-variants";
 import { ProjectCard } from "./project-card";
 
-export function SelectedWorksSection() {
+export function SelectedWorksSection({ projects }: { projects: ProjectSummary[] }) {
   const { locale, t } = useLanguage();
   const reduceMotion = useReducedMotion();
   const [activeTabKey, setActiveTabKey] = useState<"all" | "website" | "data">("all");
-
-  const projects = locale === "en" ? PORTFOLIO_PROJECTS_EN : PORTFOLIO_PROJECTS_TH;
 
   const categories = useMemo(() => {
     return [

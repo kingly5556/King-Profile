@@ -1,4 +1,5 @@
 import type { PortfolioProject, SiteNavLink, SkillItem, SocialLink } from "../model/types";
+import { CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, contactMailto } from "./contact";
 
 export const SITE_BRAND_EN = "Kongkat Thanalertrungroj";
 
@@ -21,7 +22,6 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
     slug: "data-center",
     category: "Website project",
     index: 1,
-    total: 3,
     meta: "Cooperative project · University data platform",
     title: "DATA CENTER (SANDBOX)",
     description:
@@ -34,12 +34,12 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
       "Security & governance via RBAC across departments and user levels.",
     ],
     overviewImage: {
-      src: "/images/certificated_pic/Datacenter_RmutiAward.png",
+      src: "/images/certificated_pic/Datacenter_RmutiAward.webp",
       alt: "RMUTI Innovation Award Certificate",
       caption: "Awarded at RMUTI Cooperative Education Project Contest (Innovation)",
     },
     ctaLabel: "Email me",
-    ctaHref: "mailto:kongkat5556@hotmail.com?subject=Data%20Center%20project",
+    ctaHref: contactMailto("Data Center project"),
     imageSrc: "/images/projects/data-center-v2.png",
     imageAlt: "Data platform dashboard concept",
     imagePosition: "object-left-top",
@@ -184,7 +184,6 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
     slug: "gpa-prediction-model",
     category: "Data Project",
     index: 2,
-    total: 3,
     meta: "Data Analysis · Machine Learning · Academic Dataset",
     title: "GRADUATE STUDENT ANALYTICS & GPA PREDICTION MODEL",
     description:
@@ -672,7 +671,7 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
       },
     ],
     ctaLabel: "Email me",
-    ctaHref: "mailto:kongkat5556@hotmail.com?subject=GPA%20Prediction%20Model%20project",
+    ctaHref: contactMailto("GPA Prediction Model project"),
     imageSrc: "/images/projects/gpa-prediction.webp",
     imageAlt: "Graduate Student Analytics & GPA Prediction Model",
     imagePosition: "object-left-top",
@@ -683,7 +682,6 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
     slug: "quill-remake",
     category: "Website project",
     index: 3,
-    total: 3,
     meta: "Personal Project · Novel Writing Platform",
     title: "QUILL PLATFORM",
     description: "A comprehensive novel reading and writing platform designed to connect authors and readers. It features a robust 3-Tier Architecture for enhanced security, scalable REST APIs, and an integrated AI writing assistant to help authors craft their stories efficiently.",
@@ -695,13 +693,13 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
       "Delivers a seamless user experience for both reading published works and managing ongoing writing projects.",
     ],
     overviewImage: {
-      src: "/images/certificated_pic/Quill_AUCC.png",
+      src: "/images/certificated_pic/Quill_AUCC.webp",
       alt: "AUCC Competition Certificate",
       caption: "Certificate from the AUCC Competition",
     },
     ctaLabel: "Email me",
-    ctaHref: "mailto:kongkat5556@hotmail.com?subject=Quill%20Remake%20project",
-    imageSrc: "/images/projects/Quill.png",
+    ctaHref: contactMailto("Quill Remake project"),
+    imageSrc: "/images/projects/Quill.webp",
     imageAlt: "Quill Platform Remake",
     imagePosition: "object-left-top",
     accent: "blue",
@@ -800,6 +798,6 @@ export const SKILL_ITEMS_EN: SkillItem[] = [
 
 export const FOOTER_SOCIAL_LINKS_EN: SocialLink[] = [
   { label: "kingly5556 on GitHub", href: "https://github.com/kingly5556", icon: "github" },
-  { label: "kongkat5556@hotmail.com", href: "mailto:kongkat5556@hotmail.com", icon: "mail" },
-  { label: "+66 86-424-1979", href: "tel:+66864241979", icon: "call" },
+  { label: CONTACT_EMAIL, href: contactMailto(), icon: "mail" },
+  { label: CONTACT_PHONE_DISPLAY, href: `tel:${CONTACT_PHONE_TEL}`, icon: "call" },
 ];

@@ -189,7 +189,6 @@ export type PortfolioProject = {
   slug: string;
   category: "Website project" | "Data Project" | string;
   index: number;
-  total: number;
   meta: string;
   title: string;
   description: string;
@@ -228,4 +227,32 @@ export type SocialLink = {
 export type SkillItem = {
   label: string;
   icon: string;
+};
+
+/** The fields a project card needs — see `toProjectSummary`. */
+export type ProjectSummary = Pick<
+  PortfolioProject,
+  | "slug"
+  | "category"
+  | "meta"
+  | "title"
+  | "description"
+  | "imageSrc"
+  | "imageAlt"
+  | "imagePosition"
+  | "accent"
+  | "icon"
+>;
+
+/** Localized site chrome + hero content, resolved on the server for the current locale. */
+export type SiteContent = {
+  brand: string;
+  nav: SiteNavLink[];
+  social: SocialLink[];
+  skills: SkillItem[];
+  hero: {
+    nameLines: readonly [string, string];
+    role: string;
+    subtitle: string;
+  };
 };

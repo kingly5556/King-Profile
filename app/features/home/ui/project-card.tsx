@@ -4,29 +4,29 @@ import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/app/context/LanguageContext";
-import type { PortfolioProject } from "../model/types";
+import type { ProjectSummary } from "../model/types";
 import { MaterialIcon } from "./material-icon";
 import { staggerItem, viewportScroll } from "./motion-variants";
 
-const accentBorderHover: Record<PortfolioProject["accent"], string> = {
+const accentBorderHover: Record<ProjectSummary["accent"], string> = {
   blue: "group-hover:border-accent-blue/60",
   purple: "group-hover:border-accent-purple/60",
   orange: "group-hover:border-orange-500/60",
 };
 
-const accentOverlay: Record<PortfolioProject["accent"], string> = {
+const accentOverlay: Record<ProjectSummary["accent"], string> = {
   blue: "bg-accent-blue/10",
   purple: "bg-accent-purple/10",
   orange: "bg-orange-500/10",
 };
 
-const accentIcon: Record<PortfolioProject["accent"], string> = {
+const accentIcon: Record<ProjectSummary["accent"], string> = {
   blue: "text-accent-blue",
   purple: "text-accent-purple",
   orange: "text-orange-500",
 };
 
-export function ProjectCard({ project }: { project: PortfolioProject }) {
+export function ProjectCard({ project }: { project: ProjectSummary }) {
   const { t } = useLanguage();
   const reduceMotion = useReducedMotion();
 

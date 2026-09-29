@@ -1,4 +1,5 @@
 import type { PortfolioProject, SiteNavLink, SkillItem, SocialLink } from "../model/types";
+import { CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, contactMailto } from "./contact";
 
 export const SITE_BRAND_TH = "ก้องกาจ ธนเลิศรุ่งโรจน์";
 
@@ -21,7 +22,6 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
     slug: "data-center",
     category: "โครงการเว็บไซต์",
     index: 1,
-    total: 3,
     meta: "โครงการสหกิจศึกษา · แพลตฟอร์มข้อมูลมหาวิทยาลัย",
     title: "ศูนย์ข้อมูล (DATA CENTER - SANDBOX)",
     description:
@@ -34,12 +34,12 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
       "ความปลอดภัยและธรรมาภิบาลข้อมูล: ควบคุมสิทธิ์การเข้าถึงข้อมูลตามบทบาทหน้าที่ (RBAC) แยกตามแผนกและระดับผู้ใช้งาน",
     ],
     overviewImage: {
-      src: "/images/certificated_pic/Datacenter_RmutiAward.png",
+      src: "/images/certificated_pic/Datacenter_RmutiAward.webp",
       alt: "RMUTI Innovation Award Certificate",
       caption: "รางวัลประกวดโครงงานสหกิจศึกษา มทร.อีสาน สาขานวัตกรรม",
     },
     ctaLabel: "ส่งอีเมลหาฉัน",
-    ctaHref: "mailto:kongkat5556@hotmail.com?subject=Data%20Center%20project",
+    ctaHref: contactMailto("Data Center project"),
     imageSrc: "/images/projects/data-center-v2.png",
     imageAlt: "แนวคิดแดชบอร์ดแพลตฟอร์มข้อมูล",
     imagePosition: "object-left-top",
@@ -184,7 +184,6 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
     slug: "gpa-prediction-model",
     category: "โครงการข้อมูล",
     index: 2,
-    total: 3,
     meta: "การวิเคราะห์ข้อมูล · แมชชีนเลิร์นนิง · ชุดข้อมูลวิชาการ",
     title: "ระบบวิเคราะห์ข้อมูลนักศึกษาสำเร็จการศึกษา & โมเดลทำนายเกรดเฉลี่ยสะสม (GPA)",
     description:
@@ -505,6 +504,15 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
               },
               {
                 test: "Correlation",
+                feature: "OLD_PROG_GPA_MEAN",
+                statistic: "Pearson r = +0.212",
+                pValue: "< 0.001 ***",
+                effectSize: "Spearman ρ = +0.191",
+                verdict: "significant",
+                insight: "ค่าเฉลี่ย GPA ระดับหลักสูตรจากมัธยมปลายให้สัญญาณคุณภาพของหลักสูตร ซึ่งช่วยทำนายผลการเรียนในมหาวิทยาลัยได้อย่างมีความหมาย",
+              },
+              {
+                test: "Correlation",
                 feature: "STUDY_GAP",
                 statistic: "Pearson r = +0.087",
                 pValue: "< 0.001 ***",
@@ -663,7 +671,7 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
       },
     ],
     ctaLabel: "ส่งอีเมลหาฉัน",
-    ctaHref: "mailto:kongkat5556@hotmail.com?subject=GPA%20Prediction%20Model%20project",
+    ctaHref: contactMailto("GPA Prediction Model project"),
     imageSrc: "/images/projects/gpa-prediction.webp",
     imageAlt: "ระบบวิเคราะห์ข้อมูลนักศึกษาสำเร็จการศึกษา & โมเดลทำนายเกรดเฉลี่ยสะสม (GPA)",
     imagePosition: "object-left-top",
@@ -674,7 +682,6 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
     slug: "quill-remake",
     category: "โครงการเว็บไซต์",
     index: 3,
-    total: 3,
     meta: "โครงการส่วนตัว · แพลตฟอร์มนิยายออนไลน์",
     title: "แพลตฟอร์มนิยาย QUILL",
     description: "แพลตฟอร์มสำหรับอ่านและเขียนนิยายออนไลน์ที่เชื่อมโยงนักเขียนและนักอ่านเข้าด้วยกัน โดดเด่นด้วยสถาปัตยกรรมระบบแบบ 3-Tier ที่มีความปลอดภัยสูง การทำงานผ่าน REST API ที่รองรับการขยายตัว และมีผู้ช่วย AI ที่ช่วยให้นักเขียนสร้างสรรค์ผลงานได้อย่างมีประสิทธิภาพ",
@@ -686,13 +693,13 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
       "มอบประสบการณ์การใช้งานที่ลื่นไหล ทั้งสำหรับนักอ่านที่ต้องการค้นหาผลงานใหม่ๆ และนักเขียนที่ต้องการจัดการนิยายของตนเอง",
     ],
     overviewImage: {
-      src: "/images/certificated_pic/Quill_AUCC.png",
+      src: "/images/certificated_pic/Quill_AUCC.webp",
       alt: "AUCC Competition Certificate",
       caption: "ประกาศนียบัตรจากการประกวด AUCC",
     },
     ctaLabel: "ส่งอีเมลหาฉัน",
-    ctaHref: "mailto:kongkat5556@hotmail.com?subject=Quill%20Remake%20project",
-    imageSrc: "/images/projects/Quill.png",
+    ctaHref: contactMailto("Quill Remake project"),
+    imageSrc: "/images/projects/Quill.webp",
     imageAlt: "Quill Platform Remake",
     imagePosition: "object-left-top",
     accent: "blue",
@@ -791,6 +798,6 @@ export const SKILL_ITEMS_TH: SkillItem[] = [
 
 export const FOOTER_SOCIAL_LINKS_TH: SocialLink[] = [
   { label: "GitHub ของฉัน (kingly5556)", href: "https://github.com/kingly5556", icon: "github" },
-  { label: "kongkat5556@hotmail.com", href: "mailto:kongkat5556@hotmail.com", icon: "mail" },
-  { label: "+66 86-424-1979", href: "tel:+66864241979", icon: "call" },
+  { label: CONTACT_EMAIL, href: contactMailto(), icon: "mail" },
+  { label: CONTACT_PHONE_DISPLAY, href: `tel:${CONTACT_PHONE_TEL}`, icon: "call" },
 ];

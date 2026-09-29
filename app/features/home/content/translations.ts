@@ -1,5 +1,12 @@
 export type Locale = "en" | "th";
 
+export const DEFAULT_LOCALE: Locale = "en";
+export const LOCALE_COOKIE = "portfolio-locale";
+
+export function isLocale(value: string | undefined): value is Locale {
+  return value === "en" || value === "th";
+}
+
 export const UI_TRANSLATIONS: Record<Locale, Record<string, string>> = {
   en: {
     letsTalk: "Let's Talk",
@@ -60,6 +67,7 @@ export const UI_TRANSLATIONS: Record<Locale, Record<string, string>> = {
     action: "Action",
     goalAchievement: "Goal Achievement",
     qualityAssessment: "Quality Assessment",
+    benefitsAndImpact: "Benefits & Impact",
     stepByStepSummary: "Step by Step Summary",
     systemDesign: "System Design",
     authAndUsers: "Auth & Users",
@@ -138,6 +146,7 @@ export const UI_TRANSLATIONS: Record<Locale, Record<string, string>> = {
     action: "Action",
     goalAchievement: "บรรลุเป้าหมาย",
     qualityAssessment: "ประเมินคุณภาพ",
+    benefitsAndImpact: "ประโยชน์และผลกระทบ",
     stepByStepSummary: "สรุปทีละขั้นตอน",
     systemDesign: "ออกแบบระบบ",
     authAndUsers: "ระบบยืนยันตัวตน",
@@ -158,3 +167,10 @@ export const UI_TRANSLATIONS: Record<Locale, Record<string, string>> = {
     k8sManifests: "ไฟล์ K8s Manifest",
   },
 };
+
+export type Translate = (key: string) => string;
+
+/** Server-side equivalent of `useLanguage().t`. */
+export function getTranslator(locale: Locale): Translate {
+  return (key) => UI_TRANSLATIONS[locale][key] || UI_TRANSLATIONS.en[key] || key;
+}

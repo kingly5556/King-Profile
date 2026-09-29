@@ -1,45 +1,63 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { Locale, UI_TRANSLATIONS } from "../features/home/content/translations";
+import { useRouter } from "next/navigation";
+import React, { createContext, useCallback, useContext, useMemo, useState, useTransition } from "react";
+import { LOCALE_COOKIE, Locale, UI_TRANSLATIONS } from "../features/home/content/translations";
+import type { SiteContent } from "../features/home/model/types";
 
 type LanguageContextType = {
   locale: Locale;
   setLocale: (locale: Locale) => void;
   t: (key: string) => string;
+  /** Localized site chrome/hero content for the current locale (resolved on the server). */
+  content: SiteContent;
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("en");
-  const [mounted, setMounted] = useState(false);
+const ONE_YEAR_SECONDS = 60 * 60 * 24 * 365;
 
-  // Initialize language from localStorage on client mount to avoid hydration mismatches
-  useEffect(() => {
-    const savedLocale = localStorage.getItem("portfolio-locale") as Locale;
-    if (savedLocale === "en" || savedLocale === "th") {
-      setLocaleState(savedLocale);
-    }
-    setMounted(true);
-  }, []);
+// `initialLocale` and `content` come from the cookie read on the server (see app/layout.tsx),
+// so the first HTML already matches the visitor's language — no flash of English, and only
+// one language's content is ever sent to the browser.
+export function LanguageProvider({
+  initialLocale,
+  content,
+  children,
+}: {
+  initialLocale: Locale;
+  content: SiteContent;
+  children: React.ReactNode;
+}) {
+  const router = useRouter();
+  const [locale, setLocaleState] = useState<Locale>(initialLocale);
+  const [, startTransition] = useTransition();
 
-  const setLocale = (newLocale: Locale) => {
-    setLocaleState(newLocale);
-    localStorage.setItem("portfolio-locale", newLocale);
-  };
-
-  const t = (key: string): string => {
-    return UI_TRANSLATIONS[locale][key] || UI_TRANSLATIONS["en"][key] || key;
-  };
-
-  // Render a transparent shell or wait until mount if necessary, but returning the provider directly
-  // with the default 'en' state avoids hydration mismatch and ensures SEO-friendly SSR html output.
-  return (
-    <LanguageContext.Provider value={{ locale, setLocale, t }}>
-      {children}
-    </LanguageContext.Provider>
+  const setLocale = useCallback(
+    (newLocale: Locale) => {
+      document.cookie = `${LOCALE_COOKIE}=${newLocale}; path=/; max-age=${ONE_YEAR_SECONDS}; samesite=lax`;
+      document.documentElement.lang = newLocale;
+      // Update the locale and re-render the server components (which read the cookie) in one
+      // transition, so UI strings and page content switch together when the new payload lands.
+      startTransition(() => {
+        setLocaleState(newLocale);
+        router.refresh();
+      });
+    },
+    [router],
   );
+
+  const value = useMemo<LanguageContextType>(
+    () => ({
+      locale,
+      setLocale,
+      content,
+      t: (key) => UI_TRANSLATIONS[locale][key] || UI_TRANSLATIONS.en[key] || key,
+    }),
+    [locale, setLocale, content],
+  );
+
+  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 }
 
 export function useLanguage() {

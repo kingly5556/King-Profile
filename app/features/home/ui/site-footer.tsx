@@ -3,22 +3,14 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 import { useLanguage } from "@/app/context/LanguageContext";
-import {
-  CONTACT_EMAIL,
-  FOOTER_SOCIAL_LINKS_EN,
-  FOOTER_SOCIAL_LINKS_TH,
-  SITE_BRAND_EN,
-  SITE_BRAND_TH,
-} from "../content/home";
 import { MaterialIcon } from "./material-icon";
 import { fadeUp, staggerContainer, staggerItem, viewportScroll } from "./motion-variants";
 
 export function SiteFooter() {
-  const { locale, t } = useLanguage();
+  const { content, t } = useLanguage();
   const reduceMotion = useReducedMotion();
 
-  const brand = locale === "en" ? SITE_BRAND_EN : SITE_BRAND_TH;
-  const links = locale === "en" ? FOOTER_SOCIAL_LINKS_EN : FOOTER_SOCIAL_LINKS_TH;
+  const { brand, social: links } = content;
 
   return (
     <footer

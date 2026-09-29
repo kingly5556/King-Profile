@@ -1,97 +1,44 @@
 "use client";
 
-import { useState } from "react";
-import { useLanguage } from "@/app/context/LanguageContext";
+import { useState, type ReactNode } from "react";
 
-export function ProjectTabs({
-  overviewContent,
-  metadataContent,
-  edaContent,
-  cleaningContent,
-  featureEngineeringContent,
-  statisticalTestingContent,
-  predictiveModelingContent,
-  systemDesignContent,
-  authContent,
-  datasetContent,
-  schemaContent,
-  aiContent,
-  coreContent,
-  deploymentContent,
-  summaryContent,
-  accentBorderClass,
-}: {
-  overviewContent: React.ReactNode;
-  metadataContent?: React.ReactNode;
-  edaContent?: React.ReactNode;
-  cleaningContent?: React.ReactNode;
-  featureEngineeringContent?: React.ReactNode;
-  statisticalTestingContent?: React.ReactNode;
-  predictiveModelingContent?: React.ReactNode;
-  systemDesignContent?: React.ReactNode;
-  authContent?: React.ReactNode;
-  datasetContent?: React.ReactNode;
-  schemaContent?: React.ReactNode;
-  aiContent?: React.ReactNode;
-  coreContent?: React.ReactNode;
-  deploymentContent?: React.ReactNode;
-  summaryContent?: React.ReactNode;
-  accentBorderClass: string;
-}) {
-  const [activeTab, setActiveTab] = useState("Overview");
-  const { t } = useLanguage();
+export type ProjectTab = {
+  id: string;
+  label: string;
+  /** Rendered on the server; this component only decides which tab is visible. */
+  content: ReactNode;
+};
 
-  const tabs = [
-    { id: "Overview", label: t("overview") },
-    ...(metadataContent ? [{ id: "Metadata", label: t("metadata") }] : []),
-    ...(edaContent ? [{ id: "EDA", label: t("eda") }] : []),
-    ...(cleaningContent ? [{ id: "Cleaning", label: t("dataCleaning") }] : []),
-    ...(featureEngineeringContent ? [{ id: "FeatureEng", label: t("featureEngineering") }] : []),
-    ...(statisticalTestingContent ? [{ id: "StatTest", label: t("statisticalTesting") }] : []),
-    ...(predictiveModelingContent ? [{ id: "PredModel", label: t("predictiveModeling") }] : []),
-    ...(systemDesignContent ? [{ id: "SystemDesign", label: t("systemDesign") }] : []),
-    ...(authContent ? [{ id: "Auth", label: t("authAndUsers") }] : []),
-    ...(aiContent ? [{ id: "AI", label: t("aiAssistant") }] : []),
-    ...(datasetContent ? [{ id: "Dataset", label: t("datasetManagement") }] : []),
-    ...(schemaContent ? [{ id: "Schema", label: t("schemaManagement") }] : []),
-    ...(coreContent ? [{ id: "Core", label: t("platformFeatures") }] : []),
-    ...(deploymentContent ? [{ id: "Deployment", label: t("deployment") }] : []),
-    ...(summaryContent ? [{ id: "Summary", label: t("projectSummary") }] : []),
-  ];
+export function ProjectTabs({ tabs, accentBorderClass }: { tabs: ProjectTab[]; accentBorderClass: string }) {
+  const [activeId, setActiveId] = useState(tabs[0]?.id);
+  // Fall back to the first tab if the tab set changes (e.g. after a language switch).
+  const active = tabs.find((tab) => tab.id === activeId) ?? tabs[0];
 
   return (
     <div className="w-full">
-      <div className="mb-12 flex gap-8 border-b border-outline overflow-x-auto">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`pb-4 font-label-mono text-sm uppercase tracking-widest transition-colors whitespace-nowrap ${
-              activeTab === tab.id
-                ? `border-b-2 ${accentBorderClass} text-primary`
-                : "text-secondary hover:text-primary border-b-2 border-transparent"
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
+      <div className="mb-12 flex gap-8 border-b border-outline overflow-x-auto" role="tablist">
+        {tabs.map((tab) => {
+          const selected = tab.id === active?.id;
+          return (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={selected}
+              onClick={() => setActiveId(tab.id)}
+              className={`pb-4 font-label-mono text-sm uppercase tracking-widest transition-colors whitespace-nowrap ${
+                selected
+                  ? `border-b-2 ${accentBorderClass} text-primary`
+                  : "text-secondary hover:text-primary border-b-2 border-transparent"
+              }`}
+            >
+              {tab.label}
+            </button>
+          );
+        })}
       </div>
-      <div className="min-h-[50vh]">
-        {activeTab === "Overview" && overviewContent}
-        {activeTab === "Metadata" && metadataContent}
-        {activeTab === "EDA" && edaContent}
-        {activeTab === "Cleaning" && cleaningContent}
-        {activeTab === "FeatureEng" && featureEngineeringContent}
-        {activeTab === "StatTest" && statisticalTestingContent}
-        {activeTab === "PredModel" && predictiveModelingContent}
-        {activeTab === "SystemDesign" && systemDesignContent}
-        {activeTab === "Auth" && authContent}
-        {activeTab === "AI" && aiContent}
-        {activeTab === "Dataset" && datasetContent}
-        {activeTab === "Schema" && schemaContent}
-        {activeTab === "Core" && coreContent}
-        {activeTab === "Deployment" && deploymentContent}
-        {activeTab === "Summary" && summaryContent}
+      <div className="min-h-[50vh]" role="tabpanel">
+        {active?.content}
       </div>
     </div>
   );

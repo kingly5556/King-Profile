@@ -3,15 +3,14 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 import { useLanguage } from "@/app/context/LanguageContext";
-import { SKILL_ITEMS_EN, SKILL_ITEMS_TH } from "../content/home";
 import { MaterialIcon } from "./material-icon";
 import { staggerContainer, staggerItem, viewportScroll } from "./motion-variants";
 
 export function SkillsSection() {
-  const { locale } = useLanguage();
+  const { content } = useLanguage();
   const reduceMotion = useReducedMotion();
 
-  const skills = locale === "en" ? SKILL_ITEMS_EN : SKILL_ITEMS_TH;
+  const skills = content.skills;
 
   return (
     <section id="expertise" className="relative overflow-hidden border-y border-outline bg-surface-container-lowest py-20">
