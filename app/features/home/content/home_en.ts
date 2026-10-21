@@ -36,6 +36,8 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
     links: [
       { label: "Live demo", href: "https://k-erp-hub.vercel.app", icon: "arrow_outward" },
       { label: "Source code", href: "https://github.com/kingly5556/K-ERP", icon: "github" },
+      { label: "Stock report (PDF)", href: "/docs/KERP-STK-TR-001_Stock-Technical-Report_EN.pdf", icon: "description" },
+      { label: "Accounting report (PDF)", href: "/docs/KERP-ACC-TR-001_Accounting-Technical-Report_EN.pdf", icon: "description" },
     ],
     ctaLabel: "Email me",
     ctaHref: contactMailto("K-ERP project"),
