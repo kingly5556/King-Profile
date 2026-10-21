@@ -1,13 +1,18 @@
 import type { PortfolioProject } from "@/app/features/home/model/types";
 
 const SMALL_WORDS = new Set(["&", "and", "of", "the", "a", "an", "to", "in"]);
+// Words that must stay upper-case (compared without trailing punctuation).
+const ACRONYMS = new Set(["K-ERP", "ERP", "GPA", "AI", "ML", "API", "OCR", "PDPA"]);
 
 // Project titles are stored in ALL CAPS for the UI; search snippets read better in Title Case.
 export function projectMetaTitle(project: Pick<PortfolioProject, "title">): string {
   return project.title
-    .toLowerCase()
     .split(" ")
-    .map((word, i) => (i > 0 && SMALL_WORDS.has(word) ? word : word.replace(/^\(?[a-z]/, (m) => m.toUpperCase())))
+    .map((original, i) => {
+      if (ACRONYMS.has(original.replace(/[^A-Za-z0-9-]/g, "").toUpperCase())) return original;
+      const word = original.toLowerCase();
+      return i > 0 && SMALL_WORDS.has(word) ? word : word.replace(/^\(?[a-z]/, (m) => m.toUpperCase());
+    })
     .join(" ");
 }
 
