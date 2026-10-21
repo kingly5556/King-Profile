@@ -183,6 +183,8 @@ export type ProjectDetailSection =
       stats: DeploymentStat[];
       phases: DeploymentPhase[];
       k8sSummary: string[];
+      /** Title for the k8sSummary box; defaults to "Kubernetes Manifests". */
+      manifestsTitle?: string;
     };
 
 export type PortfolioProject = {
@@ -202,6 +204,8 @@ export type PortfolioProject = {
   };
   /** Optional rich detail sections rendered on the project page */
   detailSections?: ProjectDetailSection[];
+  /** Optional outbound links (live demo, source code, report) shown on the project page */
+  links?: { label: string; href: string; icon: string }[];
   ctaLabel: string;
   ctaHref: string;
   imageSrc: string;

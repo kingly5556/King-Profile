@@ -96,6 +96,9 @@ const TAB_DEFS: TabDef[] = [
   featureTab("Dataset", "datasetManagement", "dataset"),
   featureTab("Schema", "schemaManagement", "schema"),
   featureTab("Core", "platformFeatures", "core"),
+  featureTab("Purchasing", "purchasing", "purchasing"),
+  featureTab("Inventory", "stockLedger", "inventory"),
+  featureTab("Ledger", "generalLedger", "ledger"),
   {
     id: "Deployment",
     labelKey: "deployment",
@@ -164,6 +167,17 @@ function OverviewTab({ project, ctx }: { project: PortfolioProject; ctx: Section
               <span className="font-label-mono text-[10px] uppercase text-secondary">{t("tags")}</span>
               <span className="font-body-md text-primary">{project.meta}</span>
             </div>
+            {project.links?.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 border border-primary bg-primary px-6 py-4 font-label-mono text-label-mono uppercase tracking-widest text-background transition-colors hover:bg-transparent hover:text-primary"
+              >
+                <MaterialIcon name={link.icon} sizeClass="text-sm" /> {link.label}
+              </a>
+            ))}
             <a
               href={project.ctaHref}
               className="mt-4 inline-flex items-center justify-center gap-2 border border-outline px-6 py-4 font-label-mono text-label-mono uppercase tracking-widest transition-colors hover:border-primary hover:bg-primary hover:text-background"

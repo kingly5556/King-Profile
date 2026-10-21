@@ -5,7 +5,7 @@ export const SITE_BRAND_EN = "Kongkat Thanalertrungroj";
 
 export const HERO_HEADLINE_NAME_LINES_EN = ["Kongkat", "Thanalertrungroj"] as const;
 
-export const HERO_HEADLINE_ROLE_EN = "PROGRAMMER & AI ENGINEER" as const;
+export const HERO_HEADLINE_ROLE_EN = "BACKEND & FULL-STACK DEVELOPER" as const;
 
 export const HERO_SUBTITLE_EN =
   "B.Sc. Computer Science · Rajamangala University of Technology Isan · 2022–2026 · GPA 3.31";
@@ -19,9 +19,166 @@ export const SITE_NAV_EN: SiteNavLink[] = [
 
 export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
   {
-    slug: "data-center",
+    slug: "k-erp",
     category: "Website project",
     index: 1,
+    meta: "Personal project · Modular ERP (live demo)",
+    title: "K-ERP: STOCK & PURCHASING + GENERAL LEDGER",
+    description:
+      "A small business system for buying and stocking goods. Purchase orders are approved, goods are received, and the matching accounting entry appears in the general ledger on its own, exactly once, even if the accounting service was down at the time.",
+    bullets: [
+      "Three services behind one login: a Next.js gateway (JWT in an httpOnly cookie, reverse proxy) plus Stock & Purchase and Accounting, each with its own PostgreSQL database.",
+      "Transactional outbox + idempotent posting: no lost or duplicated journal entries, verified on production by suspending the accounting service mid-receipt.",
+      "Double-entry rules enforced in code and in PostgreSQL (CHECK constraint, triggers that make posted entries immutable); money stored as integer satang.",
+      "Row-level locking keeps stock from going negative; gap-free document numbers under concurrent requests (tested with 20 parallel creates).",
+      "Deployed for 0 THB (Vercel, Render, Neon) with CI on every repository and a nightly job that resets the demo and reconciles stock value with the ledger.",
+    ],
+    links: [
+      { label: "Live demo", href: "https://k-erp-hub.vercel.app", icon: "arrow_outward" },
+      { label: "Source code", href: "https://github.com/kingly5556/K-ERP", icon: "github" },
+    ],
+    ctaLabel: "Email me",
+    ctaHref: contactMailto("K-ERP project"),
+    imageSrc: "/images/projects/k-erp.webp",
+    imageAlt: "K-ERP purchase order and the journal entry it produced",
+    imagePosition: "object-left-top",
+    accent: "blue",
+    icon: "deployed_code",
+    detailSections: [
+      {
+        kind: "stack",
+        title: "Tools & Tech Stack",
+        items: [
+          { label: "TypeScript", icon: "code" },
+          { label: "Node.js / Express", icon: "api" },
+          { label: "PostgreSQL / Prisma", icon: "database" },
+          { label: "React / Vite", icon: "grid_view" },
+          { label: "Next.js", icon: "layers" },
+          { label: "Vitest", icon: "done_all" },
+        ],
+      },
+      {
+        kind: "systemDesign",
+        title: "System Design",
+        problems: [
+          "Stock and accounting are often kept in separate systems, so the books drift away from what is really in the warehouse.",
+          "Re-sending a message after a network error can post the same goods receipt twice.",
+          "Two people receiving the same product at the same moment can corrupt the stock balance.",
+        ],
+        modules: [
+          { title: "ERPHUB (gateway)", description: "One login for every module; checks the JWT and forwards requests under one domain.", icon: "🔐" },
+          { title: "Stock & Purchase", description: "Products, suppliers, purchase orders with approval, goods receipts and a stock ledger.", icon: "📦" },
+          { title: "Accounting / GL", description: "Double-entry journal, chart of accounts, periods, year-end close and financial statements.", icon: "📒" },
+          { title: "Integration (outbox)", description: "Receipts and adjustments are queued in the same transaction and posted to Accounting exactly once.", icon: "🔁" },
+        ],
+        roles: [
+          { role: "Purchasing", permissions: "Create, submit and send purchase orders" },
+          { role: "Manager", permissions: "Approve purchase orders over 50,000 THB" },
+          { role: "Warehouse Staff", permissions: "Receive goods and adjust stock" },
+          { role: "Accountant", permissions: "Journal entries, chart of accounts and reports" },
+          { role: "Admin", permissions: "Everything, including period and year-end close" },
+        ],
+      },
+      {
+        kind: "systemFeature",
+        id: "purchasing",
+        title: "Purchasing",
+        stats: [
+          { label: "Statuses", value: "6", icon: "🔄" },
+          { label: "Approval", value: "> 50,000 THB", icon: "✅" },
+          { label: "PO numbers", value: "Gap-free", icon: "🔢" },
+          { label: "Receiving", value: "Partial or full", icon: "📥" },
+        ],
+        steps: [
+          { step: 1, title: "Create", concept: "Purchasing drafts an order", what: "Supplier, products, quantities and unit costs; totals validated server-side", result: "DRAFT with the next PO number" },
+          { step: 2, title: "Submit", concept: "Large orders need a second person", what: "Orders over the threshold go to PENDING_APPROVAL; the creator cannot approve", result: "Separation of duties" },
+          { step: 3, title: "Approve & send", concept: "Manager signs off", what: "Approved orders are sent to the supplier", result: "SENT, ready to receive" },
+          { step: 4, title: "Receive", concept: "Goods arrive in parts", what: "Each receipt updates the order: PARTIALLY_RECEIVED, then COMPLETED", result: "Over-receiving is refused" },
+        ],
+      },
+      {
+        kind: "systemFeature",
+        id: "inventory",
+        title: "Stock Ledger",
+        stats: [
+          { label: "Ledger", value: "Append-only", icon: "📜" },
+          { label: "Locking", value: "Row-level", icon: "🔒" },
+          { label: "Negative stock", value: "Refused", icon: "🛑" },
+          { label: "Reorder alerts", value: "Dashboard", icon: "📉" },
+        ],
+        steps: [
+          { step: 1, title: "Movement", concept: "Every change is a ledger row", what: "Receipts and adjustments insert movements; nothing is updated in place", result: "Full audit trail" },
+          { step: 2, title: "Lock", concept: "Concurrency safety", what: "SELECT … FOR UPDATE on the product row before computing the new balance", result: "No lost updates" },
+          { step: 3, title: "Outbox", concept: "Same transaction as the movement", what: "A posting message is written next to the movement and delivered with retries", result: "Accounting always catches up" },
+        ],
+      },
+      {
+        kind: "systemFeature",
+        id: "ledger",
+        title: "General Ledger",
+        stats: [
+          { label: "Money", value: "BigInt satang", icon: "💰" },
+          { label: "Posted entries", value: "Immutable", icon: "🔏" },
+          { label: "Duplicates", value: "Idempotent", icon: "♻️" },
+          { label: "Reports", value: "TB · IS · BS", icon: "📊" },
+        ],
+        steps: [
+          { step: 1, title: "Post", concept: "Debits must equal credits", what: "Checked in code and by a database CHECK; posted entries can only be reversed", result: "Balanced books" },
+          { step: 2, title: "Auto-posting", concept: "Events from Stock", what: "Goods received: Dr 1300 Inventory / Cr 2150 GR/IR, keyed by source document", result: "Exactly once" },
+          { step: 3, title: "Close", concept: "Periods and year end", what: "Monthly periods in Bangkok time; year-end moves profit to retained earnings", result: "Locked history" },
+          { step: 4, title: "Report", concept: "Statements on demand", what: "Trial balance, general ledger, income statement, balance sheet, Excel export", result: "Ready for review" },
+        ],
+      },
+      {
+        kind: "deploymentPipeline",
+        title: "Deployment Pipeline",
+        stats: [
+          { label: "Hosting", value: "Vercel + Render", icon: "☁️" },
+          { label: "Database", value: "Neon Postgres", icon: "🐘" },
+          { label: "CI", value: "GitHub Actions", icon: "⚙️" },
+          { label: "Cost", value: "0 THB", icon: "🆓" },
+        ],
+        phases: [
+          { phase: "1. Push", action: "Commit to GitHub", detail: "Each of the five repositories runs lint, typecheck/build and tests in GitHub Actions." },
+          { phase: "2. Build", action: "Render builds the backends", detail: "Clones the matching frontend, builds both, and applies Prisma migrations." },
+          { phase: "3. Deploy", action: "Vercel deploys the hub", detail: "Next.js gateway in the Singapore region, next to the services and databases." },
+          { phase: "4. Reset", action: "Nightly demo reset", detail: "Resets and re-seeds both databases, wakes the services, drains the outbox." },
+          { phase: "5. Verify", action: "Reconcile", detail: "Fails the job if stock value differs from GL account 1300." },
+        ],
+        k8sSummary: [
+          "render.yaml — Render Blueprint for the two backend services",
+          "reset-demo.yml — nightly reset, wake-up, outbox drain and reconciliation",
+          "ci.yml — lint, typecheck/build and tests in every repository",
+          "migration.sql — tables, CHECK constraint and immutability triggers",
+        ],
+        manifestsTitle: "Infrastructure files",
+      },
+      {
+        kind: "summary",
+        title: "Project Summary",
+        goalAchievement: "Built and deployed a working two-module ERP where purchasing, stock and accounting stay consistent without manual re-entry.",
+        qualityAssessment: "101 accounting tests, 28 stock tests and 23 end-to-end checks pass; production tests covered the full purchase flow, an accounting outage, cold starts and mobile layout.",
+        benefits: [
+          "Stock value and the inventory account reconcile every night (91,050.00 THB = 91,050.00 THB).",
+          "A service outage delays postings instead of losing them.",
+          "Anyone can try every role from the login page without signing up.",
+          "Three production-only bugs found and fixed: build cache, cross-region transaction timeout, host wake-up page.",
+          "Architecture, rules and trade-offs documented in the repositories and a technical report.",
+        ],
+        steps: [
+          { phase: "Design", action: "Specs for modules, data model and rules", result: "Written before any code" },
+          { phase: "Build", action: "TypeScript services with AI-assisted implementation", result: "Reviewed, tested and fixed" },
+          { phase: "Test", action: "Unit, integration (real PostgreSQL) and end-to-end", result: "All suites green" },
+          { phase: "Deploy", action: "Vercel, Render, Neon, GitHub Actions", result: "Live demo at 0 THB" },
+          { phase: "Verify", action: "Production test plan P1–P9", result: "Passed, issues fixed" },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "data-center",
+    category: "Website project",
+    index: 2,
     meta: "Cooperative project · University data platform",
     title: "DATA CENTER (SANDBOX)",
     description:
@@ -183,7 +340,7 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
   {
     slug: "gpa-prediction-model",
     category: "Data Project",
-    index: 2,
+    index: 3,
     meta: "Data Analysis · Machine Learning · Academic Dataset",
     title: "GRADUATE STUDENT ANALYTICS & GPA PREDICTION MODEL",
     description:
@@ -691,7 +848,7 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
   {
     slug: "quill-remake",
     category: "Website project",
-    index: 3,
+    index: 4,
     meta: "Personal Project · Novel Writing Platform",
     title: "QUILL PLATFORM",
     description: "A comprehensive novel reading and writing platform designed to connect authors and readers. It features a robust 3-Tier Architecture for enhanced security, scalable REST APIs, and an integrated AI writing assistant to help authors craft their stories efficiently.",

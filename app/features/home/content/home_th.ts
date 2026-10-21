@@ -5,7 +5,7 @@ export const SITE_BRAND_TH = "ก้องกาจ ธนเลิศรุ่�
 
 export const HERO_HEADLINE_NAME_LINES_TH = ["ก้องกาจ", "ธนเลิศรุ่งโรจน์"] as const;
 
-export const HERO_HEADLINE_ROLE_TH = "โปรแกรมเมอร์ & วิศวกร AI" as const;
+export const HERO_HEADLINE_ROLE_TH = "นักพัฒนา BACKEND & FULL-STACK" as const;
 
 export const HERO_SUBTITLE_TH =
   "วท.บ. วิทยาการคอมพิวเตอร์ · มหาวิทยาลัยเทคโนโลยีราชมงคลอีสาน · 2022–2026 · เกรดเฉลี่ยสะสม 3.31";
@@ -19,9 +19,166 @@ export const SITE_NAV_TH: SiteNavLink[] = [
 
 export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
   {
-    slug: "data-center",
+    slug: "k-erp",
     category: "โครงการเว็บไซต์",
     index: 1,
+    meta: "โปรเจ็คส่วนตัว · ระบบ ERP แบบแยกโมดูล (มี demo ให้ลอง)",
+    title: "K-ERP: ระบบสต็อกและจัดซื้อ + บัญชีแยกประเภท",
+    description:
+      "ระบบงานซื้อและเก็บสินค้าสำหรับธุรกิจขนาดเล็ก ใบสั่งซื้อผ่านการอนุมัติ รับของเข้าคลัง แล้วรายการบัญชีจะขึ้นในบัญชีแยกประเภทเองโดยอัตโนมัติเพียงครั้งเดียว แม้ระบบบัญชีจะล่มอยู่ในตอนนั้นก็ตาม",
+    bullets: [
+      "3 บริการภายใต้การ login ครั้งเดียว: Gateway ด้วย Next.js (JWT ใน httpOnly cookie, reverse proxy) และโมดูลสต็อก/จัดซื้อกับโมดูลบัญชี ซึ่งแยกฐานข้อมูล PostgreSQL ของตัวเอง",
+      "Transactional outbox + การลงบัญชีแบบ idempotent: รายการบัญชีไม่หายและไม่ซ้ำ ทดสอบบน production ด้วยการปิดระบบบัญชีระหว่างรับของ",
+      "บังคับกฎบัญชีคู่ทั้งในโค้ดและใน PostgreSQL (CHECK constraint, trigger ที่ห้ามแก้รายการที่ลงบัญชีแล้ว) และเก็บเงินเป็นจำนวนเต็มหน่วยสตางค์",
+      "ล็อกแถวสินค้าเพื่อไม่ให้สต็อกติดลบ และเลขที่เอกสารไม่ข้ามแม้มีคำขอพร้อมกัน (ทดสอบสร้างพร้อมกัน 20 ใบ)",
+      "Deploy ด้วยค่าใช้จ่าย 0 บาท (Vercel, Render, Neon) มี CI ทุก repo และงานอัตโนมัติทุกคืนที่รีเซ็ต demo แล้วกระทบยอดมูลค่าสต็อกกับบัญชี",
+    ],
+    links: [
+      { label: "ลองใช้ demo", href: "https://k-erp-hub.vercel.app", icon: "arrow_outward" },
+      { label: "ซอร์สโค้ด", href: "https://github.com/kingly5556/K-ERP", icon: "github" },
+    ],
+    ctaLabel: "ส่งอีเมลหาฉัน",
+    ctaHref: contactMailto("K-ERP project"),
+    imageSrc: "/images/projects/k-erp.webp",
+    imageAlt: "ใบสั่งซื้อใน K-ERP และรายการบัญชีที่เกิดขึ้นจากการรับของ",
+    imagePosition: "object-left-top",
+    accent: "blue",
+    icon: "deployed_code",
+    detailSections: [
+      {
+        kind: "stack",
+        title: "เครื่องมือและเทคโนโลยี",
+        items: [
+          { label: "TypeScript", icon: "code" },
+          { label: "Node.js / Express", icon: "api" },
+          { label: "PostgreSQL / Prisma", icon: "database" },
+          { label: "React / Vite", icon: "grid_view" },
+          { label: "Next.js", icon: "layers" },
+          { label: "Vitest", icon: "done_all" },
+        ],
+      },
+      {
+        kind: "systemDesign",
+        title: "การออกแบบระบบ",
+        problems: [
+          "สต็อกกับบัญชีมักอยู่คนละระบบ ทำให้ตัวเลขในบัญชีไม่ตรงกับของที่อยู่ในคลังจริง",
+          "การส่งข้อมูลซ้ำหลังเครือข่ายขัดข้อง อาจทำให้ลงบัญชีการรับของรายการเดียวกันสองครั้ง",
+          "ถ้าสองคนรับสินค้าตัวเดียวกันพร้อมกัน ยอดคงเหลืออาจผิดพลาด",
+        ],
+        modules: [
+          { title: "ERPHUB (Gateway)", description: "Login ครั้งเดียวใช้ได้ทุกโมดูล ตรวจ JWT และส่งต่อคำขอภายใต้โดเมนเดียว", icon: "🔐" },
+          { title: "สต็อกและจัดซื้อ", description: "สินค้า ผู้ขาย ใบสั่งซื้อพร้อมการอนุมัติ การรับของ และบัญชีคุมสต็อก", icon: "📦" },
+          { title: "บัญชี / GL", description: "สมุดรายวันแบบบัญชีคู่ ผังบัญชี งวดบัญชี การปิดสิ้นปี และงบการเงิน", icon: "📒" },
+          { title: "การเชื่อมต่อ (Outbox)", description: "การรับของและการปรับสต็อกถูกบันทึกในคิวภายใน transaction เดียวกัน แล้วลงบัญชีเพียงครั้งเดียว", icon: "🔁" },
+        ],
+        roles: [
+          { role: "Purchasing", permissions: "สร้าง ส่งอนุมัติ และส่งใบสั่งซื้อ" },
+          { role: "Manager", permissions: "อนุมัติใบสั่งซื้อที่เกิน 50,000 บาท" },
+          { role: "Warehouse Staff", permissions: "รับของและปรับสต็อก" },
+          { role: "Accountant", permissions: "รายการบัญชี ผังบัญชี และรายงาน" },
+          { role: "Admin", permissions: "ทำได้ทุกอย่าง รวมถึงปิดงวดและปิดสิ้นปี" },
+        ],
+      },
+      {
+        kind: "systemFeature",
+        id: "purchasing",
+        title: "การจัดซื้อ",
+        stats: [
+          { label: "สถานะ", value: "6", icon: "🔄" },
+          { label: "การอนุมัติ", value: "> 50,000 บาท", icon: "✅" },
+          { label: "เลขที่ PO", value: "ไม่ข้าม", icon: "🔢" },
+          { label: "การรับของ", value: "บางส่วน/ครบ", icon: "📥" },
+        ],
+        steps: [
+          { step: 1, title: "สร้าง", concept: "ฝ่ายจัดซื้อร่างใบสั่งซื้อ", what: "ผู้ขาย สินค้า จำนวน และราคาต่อหน่วย ตรวจยอดรวมฝั่ง server", result: "สถานะ DRAFT พร้อมเลขที่ PO ถัดไป" },
+          { step: 2, title: "ส่งอนุมัติ", concept: "ใบใหญ่ต้องมีคนที่สองตรวจ", what: "ใบที่เกินเกณฑ์เข้าสถานะ PENDING_APPROVAL และผู้สร้างอนุมัติเองไม่ได้", result: "แบ่งแยกหน้าที่" },
+          { step: 3, title: "อนุมัติและส่ง", concept: "ผู้จัดการอนุมัติ", what: "ใบที่อนุมัติแล้วส่งให้ผู้ขาย", result: "สถานะ SENT พร้อมรับของ" },
+          { step: 4, title: "รับของ", concept: "ของมาเป็นช่วง ๆ", what: "การรับแต่ละครั้งอัปเดตใบสั่งซื้อเป็น PARTIALLY_RECEIVED แล้ว COMPLETED", result: "รับเกินจำนวนไม่ได้" },
+        ],
+      },
+      {
+        kind: "systemFeature",
+        id: "inventory",
+        title: "บัญชีคุมสต็อก",
+        stats: [
+          { label: "สมุดคุม", value: "เพิ่มได้อย่างเดียว", icon: "📜" },
+          { label: "การล็อก", value: "ระดับแถว", icon: "🔒" },
+          { label: "สต็อกติดลบ", value: "ไม่อนุญาต", icon: "🛑" },
+          { label: "แจ้งเตือนสั่งซื้อ", value: "หน้า Dashboard", icon: "📉" },
+        ],
+        steps: [
+          { step: 1, title: "การเคลื่อนไหว", concept: "ทุกการเปลี่ยนแปลงคือแถวใหม่", what: "การรับของและการปรับสต็อกเพิ่มแถว ไม่แก้ทับของเดิม", result: "ตรวจสอบย้อนหลังได้ครบ" },
+          { step: 2, title: "ล็อก", concept: "ความปลอดภัยเมื่อทำพร้อมกัน", what: "SELECT … FOR UPDATE ที่แถวสินค้าก่อนคำนวณยอดใหม่", result: "ยอดไม่หาย ไม่ซ้อนทับ" },
+          { step: 3, title: "Outbox", concept: "อยู่ใน transaction เดียวกับการเคลื่อนไหว", what: "เขียนข้อความลงบัญชีคู่กับการเคลื่อนไหว แล้วส่งพร้อมการลองซ้ำ", result: "ระบบบัญชีตามทันเสมอ" },
+        ],
+      },
+      {
+        kind: "systemFeature",
+        id: "ledger",
+        title: "บัญชีแยกประเภท",
+        stats: [
+          { label: "จำนวนเงิน", value: "BigInt สตางค์", icon: "💰" },
+          { label: "รายการที่ลงแล้ว", value: "แก้ไขไม่ได้", icon: "🔏" },
+          { label: "รายการซ้ำ", value: "Idempotent", icon: "♻️" },
+          { label: "รายงาน", value: "งบทดลอง · กำไรขาดทุน · ฐานะ", icon: "📊" },
+        ],
+        steps: [
+          { step: 1, title: "ลงบัญชี", concept: "เดบิตต้องเท่าเครดิต", what: "ตรวจทั้งในโค้ดและด้วย CHECK ในฐานข้อมูล รายการที่ลงแล้วทำได้แค่กลับรายการ", result: "บัญชีสมดุลเสมอ" },
+          { step: 2, title: "ลงบัญชีอัตโนมัติ", concept: "เหตุการณ์จากระบบสต็อก", what: "รับของ: Dr 1300 สินค้าคงเหลือ / Cr 2150 GR/IR โดยอ้างอิงเอกสารต้นทาง", result: "ลงเพียงครั้งเดียว" },
+          { step: 3, title: "ปิดงวด", concept: "งวดบัญชีและสิ้นปี", what: "งวดรายเดือนตามเวลาไทย ปิดสิ้นปีโอนกำไรเข้ากำไรสะสม", result: "ประวัติถูกล็อก" },
+          { step: 4, title: "รายงาน", concept: "งบการเงินเรียกดูได้ทันที", what: "งบทดลอง บัญชีแยกประเภท งบกำไรขาดทุน งบแสดงฐานะการเงิน และส่งออก Excel", result: "พร้อมให้ตรวจ" },
+        ],
+      },
+      {
+        kind: "deploymentPipeline",
+        title: "ขั้นตอนการ Deploy",
+        stats: [
+          { label: "โฮสติ้ง", value: "Vercel + Render", icon: "☁️" },
+          { label: "ฐานข้อมูล", value: "Neon Postgres", icon: "🐘" },
+          { label: "CI", value: "GitHub Actions", icon: "⚙️" },
+          { label: "ค่าใช้จ่าย", value: "0 บาท", icon: "🆓" },
+        ],
+        phases: [
+          { phase: "1. Push", action: "Commit ขึ้น GitHub", detail: "ทั้ง 5 repo รัน lint, typecheck/build และ test ใน GitHub Actions" },
+          { phase: "2. Build", action: "Render build ฝั่ง backend", detail: "Clone frontend ที่คู่กัน build ทั้งสองส่วน และรัน Prisma migration" },
+          { phase: "3. Deploy", action: "Vercel deploy ตัว hub", detail: "Gateway ด้วย Next.js อยู่ region สิงคโปร์ ใกล้บริการและฐานข้อมูล" },
+          { phase: "4. Reset", action: "รีเซ็ต demo ทุกคืน", detail: "ล้างและใส่ข้อมูลใหม่ทั้งสองฐาน ปลุกบริการ และส่งคิว outbox ให้หมด" },
+          { phase: "5. Verify", action: "กระทบยอด", detail: "ถ้ามูลค่าสต็อกไม่ตรงกับบัญชี 1300 งานจะล้มทันที" },
+        ],
+        k8sSummary: [
+          "render.yaml — Render Blueprint ของ backend ทั้งสองบริการ",
+          "reset-demo.yml — รีเซ็ตทุกคืน ปลุกบริการ ส่งคิว outbox และกระทบยอด",
+          "ci.yml — lint, typecheck/build และ test ในทุก repo",
+          "migration.sql — ตาราง CHECK constraint และ trigger กันแก้รายการ",
+        ],
+        manifestsTitle: "ไฟล์โครงสร้างระบบ",
+      },
+      {
+        kind: "summary",
+        title: "สรุปโครงการ",
+        goalAchievement: "สร้างและ deploy ระบบ ERP สองโมดูลที่ใช้งานได้จริง โดยข้อมูลจัดซื้อ สต็อก และบัญชีสอดคล้องกันโดยไม่ต้องบันทึกซ้ำด้วยมือ",
+        qualityAssessment: "test บัญชี 101 ข้อ สต็อก 28 ข้อ และ end-to-end 23 ข้อผ่านทั้งหมด และทดสอบบน production ครอบคลุม flow จัดซื้อเต็มรูปแบบ ระบบบัญชีล่ม การปลุกเซิร์ฟเวอร์ และหน้าจอมือถือ",
+        benefits: [
+          "มูลค่าสต็อกกับบัญชีสินค้าคงเหลือกระทบยอดตรงกันทุกคืน (91,050.00 = 91,050.00 บาท)",
+          "เมื่อบริการล่ม การลงบัญชีแค่ล่าช้า ไม่สูญหาย",
+          "ใครก็ลองใช้ได้ทุกบทบาทจากหน้า login โดยไม่ต้องสมัคร",
+          "พบและแก้บั๊กที่เกิดเฉพาะบน production 3 จุด: build cache, transaction timeout ข้ามภูมิภาค และหน้าปลุกเซิร์ฟเวอร์ของโฮสต์",
+          "บันทึกสถาปัตยกรรม กฎ และเหตุผลการตัดสินใจไว้ใน repo และรายงานเชิงเทคนิค",
+        ],
+        steps: [
+          { phase: "Design", action: "เขียนสเปกโมดูล โมเดลข้อมูล และกฎ", result: "เขียนก่อนลงมือเขียนโค้ด" },
+          { phase: "Build", action: "พัฒนาบริการด้วย TypeScript โดยใช้ AI ช่วยเขียนโค้ด", result: "ตรวจทาน ทดสอบ และแก้ไขเอง" },
+          { phase: "Test", action: "Unit, integration (PostgreSQL จริง) และ end-to-end", result: "ผ่านทุกชุด" },
+          { phase: "Deploy", action: "Vercel, Render, Neon, GitHub Actions", result: "Demo ออนไลน์ 0 บาท" },
+          { phase: "Verify", action: "แผนทดสอบ production P1–P9", result: "ผ่าน และแก้ปัญหาที่พบแล้ว" },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "data-center",
+    category: "โครงการเว็บไซต์",
+    index: 2,
     meta: "โครงการสหกิจศึกษา · แพลตฟอร์มข้อมูลมหาวิทยาลัย",
     title: "ศูนย์ข้อมูล (DATA CENTER - SANDBOX)",
     description:
@@ -183,7 +340,7 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
   {
     slug: "gpa-prediction-model",
     category: "โครงการข้อมูล",
-    index: 2,
+    index: 3,
     meta: "การวิเคราะห์ข้อมูล · แมชชีนเลิร์นนิง · ชุดข้อมูลวิชาการ",
     title: "ระบบวิเคราะห์ข้อมูลนักศึกษาสำเร็จการศึกษา & โมเดลทำนายเกรดเฉลี่ยสะสม (GPA)",
     description:
@@ -691,7 +848,7 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
   {
     slug: "quill-remake",
     category: "โครงการเว็บไซต์",
-    index: 3,
+    index: 4,
     meta: "โครงการส่วนตัว · แพลตฟอร์มนิยายออนไลน์",
     title: "แพลตฟอร์มนิยาย QUILL",
     description: "แพลตฟอร์มสำหรับอ่านและเขียนนิยายออนไลน์ที่เชื่อมโยงนักเขียนและนักอ่านเข้าด้วยกัน โดดเด่นด้วยสถาปัตยกรรมระบบแบบ 3-Tier ที่มีความปลอดภัยสูง การทำงานผ่าน REST API ที่รองรับการขยายตัว และมีผู้ช่วย AI ที่ช่วยให้นักเขียนสร้างสรรค์ผลงานได้อย่างมีประสิทธิภาพ",

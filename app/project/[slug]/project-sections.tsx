@@ -703,7 +703,11 @@ export function DeploymentSection({ section, ctx }: { section: SectionOf<"deploy
         </div>
       </div>
 
-      <BoxedList title={`☸️ ${t("k8sManifests")}`} items={section.k8sSummary} ctx={ctx} />
+      <BoxedList
+        title={section.manifestsTitle ? `📄 ${section.manifestsTitle}` : `☸️ ${t("k8sManifests")}`}
+        items={section.k8sSummary}
+        ctx={ctx}
+      />
     </div>
   );
 }
