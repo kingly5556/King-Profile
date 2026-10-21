@@ -38,7 +38,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           <div style={{ display: "flex", fontSize: 76, fontWeight: 700, lineHeight: 1.05 }}>{title}</div>
           <div style={{ display: "flex", fontSize: 30, color: "#94a3b8" }}>{meta}</div>
         </div>
-        <div style={{ display: "flex", fontSize: 30, color: "#a78bfa" }}>Kongkat Thanalertrungroj · Programmer &amp; AI Engineer</div>
+        <div style={{ display: "flex", fontSize: 30, color: "#a78bfa" }}>Kongkat Thanalertrungroj · Backend &amp; Full-stack Developer</div>
       </div>
     ),
     { ...size },

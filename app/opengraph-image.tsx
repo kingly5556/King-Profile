@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Kongkat Thanalertrungroj — Programmer & AI Engineer";
+export const alt = "Kongkat Thanalertrungroj — Backend & Full-stack Developer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -26,7 +26,7 @@ export default function Image() {
           <div style={{ display: "flex", fontSize: 96, fontWeight: 300, lineHeight: 1 }}>Kongkat</div>
           <div style={{ display: "flex", fontSize: 96, fontWeight: 300, lineHeight: 1 }}>Thanalertrungroj</div>
           <div style={{ display: "flex", fontSize: 40, fontWeight: 700, color: "#a78bfa", marginTop: 12 }}>
-            PROGRAMMER &amp; AI ENGINEER
+            BACKEND &amp; FULL-STACK DEVELOPER
           </div>
         </div>
         <div style={{ display: "flex", fontSize: 28, color: "#94a3b8" }}>

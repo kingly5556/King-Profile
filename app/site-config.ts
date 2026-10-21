@@ -9,6 +9,6 @@ export const SITE_URL = (() => {
   return "http://localhost:3000";
 })();
 
-export const SITE_TITLE = "Kongkat Thanalertrungroj — Programmer & AI Engineer";
+export const SITE_TITLE = "Kongkat Thanalertrungroj — Backend & Full-stack Developer";
 export const SITE_DESCRIPTION =
-  "Portfolio of Kongkat Thanalertrungroj — programmer, AI engineer, B.Sc. Computer Science (RMUTI). Data platforms, full-stack, and ML.";
+  "Portfolio of Kongkat Thanalertrungroj — backend & full-stack developer, B.Sc. Computer Science (RMUTI). Business systems (ERP), data platforms, and ML.";
