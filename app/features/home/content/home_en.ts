@@ -207,7 +207,7 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
             rows: [
               { column: "YEAR", type: "int64", example: "2564, 2565", description: "Academic admission year (Thai Buddhist Era)" },
               { column: "UNIV_ID", type: "int64", example: "19901, 19902", description: "Campus code within RMUTI" },
-              { column: "STD_ID", type: "object", example: "64172110001-5", description: "Student ID number" },
+              { column: "STD_ID", type: "object", example: "— (masked)", description: "Student ID number" },
               { column: "PREFIX_NAME_ID", type: "int64", example: "3 = Mr., 4 = Ms.", description: "Name prefix code — anomalous max value (223) flagged for review" },
               { column: "STD_FNAME", type: "object", example: "—", description: "First name (Thai) — PII" },
               { column: "STD_LNAME", type: "object", example: "—", description: "Last name (Thai) — PII" },
@@ -220,9 +220,9 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
             columns: "CITIZEN_ID, GENDER_ID, BIRTHDAY, RACE_ID, RELIGION_ID",
             purpose: "Population & personal attributes",
             rows: [
-              { column: "CITIZEN_ID", type: "object", example: "1309902xxxxxxx", description: "13-digit national ID — Sensitive PII" },
+              { column: "CITIZEN_ID", type: "object", example: "— (masked)", description: "13-digit national ID — Sensitive PII" },
               { column: "GENDER_ID", type: "int64", example: "1 = Male, 2 = Female", description: "Gender identifier" },
-              { column: "BIRTHDAY", type: "object", example: "15/06/2545", description: "Date of birth (DD/MM/YYYY Thai Era) — PII" },
+              { column: "BIRTHDAY", type: "object", example: "— (masked)", description: "Date of birth (DD/MM/YYYY Thai Era) — PII" },
               { column: "RACE_ID", type: "int64", example: "99 = Thai", description: "Nationality code" },
               { column: "RELIGION_ID", type: "float64", example: "1.0 = Buddhist, 6.0 = Islam", description: "Religion code — 2 missing records" },
             ],
@@ -271,6 +271,16 @@ export const PORTFOLIO_PROJECTS_EN: PortfolioProject[] = [
             columns: "DATAGRADUATION, GROUP_CODE, Custom",
             purpose: "Additional metadata fields",
           },
+        ],
+      },
+      {
+        kind: "pdpa",
+        title: "Data Handling",
+        piiColumns: ["STD_ID", "STD_FNAME", "STD_LNAME", "CITIZEN_ID", "BIRTHDAY", "HOMEADD", "TELEPHONE", "EMAIL"],
+        principles: [
+          { label: "Source", detail: "The records were provided to me by my internship host organisation for a data-organisation task. I reused the same dataset for this modelling work." },
+          { label: "Identifiers removed", detail: "Columns that identify a person (listed above) were dropped before any analysis or modelling; they are listed here only to document the schema." },
+          { label: "No raw data published", detail: "Neither the raw records nor row-level outputs are published. This page shows only the schema, aggregate statistics and the resulting model." },
         ],
       },
       {

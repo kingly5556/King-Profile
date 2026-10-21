@@ -157,6 +157,31 @@ export function StackSection({ section, ctx }: { section: SectionOf<"stack">; ct
   );
 }
 
+export function PdpaSection({ section, ctx }: { section: SectionOf<"pdpa">; ctx: SectionCtx }) {
+  return (
+    <div className="mt-16">
+      <h2 className="mb-6 font-headline-md text-headline-md text-primary">{section.title}</h2>
+      <div className={`border ${ctx.border} bg-surface-container-low p-6 flex flex-col gap-6`}>
+        <div className="flex flex-wrap gap-2">
+          {section.piiColumns.map((col) => (
+            <span key={col} className="border border-outline px-2 py-1 font-mono text-xs text-secondary">
+              {col}
+            </span>
+          ))}
+        </div>
+        <ul className="flex flex-col gap-4">
+          {section.principles.map((p) => (
+            <li key={p.label} className="flex flex-col gap-1">
+              <span className={`font-label-mono text-xs uppercase tracking-widest ${ctx.text}`}>{p.label}</span>
+              <span className="font-body-md text-sm text-secondary leading-relaxed">{p.detail}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
 export function DatasetSection({ section, ctx }: { section: SectionOf<"dataset">; ctx: SectionCtx }) {
   const { t } = ctx;
   return (

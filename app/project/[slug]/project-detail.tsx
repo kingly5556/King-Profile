@@ -12,6 +12,7 @@ import {
   DeploymentSection,
   EDASection,
   FeatureEngineeringSection,
+  PdpaSection,
   PredictiveModelingSection,
   StackSection,
   StatisticalTestingSection,
@@ -43,8 +44,13 @@ const TAB_DEFS: TabDef[] = [
   {
     id: "Metadata",
     labelKey: "metadata",
-    match: (s) => s.kind === "dataset",
-    render: (s, ctx, key) => s.kind === "dataset" && <DatasetSection key={key} section={s} ctx={ctx} />,
+    match: (s) => s.kind === "dataset" || s.kind === "pdpa",
+    render: (s, ctx, key) =>
+      s.kind === "dataset" ? (
+        <DatasetSection key={key} section={s} ctx={ctx} />
+      ) : (
+        s.kind === "pdpa" && <PdpaSection key={key} section={s} ctx={ctx} />
+      ),
   },
   {
     id: "EDA",

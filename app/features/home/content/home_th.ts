@@ -207,7 +207,7 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
             rows: [
               { column: "YEAR", type: "int64", example: "2564, 2565", description: "ปีการศึกษาที่เข้าศึกษา (พุทธศักราช B.E.)" },
               { column: "UNIV_ID", type: "int64", example: "19901, 19902", description: "รหัสวิทยาเขตภายใน มทร.อีสาน" },
-              { column: "STD_ID", type: "object", example: "64172110001-5", description: "เลขประจำตัวนักศึกษา" },
+              { column: "STD_ID", type: "object", example: "— (masked)", description: "เลขประจำตัวนักศึกษา" },
               { column: "PREFIX_NAME_ID", type: "int64", example: "3 = นาย, 4 = นางสาว", description: "รหัสคำนำหน้าชื่อ — ตรวจพบค่าผิดปกติสูงสุด (223) ที่ต้องทำการตรวจสอบความถูกต้อง" },
               { column: "STD_FNAME", type: "object", example: "—", description: "ชื่อจริง (ภาษาไทย) — ข้อมูลส่วนบุคคล (PII)" },
               { column: "STD_LNAME", type: "object", example: "—", description: "นามสกุล (ภาษาไทย) — ข้อมูลส่วนบุคคล (PII)" },
@@ -220,9 +220,9 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
             columns: "CITIZEN_ID, GENDER_ID, BIRTHDAY, RACE_ID, RELIGION_ID",
             purpose: "ลักษณะประชากรและส่วนบุคคล",
             rows: [
-              { column: "CITIZEN_ID", type: "object", example: "1309902xxxxxxx", description: "เลขประจำตัวประชาชน 13 หลัก — ข้อมูลส่วนบุคคลที่ละเอียดอ่อน (Sensitive PII)" },
+              { column: "CITIZEN_ID", type: "object", example: "— (masked)", description: "เลขประจำตัวประชาชน 13 หลัก — ข้อมูลส่วนบุคคลที่ละเอียดอ่อน (Sensitive PII)" },
               { column: "GENDER_ID", type: "int64", example: "1 = ชาย, 2 = หญิง", description: "รหัสระบุเพศสภาพ" },
-              { column: "BIRTHDAY", type: "object", example: "15/06/2545", description: "วันเดือนปีเกิด (วว/ดด/พศ พุทธศักราช) — ข้อมูลส่วนบุคคล (PII)" },
+              { column: "BIRTHDAY", type: "object", example: "— (masked)", description: "วันเดือนปีเกิด (วว/ดด/พศ พุทธศักราช) — ข้อมูลส่วนบุคคล (PII)" },
               { column: "RACE_ID", type: "int64", example: "99 = ไทย", description: "รหัสสัญชาติ" },
               { column: "RELIGION_ID", type: "float64", example: "1.0 = พุทธ, 6.0 = อิสลาม", description: "รหัสศาสนา — พบข้อมูลสูญหาย 2 แถว" },
             ],
@@ -271,6 +271,16 @@ export const PORTFOLIO_PROJECTS_TH: PortfolioProject[] = [
             columns: "DATAGRADUATION, GROUP_CODE, Custom",
             purpose: "ฟิลด์ข้อมูลเมทาดาตาอื่นๆ เพิ่มเติม",
           },
+        ],
+      },
+      {
+        kind: "pdpa",
+        title: "การจัดการข้อมูลส่วนบุคคล",
+        piiColumns: ["STD_ID", "STD_FNAME", "STD_LNAME", "CITIZEN_ID", "BIRTHDAY", "HOMEADD", "TELEPHONE", "EMAIL"],
+        principles: [
+          { label: "ที่มาของข้อมูล", detail: "ได้รับข้อมูลจากหน่วยงานที่ไปฝึกงาน เพื่อนำมาจัดระเบียบข้อมูล และนำชุดข้อมูลเดียวกันมาใช้ต่อในงานสร้างโมเดลนี้" },
+          { label: "ตัดข้อมูลระบุตัวตน", detail: "คอลัมน์ที่ระบุตัวบุคคล (ตามรายการด้านบน) ถูกตัดออกก่อนการวิเคราะห์และสร้างโมเดล แสดงไว้ที่นี่เพื่ออธิบายโครงสร้างข้อมูลเท่านั้น" },
+          { label: "ไม่เผยแพร่ข้อมูลดิบ", detail: "ไม่เผยแพร่ข้อมูลดิบหรือผลลัพธ์รายบุคคล หน้านี้แสดงเฉพาะโครงสร้างข้อมูล สถิติภาพรวม และโมเดลที่ได้" },
         ],
       },
       {
