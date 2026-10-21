@@ -43,3 +43,6 @@ next-env.d.ts
 # local tooling / agent worktrees
 .kilo/
 .qodo/
+
+# local assistant settings
+.claude/
